@@ -1,21 +1,70 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
     
     private Rigidbody2D enemyRb;
+    private Rigidbody2D playerRb;
 
-    private int iSpeed = 5;
+    private float fSpeed = 5;
+
+    public int iEnemyHealth = 3;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         enemyRb =  GetComponent<Rigidbody2D>();
+        GameObject player = GameObject.FindGameObjectWithTag("Player"); // find player
+        playerRb = player.GetComponent<Rigidbody2D>(); // find player's rigidbody
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        enemyRb.linearVelocity = new Vector2(1 * iSpeed, enemyRb.linearVelocity.y);
+        enemyRb.linearVelocity = new Vector2(1 * fSpeed, enemyRb.linearVelocity.y);
     }
-}
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Wall")
+        {
+            fSpeed *= -1;
+        }
+
+        if (other.gameObject.tag == "Player")
+        {
+            //((px x ex) + (py + ey))/|p||e| = cosangle
+            // Vector2 enemyPosition = enemyRb.transform.position;
+            // Vector2 playerPosition = playerRb.transform.position;
+            // float enemyMag = enemyPosition.magnitude;
+            // float playerMag = playerPosition.magnitude;
+            // float magProduct = enemyMag * playerMag;
+            // float playerCosAngle = ((playerPosition.x * enemyPosition.x) + (playerPosition.y * enemyPosition.y)) /
+            //                     magProduct;
+            // if (playerCosAngle <= 0.53)
+            // {
+            //     Debug.Log("Squash!");
+            // }
+            //
+            // else if (playerCosAngle > 0.53)
+            // {
+            //     Debug.Log("Ow!");
+            
+            ContactPoint2D contact = other.contacts[0];
+
+            if (contact.normal.y < -0.5f)
+            {
+                Debug.Log("Squash!");
+                iEnemyHealth--;
+            }
+            else
+            {
+                Debug.Log("Ow!");
+            }
+            }
+
+        }
+    }
+

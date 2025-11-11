@@ -5,9 +5,9 @@ public class PlayerController : MonoBehaviour
 {
 
     private Rigidbody2D playerRb;
-    public bool isGrounded;
-    private float speed = 10;
-    private float jumpForce = 5;
+    public bool bIsGrounded;
+    private float fSpeed = 10;
+    private float fJumpForce = 5;
     
 
     void Awake()
@@ -27,10 +27,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         
-        playerRb.linearVelocity = new Vector2(Input.GetAxis("Horizontal") * speed, playerRb.linearVelocity.y);
-       if (Input.GetKeyDown("space") && isGrounded)
+        playerRb.linearVelocity = new Vector2(Input.GetAxis("Horizontal") * fSpeed, playerRb.linearVelocity.y);
+       if (Input.GetKeyDown("space") && bIsGrounded)
        {
-           playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, jumpForce);
+           playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, fJumpForce);
        }
         
     }
@@ -39,12 +39,12 @@ public class PlayerController : MonoBehaviour
     void OnCollisionStay2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))
-            isGrounded = true;
+            bIsGrounded = true;
     }
     
     void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))
-            isGrounded = false;
+            bIsGrounded = false;
     }
 }
