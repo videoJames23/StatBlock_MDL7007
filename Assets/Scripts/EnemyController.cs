@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    
+
     private Rigidbody2D enemyRb;
     private Rigidbody2D playerRb;
+    public PlayerController playerController;
 
-    private float fSpeed = 5;
+    public float fSpeed = 5;
 
     public int iEnemyHealth = 3;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        enemyRb =  GetComponent<Rigidbody2D>();
+        enemyRb = GetComponent<Rigidbody2D>();
         GameObject player = GameObject.FindGameObjectWithTag("Player"); // find player
         playerRb = player.GetComponent<Rigidbody2D>(); // find player's rigidbody
-        
+        playerController = player.GetComponent<PlayerController>();
+
     }
 
     // Update is called once per frame
@@ -35,25 +39,33 @@ public class EnemyController : MonoBehaviour
 
         if (other.gameObject.tag == "Player")
         {
-            //((px x ex) + (py + ey))/|p||e| = cosangle
+            // ((px x ex) + (py + ey))/|p||e| = cosangle
             // Vector2 enemyPosition = enemyRb.transform.position;
-            // Vector2 playerPosition = playerRb.transform.position;
+            // Vector2 relativePlayerPosition = enemyRb.transform.position - playerRb.transform.position;
             // float enemyMag = enemyPosition.magnitude;
-            // float playerMag = playerPosition.magnitude;
+            // float playerMag = relativePlayerPosition.magnitude;
             // float magProduct = enemyMag * playerMag;
-            // float playerCosAngle = ((playerPosition.x * enemyPosition.x) + (playerPosition.y * enemyPosition.y)) /
-            //                     magProduct;
+            // float playerCosAngle =
+            //     ((relativePlayerPosition.x * enemyPosition.x) + (relativePlayerPosition.y * enemyPosition.y)) /
+            //     magProduct;
             // if (playerCosAngle <= 0.53)
             // {
             //     Debug.Log("Squash!");
+            //     iEnemyHealth--;
             // }
             //
             // else if (playerCosAngle > 0.53)
             // {
             //     Debug.Log("Ow!");
-            
+            //     playerController.TakeDamage(1);
+            //     
+            //     
+            //
+            //     
+            // }
+           // alternate jump detector using maths :3
             ContactPoint2D contact = other.contacts[0];
-
+            
             if (contact.normal.y < -0.5f)
             {
                 Debug.Log("Squash!");
@@ -62,9 +74,10 @@ public class EnemyController : MonoBehaviour
             else
             {
                 Debug.Log("Ow!");
-            }
+                playerController.TakeDamage(1);
             }
 
         }
     }
+}
 

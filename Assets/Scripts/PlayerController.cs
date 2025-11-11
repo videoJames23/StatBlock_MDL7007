@@ -6,9 +6,10 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D playerRb;
     public bool bIsGrounded;
-    private float fSpeed = 10;
-    private float fJumpForce = 5;
-    
+    public float fSpeed = 10;
+    public float fJumpForce = 5;
+    public int iPlayerHealth = 3;
+    public int iDamage = 1;
 
     void Awake()
     {
@@ -34,8 +35,11 @@ public class PlayerController : MonoBehaviour
        }
         
     }
-    
-    
+
+    public void TakeDamage(int damage)
+    {
+        iPlayerHealth -= damage;
+    }
     void OnCollisionStay2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))
