@@ -8,10 +8,10 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRb;
     public bool bIsGrounded;
     public float fSpeed = 10;
-    public float fJumpForce = 7.5f;
+    public float fJumpForce = 10f;
     public int iPlayerHealth = 3;
     private float fIFramesDuration = 2;
-    private int iNumberOfFlashes = 3;
+    private int iNumberOfFlashes = 5;
     private SpriteRenderer spriteRenderer;
 
 
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
         Physics2D.IgnoreLayerCollision(10, 11, true);
         for (int i = 0; i < iNumberOfFlashes; i++)
         {
-            spriteRenderer.color = new Color(0, 0, 1, 0.5f);
+            spriteRenderer.color = new Color(0, 0.25f, 1, 0.5f);
             yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
             spriteRenderer.color = Color.blue;
             yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);

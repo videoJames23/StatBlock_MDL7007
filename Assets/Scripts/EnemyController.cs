@@ -94,5 +94,10 @@ public class EnemyController : MonoBehaviour
 
         }
     }
+
+    public void ChangeSize(int iEnemySize)
+    {
+        
+    }
 }
 
