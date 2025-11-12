@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
 
     private Rigidbody2D enemyRb;
     private Rigidbody2D playerRb;
+    private BoxCollider2D enemyCollider;
     public PlayerController playerController;
 
     public float fSpeed = 5;
@@ -14,10 +15,12 @@ public class EnemyController : MonoBehaviour
     public int iEnemyHealth = 3;
 
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         enemyRb = GetComponent<Rigidbody2D>();
+        enemyCollider =  GetComponent<BoxCollider2D>();
         GameObject player = GameObject.FindGameObjectWithTag("Player"); // find player
         playerRb = player.GetComponent<Rigidbody2D>(); // find player's rigidbody
         playerController = player.GetComponent<PlayerController>();
@@ -40,8 +43,8 @@ public class EnemyController : MonoBehaviour
 
         if (other.gameObject.tag == "Player")
         {  
-            // alternate jump detector using maths :3
-            // ((px x ex) + (py + ey))/|p||e| = cosangle
+            // // alternate jump detector using maths :3
+            // // ((px x ex) + (py + ey))/|p||e| = cosangle
             // Vector2 enemyPosition = enemyRb.transform.position;
             // Vector2 relativePlayerPosition = enemyRb.transform.position - playerRb.transform.position;
             // float enemyMag = enemyPosition.magnitude;
@@ -50,21 +53,29 @@ public class EnemyController : MonoBehaviour
             // float playerCosAngle =
             //     ((relativePlayerPosition.x * enemyPosition.x) + (relativePlayerPosition.y * enemyPosition.y)) /
             //     magProduct;
-            // if (playerCosAngle <= 0.53)
+            // if (playerCosAngle <= 0.525)
             // {
             //     Debug.Log("Squash!");
             //     iEnemyHealth--;
+            //     float fJumpForce = playerController.fJumpForce;
+            //     playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, fJumpForce);
+            //     if (iEnemyHealth <= 0)
+            //     {
+            //         Destroy(gameObject);
+            //     }
             // }
             //
-            // else if (playerCosAngle > 0.53)
+            // else if (playerCosAngle > 0.525)
             // {
             //     Debug.Log("Ow!");
             //     playerController.TakeDamage(1);
             // }
-         
+            
             ContactPoint2D contact = other.contacts[0];
             
-            if (contact.normal.y < -0.5f)
+            bool playerIsAbove = contact.normal.y < -0.5f && playerRb.linearVelocity.y <= 0f;
+            
+            if (playerIsAbove)
             {
                 Debug.Log("Squash!");
                 iEnemyHealth--;
@@ -72,7 +83,7 @@ public class EnemyController : MonoBehaviour
                 playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, fJumpForce);
                 if (iEnemyHealth <= 0)
                 {
-                    Destroy(this.gameObject);
+                    Destroy(gameObject);
                 }
             }
             else

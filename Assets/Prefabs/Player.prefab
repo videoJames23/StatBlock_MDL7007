@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8678867525025807306}
   - component: {fileID: 9062997046339653805}
   - component: {fileID: 5708521445496767556}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -51,7 +51,6 @@ MonoBehaviour:
   fSpeed: 10
   fJumpForce: 5
   iPlayerHealth: 3
-  iDamage: 1
 --- !u!212 &8678867525025807306
 SpriteRenderer:
   m_ObjectHideFlags: 0
