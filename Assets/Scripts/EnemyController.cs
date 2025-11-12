@@ -7,10 +7,9 @@ public class EnemyController : MonoBehaviour
 
     private Rigidbody2D enemyRb;
     private Rigidbody2D playerRb;
-    private BoxCollider2D enemyCollider;
     public PlayerController playerController;
 
-    public float fSpeed = 5;
+    public float fEnemySpeed = 5;
 
     public int iEnemyHealth = 3;
 
@@ -20,7 +19,6 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         enemyRb = GetComponent<Rigidbody2D>();
-        enemyCollider =  GetComponent<BoxCollider2D>();
         GameObject player = GameObject.FindGameObjectWithTag("Player"); // find player
         playerRb = player.GetComponent<Rigidbody2D>(); // find player's rigidbody
         playerController = player.GetComponent<PlayerController>();
@@ -31,14 +29,14 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        enemyRb.linearVelocity = new Vector2(1 * fSpeed, enemyRb.linearVelocity.y);
+        enemyRb.linearVelocity = new Vector2(1 * fEnemySpeed, enemyRb.linearVelocity.y);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Wall")
         {
-            fSpeed *= -1;
+            fEnemySpeed *= -1;
         }
 
         if (other.gameObject.tag == "Player")
@@ -95,9 +93,6 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void ChangeSize(int iEnemySize)
-    {
-        
-    }
+    
 }
 
