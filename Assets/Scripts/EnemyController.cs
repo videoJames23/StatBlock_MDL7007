@@ -21,6 +21,7 @@ public class EnemyController : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player"); // find player
         playerRb = player.GetComponent<Rigidbody2D>(); // find player's rigidbody
         playerController = player.GetComponent<PlayerController>();
+        
 
     }
 
@@ -38,7 +39,8 @@ public class EnemyController : MonoBehaviour
         }
 
         if (other.gameObject.tag == "Player")
-        {
+        {  
+            // alternate jump detector using maths :3
             // ((px x ex) + (py + ey))/|p||e| = cosangle
             // Vector2 enemyPosition = enemyRb.transform.position;
             // Vector2 relativePlayerPosition = enemyRb.transform.position - playerRb.transform.position;
@@ -58,18 +60,20 @@ public class EnemyController : MonoBehaviour
             // {
             //     Debug.Log("Ow!");
             //     playerController.TakeDamage(1);
-            //     
-            //     
-            //
-            //     
             // }
-           // alternate jump detector using maths :3
+         
             ContactPoint2D contact = other.contacts[0];
             
             if (contact.normal.y < -0.5f)
             {
                 Debug.Log("Squash!");
                 iEnemyHealth--;
+                float fJumpForce = playerController.fJumpForce;
+                playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, fJumpForce);
+                if (iEnemyHealth <= 0)
+                {
+                    Destroy(this.gameObject);
+                }
             }
             else
             {

@@ -9,46 +9,56 @@ public class PlayerController : MonoBehaviour
     public float fSpeed = 10;
     public float fJumpForce = 5;
     public int iPlayerHealth = 3;
-    public int iDamage = 1;
+ 
 
     void Awake()
     {
         playerRb = GetComponent<Rigidbody2D>();
-        
+
     }
-    
-    
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        playerRb.linearVelocity = new Vector2(Input.GetAxis("Horizontal") * fSpeed, playerRb.linearVelocity.y); // get horizontal movement info
         
-        playerRb.linearVelocity = new Vector2(Input.GetAxis("Horizontal") * fSpeed, playerRb.linearVelocity.y);
-       if (Input.GetKeyDown("space") && bIsGrounded)
-       {
-           playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, fJumpForce);
-       }
-        
+        if (Input.GetKeyDown("space") && bIsGrounded) // Jump
+        {
+            playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, fJumpForce);
+        }
+
     }
 
     public void TakeDamage(int damage)
     {
         iPlayerHealth -= damage;
+        
+        
+        
+        if (iPlayerHealth <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
+
     void OnCollisionStay2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Ground"))
-            bIsGrounded = true;
-    }
+        {
+            if (other.gameObject.CompareTag("Ground"))
+                bIsGrounded = true;
+        }
+
+        void OnCollisionExit2D(Collision2D other)
+        {
+            if (other.gameObject.CompareTag("Ground"))
+                bIsGrounded = false;
+        }
     
-    void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Ground"))
-            bIsGrounded = false;
-    }
 }
