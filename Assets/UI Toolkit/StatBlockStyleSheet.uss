@@ -1,0 +1,10 @@
+:root {
+}
+
+.StatBlockStat {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#LegacyRuntime");
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+}

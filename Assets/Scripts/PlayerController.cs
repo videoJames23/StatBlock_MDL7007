@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private float fIFramesDuration = 2;
     private int iNumberOfFlashes = 5;
     private SpriteRenderer cSpriteRenderer;
+    public bool bInMenu;
 
 
 
@@ -37,6 +39,14 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // movement
+        if (bInMenu)
+        {
+            fSpeed = 0;
+        }
+        else
+        {
+            fSpeed = 10;
+        }
         playerRb.linearVelocity = new Vector2(Input.GetAxis("Horizontal") * fSpeed, playerRb.linearVelocity.y);
         
         // jump
@@ -53,14 +63,23 @@ public class PlayerController : MonoBehaviour
     void OnCollisionStay2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))
+        {
             bIsGrounded = true;
+        }
+        else if (other.gameObject.CompareTag("StatBlock") && Input.GetKeyDown(KeyCode.E))
+        {
+            bInMenu = !bInMenu;
+        }
     }
 
     void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))
+        {
             bIsGrounded = false;
+        }
     }
+    
     
     // Damage/I-Frames
     public void TakeDamage(int damage)
