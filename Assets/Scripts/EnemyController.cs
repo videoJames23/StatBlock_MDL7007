@@ -32,8 +32,9 @@ public class EnemyController : MonoBehaviour
         playerRb = player.GetComponent<Rigidbody2D>();
         playerController = player.GetComponent<PlayerController>();
         
-        GameObject statBlockE = GameObject.FindGameObjectWithTag("StatBlockE");
-        statBlockUI = statBlockE.GetComponent<StatBlockUI>();
+        GameObject statBlockP = GameObject.FindGameObjectWithTag("StatBlockP");
+        statBlockUI = statBlockP.GetComponent<StatBlockUI>();
+        
         
 
     }
@@ -43,7 +44,7 @@ public class EnemyController : MonoBehaviour
     {   
         
         
-        enemyRb.linearVelocity = new Vector2(fEnemySpeed, enemyRb.linearVelocity.y);
+        enemyRb.linearVelocity = new Vector2(fEnemySpeed * fEnemyDir, enemyRb.linearVelocity.y);
         enemyRb.transform.localScale = new Vector2(fEnemySize, fEnemySize);
     }
 
@@ -85,37 +86,52 @@ public class EnemyController : MonoBehaviour
             // }
             
             ContactPoint2D contact = other.contacts[0];
-            
-            bool playerIsAbove = contact.normal.y < -0.5f && playerRb.linearVelocity.y <= 0f;
-            
-            if (playerIsAbove)
+            if (playerRb == null)
             {
-                Debug.Log("Squash!");
-                TakeDamage(1);
-                float fJumpForce = playerController.fPlayerJump;
-                playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, fJumpForce);
                 
             }
+
             else
             {
-                Debug.Log("Ow!");
-                playerController.TakeDamage(1);
+                bool playerIsAbove = contact.normal.y < -0.5f && playerRb.linearVelocity.y <= 0f;
+                if (playerIsAbove)
+                {
+                    Debug.Log("Squash!");
+                    TakeDamage(1);
+                    playerController.Jump();
+
+                }
+                else
+                {
+                    Debug.Log("Ow!");
+                    playerController.TakeDamage(1);
+                }
             }
+            
+            
+            
 
         }
     }
-    public void TakeDamage(int damage)
+    void TakeDamage(int damage)
     {
         
         statBlockUI.statsE[0]--;
         iEnemyHealth = statBlockUI.statsE[0];
         statBlockUI.iPointsTotalE--;
         statBlockUI.iPointsLeftE = statBlockUI.iPointsTotalE - statBlockUI.statsE.Sum();
+        if (playerController == null)
+        {
+                
+        }
 
-        playerController.bInMenuE = true;
-        statBlockUI.UpdateUI();
-        playerController.bInMenuE = false;
-        
+        else
+        {
+            playerController.bInMenuE = true;
+            statBlockUI.UpdateUI();
+            playerController.bInMenuE = false;
+        }
+
         // I-frames
         if (iEnemyHealth <= 0)
         {

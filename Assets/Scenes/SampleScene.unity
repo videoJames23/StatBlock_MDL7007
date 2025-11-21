@@ -1207,7 +1207,8 @@ PrefabInstance:
       propertyPath: m_TagString
       value: StatBlockE
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6222302338620656504, guid: fd6aa446fe6d7f54abb8950b576b3651, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2781,10 +2782,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: StatBlock - Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3182540502320756304, guid: 1d6e4b41fc128bc48b7de166cc438a1e, type: 3}
-      propertyPath: m_TagString
-      value: StatBlockP
-      objectReference: {fileID: 0}
     - target: {fileID: 5477954982717185813, guid: 1d6e4b41fc128bc48b7de166cc438a1e, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -2793,18 +2790,6 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 943131319}
-    - target: {fileID: 5477954982717185813, guid: 1d6e4b41fc128bc48b7de166cc438a1e, type: 3}
-      propertyPath: 'statsE.Array.data[0]'
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5477954982717185813, guid: 1d6e4b41fc128bc48b7de166cc438a1e, type: 3}
-      propertyPath: 'statsE.Array.data[2]'
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5477954982717185813, guid: 1d6e4b41fc128bc48b7de166cc438a1e, type: 3}
-      propertyPath: valueTexts.Array.size
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 5477954982717185813, guid: 1d6e4b41fc128bc48b7de166cc438a1e, type: 3}
       propertyPath: 'valueTexts.Array.data[0]'
       value: 
@@ -2821,14 +2806,6 @@ PrefabInstance:
       propertyPath: 'valueTexts.Array.data[3]'
       value: 
       objectReference: {fileID: 484052292}
-    - target: {fileID: 5477954982717185813, guid: 1d6e4b41fc128bc48b7de166cc438a1e, type: 3}
-      propertyPath: 'valueTexts.Array.data[4]'
-      value: 
-      objectReference: {fileID: 1532942409}
-    - target: {fileID: 5477954982717185813, guid: 1d6e4b41fc128bc48b7de166cc438a1e, type: 3}
-      propertyPath: 'valueTexts.Array.data[5]'
-      value: 
-      objectReference: {fileID: 1532942409}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

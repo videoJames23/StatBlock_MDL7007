@@ -85,14 +85,19 @@ public class PlayerController : MonoBehaviour
         
         playerRb.linearVelocity = new Vector2(Input.GetAxis("Horizontal") * fPlayerSpeed, playerRb.linearVelocity.y);
         
+        iPlayerHealth = statBlockUI.statsP[0];
         
         if (Input.GetKeyDown("space") && bIsGrounded)
         {
-            playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, fPlayerJump);
+            Jump();
         }
 
     }
 
+    public void Jump()
+    {
+        playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, fPlayerJump);
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -152,7 +157,6 @@ public class PlayerController : MonoBehaviour
             iPlayerHealth -= damage;
             statBlockUI.statsP[0]--;
             statBlockUI.iPointsTotalP--;
-            statBlockUI.iPointsLeftP = statBlockUI.iPointsTotalP - statBlockUI.statsP.Sum();
             statBlockUI.UpdateUI();
             // I-frames
             if (iPlayerHealth > 0)

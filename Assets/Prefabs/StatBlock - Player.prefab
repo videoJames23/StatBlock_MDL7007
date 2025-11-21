@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5477954982717185813}
   m_Layer: 0
   m_Name: StatBlock - Player
-  m_TagString: StatBlock
+  m_TagString: StatBlockP
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,7 +151,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  stats: 010000000100000001000000
+  statsP: 010000000100000001000000
+  statsE: 010000000100000002000000
   playerController: {fileID: 0}
-  iPointsTotal: 0
-  iPointsLeft: 0
+  enemyController: {fileID: 0}
+  showHideJ: {fileID: 0}
+  showHideS: {fileID: 0}
+  iPointsTotalP: 0
+  iPointsLeftP: 0
+  iPointsTotalE: 0
+  iPointsLeftE: 0

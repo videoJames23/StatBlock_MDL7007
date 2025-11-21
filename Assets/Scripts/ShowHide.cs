@@ -6,14 +6,14 @@ public class ShowHide : MonoBehaviour
     void Start()
     {
         // produces nullReferenceException
-        // if (gameObject.CompareTag("Jump"))
-        // {
-        //     Show();
-        // }
-        // else if (gameObject.CompareTag("Size"))
-        // {
-        //     Hide();
-        // }
+        if (gameObject.CompareTag("Jump"))
+        {
+            Show();
+        }
+        else if (gameObject.CompareTag("Size"))
+        {
+            Hide();
+        }
     }
 
     // Update is called once per frame
