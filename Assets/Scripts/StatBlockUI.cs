@@ -2,7 +2,6 @@ using System.Linq;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEngine.InputSystem.iOS;
 using UnityEngine.Serialization;
 
 public class StatBlockUI : MonoBehaviour
@@ -24,6 +23,7 @@ public class StatBlockUI : MonoBehaviour
     public int iPointsLeftP;
     public int iPointsTotalE;
     public int iPointsLeftE;
+    public string sUser;
 
 
     
@@ -34,6 +34,7 @@ public class StatBlockUI : MonoBehaviour
         
         GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
         enemyController = enemy.GetComponent<EnemyController>();
+        
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
         gameManagerScript = gameManager.GetComponent<GameManager>();
         
@@ -41,10 +42,19 @@ public class StatBlockUI : MonoBehaviour
         GameObject jump = GameObject.FindGameObjectWithTag("Jump");
         showHideS = size.GetComponent<ShowHide>();
         showHideJ = jump.GetComponent<ShowHide>();
-        
-    
-        iPointsTotalP = 5;
-        iPointsTotalE = 5;
+
+
+        for (int i = 0; i < valueTexts.Length; i++)
+        {
+            valueTexts[i].text = " ";
+            showHideJ.Hide();
+            showHideS.Hide();
+            
+        }
+
+
+
+
         iPointsLeftP = iPointsTotalP - statsP.Sum();
         iPointsLeftE = iPointsLeftP - statsE.Sum();
         UpdateUI();
@@ -182,7 +192,8 @@ public class StatBlockUI : MonoBehaviour
     {
         iPointsLeftP = iPointsTotalP - statsP.Sum();
         iPointsLeftE = iPointsTotalE - statsE.Sum();
-        for (int i = 0; i < valueTexts.Length - 1; i++)
+        
+        for (int i = 0; i < valueTexts.Length - 2; i++)
         {
             if (playerController == null)
             {
@@ -197,6 +208,7 @@ public class StatBlockUI : MonoBehaviour
                     valueTexts[3].text = iPointsLeftP.ToString();
                     showHideJ.Show();
                     showHideS.Hide();
+                    
                 }
 
                 else if (playerController.bInMenuE)
@@ -212,10 +224,11 @@ public class StatBlockUI : MonoBehaviour
                 {
                     valueTexts[i].color = (i == selectedIndex) ? Color.green : Color.white;
                 }
-                else
+                else if (!playerController.bInMenuP && !playerController.bInMenuE)
                 {
                     valueTexts[i].color = Color.white;
                 }
+                valueTexts[4].text = sUser;
             }
         }
     }

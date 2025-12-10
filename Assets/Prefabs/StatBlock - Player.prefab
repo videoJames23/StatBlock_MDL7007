@@ -141,7 +141,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3182540502320756304}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 262d6967e1c149e47b1801719a140f5c, type: 3}
   m_Name: 
@@ -152,12 +152,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   statsP: 010000000100000001000000
-  statsE: 010000000100000002000000
+  statsE: 030000000200000003000000
   playerController: {fileID: 0}
   enemyController: {fileID: 0}
+  gameManagerScript: {fileID: 0}
   showHideJ: {fileID: 0}
   showHideS: {fileID: 0}
-  iPointsTotalP: 0
-  iPointsLeftP: 0
-  iPointsTotalE: 0
+  iPointsTotalP: 5
+  iPointsLeftP: 2
+  iPointsTotalE: 9
   iPointsLeftE: 0

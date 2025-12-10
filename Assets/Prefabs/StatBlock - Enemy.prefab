@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 7343770285057302295}
   - component: {fileID: 9090991950417498528}
   - component: {fileID: 8308703813796633345}
-  - component: {fileID: 6222302338620656504}
   m_Layer: 0
   m_Name: StatBlock - Enemy
-  m_TagString: StatBlock
+  m_TagString: StatBlockE
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,20 +133,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6222302338620656504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7818547037360751780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 262d6967e1c149e47b1801719a140f5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  valueTexts: []
-  stats: 010000000200000001000000
-  playerController: {fileID: 0}
-  iPointsTotal: 0
-  iPointsLeft: 0

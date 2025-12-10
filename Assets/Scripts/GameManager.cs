@@ -12,13 +12,15 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+        
         
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerRb = player.GetComponent<Rigidbody2D>();
         playerController = player.GetComponent<PlayerController>();
         
-        GameObject statBlockP = GameObject.FindGameObjectWithTag("StatBlockP");
-        statBlockUI = statBlockP.GetComponent<StatBlockUI>();
+        GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
+        this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
         
         GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
         enemyRb =  enemy.GetComponent<Rigidbody2D>();
@@ -38,7 +40,7 @@ public class GameManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         if (playerController == null)
         {
@@ -138,7 +140,12 @@ public class GameManager : MonoBehaviour
         }
 
     }
-    
 
-    
+    public void LoadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+
+
 }

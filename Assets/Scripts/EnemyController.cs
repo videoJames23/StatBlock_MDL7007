@@ -13,10 +13,10 @@ public class EnemyController : MonoBehaviour
  
 
     
-    public int iEnemyHealth = 3;
-    public float fEnemySpeed = 5;
-    public float fEnemySize = 1.5f;
-    public float fEnemyDir = 1;
+    public int iEnemyHealth;
+    public float fEnemySpeed;
+    public float fEnemySize;
+    public float fEnemyDir;
     
     private StatBlockUI statBlockUI;
     
@@ -32,8 +32,8 @@ public class EnemyController : MonoBehaviour
         playerRb = player.GetComponent<Rigidbody2D>();
         playerController = player.GetComponent<PlayerController>();
         
-        GameObject statBlockP = GameObject.FindGameObjectWithTag("StatBlockP");
-        statBlockUI = statBlockP.GetComponent<StatBlockUI>();
+        GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
+        this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
         
         
 
@@ -42,8 +42,6 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        
-        
         enemyRb.linearVelocity = new Vector2(fEnemySpeed * fEnemyDir, enemyRb.linearVelocity.y);
         enemyRb.transform.localScale = new Vector2(fEnemySize, fEnemySize);
     }
@@ -52,7 +50,10 @@ public class EnemyController : MonoBehaviour
     {
         if (other.gameObject.tag == "Wall")
         {
-            fEnemyDir *= -1;
+            if (Mathf.Abs(enemyRb.linearVelocity.x) < 0.1f)
+            {
+                fEnemyDir *= -1;
+            }
         }
 
         if (other.gameObject.tag == "Player")
@@ -115,9 +116,13 @@ public class EnemyController : MonoBehaviour
     }
     void TakeDamage(int damage)
     {
-        
+        iEnemyHealth -= damage;
         statBlockUI.statsE[0]--;
-        iEnemyHealth = statBlockUI.statsE[0];
+        
+        if (statBlockUI.iPointsLeftE > 0)
+        {
+            statBlockUI.iPointsLeftE--;
+        }
         statBlockUI.iPointsTotalE--;
         statBlockUI.iPointsLeftE = statBlockUI.iPointsTotalE - statBlockUI.statsE.Sum();
         if (playerController == null)

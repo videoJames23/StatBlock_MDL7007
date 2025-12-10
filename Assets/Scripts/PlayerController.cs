@@ -29,8 +29,12 @@ public class PlayerController : MonoBehaviour
     private int iNumberOfFlashes = 5;
     
     private StatBlockUI statBlockUI;
+    private GameManager gameManagerScript;
     private EnemyController enemyController;
     private SpriteRenderer cSpriteRenderer;
+
+    private GameObject completionAudio;
+    private AudioSource audioSource;
     
 
 
@@ -42,13 +46,17 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
         cSpriteRenderer = GetComponent<SpriteRenderer>();
         
-        GameObject statBlockP = GameObject.FindGameObjectWithTag("StatBlockP");
-        statBlockUI = statBlockP.GetComponent<StatBlockUI>();
+        GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
+        this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
         
         GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
         enemyController = enemy.GetComponent<EnemyController>();
         
-
+        GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
+        gameManagerScript = gameManager.GetComponent<GameManager>();
+        
+        GameObject completionAudio = GameObject.FindGameObjectWithTag("Completion Audio");
+        audioSource = completionAudio.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -57,17 +65,23 @@ public class PlayerController : MonoBehaviour
         if (bIsTouchingStatBlockP && Input.GetKeyDown(KeyCode.E))
         {
             bInMenuP = !bInMenuP;
+            if (bInMenuP)
+            {
+                statBlockUI.sUser = "Player";
+            }
             statBlockUI.UpdateUI();
         }
         
         if (bIsTouchingStatBlockE && Input.GetKeyDown(KeyCode.E) && !bInMenuE)
         {
             bInMenuE = true;
+            statBlockUI.sUser = "Enemy";
             statBlockUI.UpdateUI();
         }
         else if (bIsTouchingStatBlockE && Input.GetKeyDown(KeyCode.E) && bInMenuE && statBlockUI.iPointsLeftE == 0)
         {
             bInMenuE = false;
+            statBlockUI.UpdateUI();
         }
         if (bInMenuP || bInMenuE)
         {
@@ -99,11 +113,14 @@ public class PlayerController : MonoBehaviour
         playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, fPlayerJump);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private IEnumerator OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Finish"))
         {  
             Debug.Log("Level Complete!");
+            audioSource.Play();
+            yield return new WaitForSeconds(4);
+            gameManagerScript.LoadScene();
         }
     }
     void OnCollisionStay2D(Collision2D other)
@@ -156,8 +173,15 @@ public class PlayerController : MonoBehaviour
         {
             iPlayerHealth -= damage;
             statBlockUI.statsP[0]--;
+            if (statBlockUI.iPointsLeftP > 0)
+            {
+                statBlockUI.iPointsLeftP--;
+            }
             statBlockUI.iPointsTotalP--;
+            statBlockUI.iPointsLeftP = statBlockUI.iPointsTotalP - statBlockUI.statsP.Sum();
+            bInMenuP = true;
             statBlockUI.UpdateUI();
+            bInMenuP = false;
             // I-frames
             if (iPlayerHealth > 0)
             {
