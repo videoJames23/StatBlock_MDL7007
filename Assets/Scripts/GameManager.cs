@@ -8,8 +8,9 @@ public class GameManager : MonoBehaviour
     private Rigidbody2D enemyRb;
     private EnemyController enemyController;
     private StatBlockUI statBlockUI;
+    public int buildIndex;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+   
     void Start()
     {
 
@@ -22,7 +23,7 @@ public class GameManager : MonoBehaviour
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
         
-        
+        buildIndex = SceneManager.GetActiveScene().buildIndex;
         GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
         if (enemy != null)
         {
@@ -30,8 +31,12 @@ public class GameManager : MonoBehaviour
             enemyController = enemy.GetComponent<EnemyController>();
         }
 
-        StatChangeP();
-        StatChangeE();
+        StatChangePHealth();
+        StatChangePSpeed();
+        StatChangePJump();
+        StatChangeEHealth();
+        StatChangeESpeed();
+        StatChangeESize();
         
         
         
@@ -44,7 +49,7 @@ public class GameManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(buildIndex);
         }
         if (playerController == null)
         {
@@ -85,17 +90,17 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void StatChangeP()
+  
+   
+
+    public void StatChangePHealth()
     {
-        Debug.Log("StatChangeP");
-        if (playerController == null)
+        
+    }
+    public void StatChangePSpeed()
+    {
+        if (playerController != null)
         {
-            
-        }
-        else
-        {
-
-
             switch (statBlockUI.statsP[1]) // player speeds
             {
                 case 0: playerController.fPlayerSpeed = 0; break;
@@ -103,7 +108,12 @@ public class GameManager : MonoBehaviour
                 case 2: playerController.fPlayerSpeed = 7; break;
                 case 3: playerController.fPlayerSpeed = 10; break;
             }
-
+        }
+    }
+    public void StatChangePJump()
+    {
+        if (playerController != null)
+        {
             switch (statBlockUI.statsP[2]) //player jump heights
             {
                 case 0: playerController.fPlayerJump = 0; break;
@@ -113,20 +123,19 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    public void StatChangeE()
+    
+    
+    public void StatChangeEHealth()
     {
-        Debug.Log("StatChangeE");
-        if (enemyController == null)
+        if (enemyController != null)
         {
-            
-        }
-
-        else
-        {
-            
             enemyController.iEnemyHealth = statBlockUI.statsE[0];
-            
+        }
+    }
+    public void StatChangeESpeed()
+    {
+        if (enemyController != null)
+        {
             switch (statBlockUI.statsE[1]) // enemy speeds
             {
                 case 0: enemyController.fEnemySpeed = 0; break;
@@ -134,23 +143,46 @@ public class GameManager : MonoBehaviour
                 case 2: enemyController.fEnemySpeed = 7 * enemyController.fEnemyDir; break;
                 case 3: enemyController.fEnemySpeed = 10 * enemyController.fEnemyDir; break;
             }
-            
-            
+        }
+    }
+    public void StatChangeESize()
+    {
+        if (enemyController != null)
+        {
             switch (statBlockUI.statsE[2]) //enemy sizes
             {
                 // If enemy grows into wall, movement stops
-                case 1: enemyController.fEnemySize = 1.5f; break;
-                case 2: enemyController.fEnemySize = 3f; break;
-                case 3: enemyController.fEnemySize = 4.5f; break;
-            }
-            
-        }
+                case 1:
+                    enemyController.fEnemySize = 1.5f;
+                    enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y - 0.81f);
+                    break;
+                case 2:
+                    
+                    switch (statBlockUI.prevSize)
+                    {
+                        case 1:
+                            enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y + 0.81f);
+                            enemyController.fEnemySize = 3f;
+                            break;
+                        case 3:
+                            enemyController.fEnemySize = 3f;
+                            enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y - 0.726443f);
+                            break;
+                    }
 
+                    break;
+                case 3:
+                    
+                    enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y + 0.726443f);
+                    enemyController.fEnemySize = 4.5f;
+                    break;
+            }
+        }
     }
 
     public void LoadScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(buildIndex + 1);
     }
 
 

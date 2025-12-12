@@ -19,8 +19,10 @@ TagManager:
   - Completion Audio
   - Background
   - Spike
-  - Spikes
   - Triangle
+  - Lever
+  - Gate
+  - Trigger
   layers:
   - Default
   - TransparentFX

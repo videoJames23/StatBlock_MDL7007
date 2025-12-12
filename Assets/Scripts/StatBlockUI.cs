@@ -19,6 +19,9 @@ public class StatBlockUI : MonoBehaviour
 
     public GameObject holder;
     public GameObject background;
+    private RectTransform holderRT;
+    private Vector2 UIPosition;
+    
     
     public ShowHide showHideJ;
     public ShowHide showHideS;
@@ -29,6 +32,7 @@ public class StatBlockUI : MonoBehaviour
     public int iPointsTotalE;
     public int iPointsLeftE;
     public string sUser;
+    public int prevSize;
 
 
     
@@ -49,6 +53,8 @@ public class StatBlockUI : MonoBehaviour
         
         holder = GameObject.FindGameObjectWithTag("Holder");
         background = GameObject.Find("Background");
+        holderRT = holder.GetComponent<RectTransform>();
+        
         
         GameObject size = GameObject.FindGameObjectWithTag("Size");
         GameObject jump = GameObject.FindGameObjectWithTag("Jump");
@@ -60,22 +66,36 @@ public class StatBlockUI : MonoBehaviour
 
         for (int i = 0; i < valueTexts.Length; i++)
         {
+            
             valueTexts[i].text = " ";
             showHideJ.Hide();
             showHideS.Hide();
             
         }
-
+        
+        Debug.Log(gameManagerScript.buildIndex);
+        if (gameManagerScript.buildIndex == 3)
+        {
+            UIPosition = new Vector2(115, 63f);
+        }
+        else if  (gameManagerScript.buildIndex != 3)
+        {
+            UIPosition = new Vector2(-409.7f, 192.1f);
+        }
+        holderRT.anchoredPosition = UIPosition;
 
 
 
         iPointsLeftP = iPointsTotalP - statsP.Sum();
         iPointsLeftE = iPointsTotalE - statsE.Sum();
-        UpdateUI();
+        
     }
 
     void Update()
     {
+        
+        
+           
         if (playerController == null)
         {
                 
@@ -125,25 +145,57 @@ public class StatBlockUI : MonoBehaviour
                     if (playerController.bInMenuP && iPointsLeftP > 0)
                     {
                         statsP[selectedIndex]++;
-                        
 
                         if (statsP[selectedIndex] > 3)
                         {
                             statsP[selectedIndex] = 3;
                         }
-                        gameManagerScript.StatChangeP();
+                        switch (selectedIndex)
+                        {
+                            case 0:
+                                gameManagerScript.StatChangePHealth();
+                                break;
+                            case 1:
+                                gameManagerScript.StatChangePSpeed();
+                                break;
+                            case 2:
+                                gameManagerScript.StatChangePJump();
+                                break;
+                        }
                         
                         
                     }
                     else if (playerController.bInMenuE && iPointsLeftE > 0)
                     {
+                        
+                        if (selectedIndex == 2)
+                        {
+                            prevSize = statsE[2];
+                        }
+                        
                         statsE[selectedIndex]++;
-
+                        
+                        
+                        
                         if (statsE[selectedIndex] > 3)
                         {
                             statsE[selectedIndex] = 3;
                         }
-                        gameManagerScript.StatChangeE();
+
+                        switch (selectedIndex)
+                        {
+                            case 0:
+                            gameManagerScript.StatChangeEHealth();
+                            break;
+                            case 1:
+                                gameManagerScript.StatChangeESpeed();
+                                break;
+                            case 2:
+                                gameManagerScript.StatChangeESize();
+                                break;
+                        }
+                        
+                        
                     }
 
                     UpdateUI();
@@ -154,7 +206,7 @@ public class StatBlockUI : MonoBehaviour
                     if (playerController.bInMenuP)
                     {
                         statsP[selectedIndex]--;
-
+                        
                         if (statsP[0] < 1)
                         {
                             statsP[0] = 1;
@@ -169,10 +221,26 @@ public class StatBlockUI : MonoBehaviour
                         {
                             statsP[2] = 0;
                         }
-                        gameManagerScript.StatChangeP();
+                        switch (selectedIndex)
+                        {
+                            case 0:
+                                gameManagerScript.StatChangePHealth();
+                                break;
+                            case 1:
+                                gameManagerScript.StatChangePSpeed();
+                                break;
+                            case 2:
+                                gameManagerScript.StatChangePJump();
+                                break;
+                        }
                     }
                     else if (playerController.bInMenuE)
                     {
+                        
+                        if (selectedIndex == 2)
+                        {
+                            prevSize = statsE[2];
+                        }
                         statsE[selectedIndex]--;
 
                         if (statsE[0] < 1)
@@ -189,7 +257,19 @@ public class StatBlockUI : MonoBehaviour
                         {
                             statsE[2] = 1;
                         }
-                        gameManagerScript.StatChangeE();
+                        switch (selectedIndex)
+                        {
+                            case 0:
+                                gameManagerScript.StatChangeEHealth();
+                                break;
+                            case 1:
+                                gameManagerScript.StatChangeESpeed();
+                                break;
+                            case 2:
+                                gameManagerScript.StatChangeESize();
+                                break;
+                        }
+                        
                     }
 
                     UpdateUI();
@@ -204,21 +284,23 @@ public class StatBlockUI : MonoBehaviour
 
     public void UpdateUI()
     {
+        Debug.Log("UpdateUI buildIndex = " + gameManagerScript.buildIndex);
+        
         iPointsLeftP = iPointsTotalP - statsP.Sum();
         iPointsLeftE = iPointsTotalE - statsE.Sum();
         
         if (playerController.bInMenu)
         {
-            holder.GetComponent<RectTransform>().anchoredPosition =
-                new Vector2(-87.6f, -74.2f);
-            holder.GetComponent<RectTransform>().localScale= new Vector3(3f, 3f, 3f);
-            background.GetComponent<RectTransform>().localScale = new Vector3(4.42999983f,2.30865788f,1f);
+                holderRT.anchoredPosition = new Vector2(-87.6f, -74.2f);
+                holderRT.localScale = new Vector3(3f, 3f, 3f);
+                background.GetComponent<RectTransform>().localScale = new Vector3(4.42999983f, 2.30865788f, 1f);
+            
         }
         else if (!playerController.bInMenu)
         {
-            holder.GetComponent<RectTransform>().anchoredPosition =
-                new Vector2(-409.7f, 192.1f);
-            holder.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+            holderRT.anchoredPosition = UIPosition;
+                
+            holderRT.localScale = new Vector3(1f, 1f, 1f);
             background.GetComponent<RectTransform>().localScale = new Vector3(2.82999992f,2.30865788f,1f);
         }
 
@@ -263,5 +345,7 @@ public class StatBlockUI : MonoBehaviour
                 valueTexts[4].text = sUser;
             }
         }
+        Debug.Log("UIPosition = " + UIPosition);
+        Debug.Log("Applying Position = " + holderRT.anchoredPosition);
     }
 }

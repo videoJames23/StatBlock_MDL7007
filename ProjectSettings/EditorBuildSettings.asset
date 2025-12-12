@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Gladiator.unity
     guid: ad8195661dc54624598ab362d76caec3
+  - enabled: 1
+    path: Assets/Scenes/Spikes.unity
+    guid: d6aef60c67196494ea84e31cc71d57aa
+  - enabled: 1
+    path: Assets/Scenes/Controller.unity
+    guid: 6ac73623e9c66264894570c037a766ab
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
             audioSource = completionAudio.GetComponent<AudioSource>();
         }
 
-        GameObject spikes = GameObject.FindGameObjectWithTag("Spikes");
+        
         
         Physics2D.IgnoreLayerCollision(10, 11, false);
     }
@@ -85,12 +85,14 @@ public class PlayerController : MonoBehaviour
         if (bIsTouchingStatBlockE && Input.GetKeyDown(KeyCode.E) && !bInMenuE)
         {
             bInMenuE = true;
+            enemyController.fPrevDir = enemyController.fEnemyDir;
             MenuChecks();
         }
         
         else if (bIsTouchingStatBlockE && Input.GetKeyDown(KeyCode.E) && bInMenuE && statBlockUI.iPointsLeftE == 0)
         {
             bInMenuE = false;
+            enemyController.fEnemyDir = enemyController.fPrevDir;
             MenuChecks();
         }
         
@@ -210,9 +212,12 @@ public class PlayerController : MonoBehaviour
             statBlockUI.iPointsTotalP--;
             statBlockUI.iPointsLeftP = statBlockUI.iPointsTotalP - statBlockUI.statsP.Sum();
             
+            gameManagerScript.StatChangePHealth();
             bInMenuP = true;
             statBlockUI.UpdateUI();
             bInMenuP = false;
+            statBlockUI.UpdateUI();
+            
             
             // I-frames
             if (iPlayerHealth > 0)

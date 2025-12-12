@@ -19,6 +19,7 @@ public class EnemyController : MonoBehaviour
     public float fEnemySpeed;
     public float fEnemySize;
     public float fEnemyDir;
+    public float fPrevDir;
     public int iDamage;
     
     private StatBlockUI statBlockUI;
@@ -129,6 +130,18 @@ public class EnemyController : MonoBehaviour
             
 
         }
+
+        if (other.gameObject.CompareTag("Spike"))
+        {
+            TakeDamage(iDamage);
+            
+            fEnemyDir *= -1;
+                
+            if (iEnemyHealth > 0)
+            {
+                StartCoroutine(Invulnerability());
+            }
+        }
     }
     void TakeDamage(int damage)
     {
@@ -142,11 +155,14 @@ public class EnemyController : MonoBehaviour
         statBlockUI.iPointsTotalE--;
         statBlockUI.iPointsLeftE = statBlockUI.iPointsTotalE - statBlockUI.statsE.Sum();
         
-        gameManagerScript.StatChangeE();
+        gameManagerScript.StatChangeEHealth();
 
+        
         playerController.bInMenuE = true;
         statBlockUI.UpdateUI();
-        playerController.bInMenuE = false;    
+        playerController.bInMenuE = false;
+        statBlockUI.UpdateUI();
+        
         
 
         // I-frames
