@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 3849892117686569016}
   - component: {fileID: 286655786788398356}
   m_Layer: 5
-  m_Name: Jump
+  m_Name: Jump Text
   m_TagString: Jump
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -793,7 +793,7 @@ GameObject:
   - component: {fileID: 7158974259706381970}
   - component: {fileID: 2756129912123725912}
   m_Layer: 5
-  m_Name: Speed
+  m_Name: Speed Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -929,7 +929,7 @@ GameObject:
   - component: {fileID: 4593910461455516963}
   - component: {fileID: 7215422631407804009}
   m_Layer: 5
-  m_Name: Health
+  m_Name: Health Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1066,7 +1066,7 @@ GameObject:
   - component: {fileID: 2493248970291114916}
   - component: {fileID: 7318924771549907295}
   m_Layer: 5
-  m_Name: Size
+  m_Name: Size Text
   m_TagString: Size
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

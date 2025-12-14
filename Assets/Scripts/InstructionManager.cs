@@ -21,10 +21,26 @@ public class InstructionManager : MonoBehaviour
         text3 = GameObject.FindGameObjectWithTag("Text3");
         text4 = GameObject.FindGameObjectWithTag("Text4");
 
-        text1TMP = text1.GetComponent<TMP_Text>();
-        text2TMP = text2.GetComponent<TMP_Text>();
-        text3TMP = text3.GetComponent<TMP_Text>();
-        text4TMP = text4.GetComponent<TMP_Text>();
+        if (text1 != null)
+        {
+            text1TMP = text1.GetComponent<TMP_Text>();
+        }
+
+        if (text2 != null)
+        {
+            text2TMP = text2.GetComponent<TMP_Text>();
+        }
+
+        if (text3 != null)
+        {
+            text3TMP = text3.GetComponent<TMP_Text>();
+        }
+
+        if (text4 != null)
+        {
+            text4TMP = text4.GetComponent<TMP_Text>();
+        }
+        
     }
 
     public void StartFadeIn(string area)

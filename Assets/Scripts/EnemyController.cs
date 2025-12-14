@@ -136,7 +136,7 @@ public class EnemyController : MonoBehaviour
         if (other.gameObject.CompareTag("Spike"))
         {
             TakeDamage(iDamage);
-            
+            playerController.damageSource.Play();
             fEnemyDir *= -1;
                 
             if (iEnemyHealth > 0)

@@ -37,7 +37,11 @@ public class PlayerController : MonoBehaviour
     private EnemyController enemyController;
     private SpriteRenderer cSpriteRenderer;
     
-    private AudioSource audioSource;
+    private AudioSource completionSource;
+    private AudioSource jumpSource;
+    public AudioSource damageSource;
+    private AudioSource openSource;
+    private AudioSource closeSource;
     
 
 
@@ -65,7 +69,30 @@ public class PlayerController : MonoBehaviour
         GameObject completionAudio = GameObject.FindGameObjectWithTag("Completion Audio");
         if (completionAudio != null)
         {
-            audioSource = completionAudio.GetComponent<AudioSource>();
+            completionSource = completionAudio.GetComponent<AudioSource>();
+        }
+        GameObject jumpAudio = GameObject.Find("Jump");
+        if (jumpAudio != null)
+        {
+            jumpSource = jumpAudio.GetComponent<AudioSource>();
+        }
+        
+        GameObject damageAudio = GameObject.Find("Damage");
+        if (damageAudio != null)
+        {
+            damageSource = damageAudio.GetComponent<AudioSource>();
+        }
+        
+        GameObject openAudio = GameObject.Find("Open");
+        if (openAudio != null)
+        {
+            openSource = openAudio.GetComponent<AudioSource>();
+        }
+        
+        GameObject closeAudio = GameObject.Find("Close");
+        if (closeAudio != null)
+        {
+            closeSource = closeAudio.GetComponent<AudioSource>();
         }
         
         GameObject instructionManager = GameObject.FindGameObjectWithTag("Instruction Manager");
@@ -85,12 +112,21 @@ public class PlayerController : MonoBehaviour
         if (bIsTouchingStatBlockP && Input.GetKeyDown(KeyCode.E))
         {
             bInMenuP = !bInMenuP;
+            if (bInMenuP)
+            {
+                openSource.Play();
+            }
+            else if (!bInMenuP)
+            {
+                closeSource.Play();
+            }
             MenuChecks();
         }
         
         if (bIsTouchingStatBlockE && Input.GetKeyDown(KeyCode.E) && !bInMenuE)
         {
             bInMenuE = true;
+            openSource.Play();
             enemyController.fPrevDir = enemyController.fEnemyDir;
             MenuChecks();
         }
@@ -98,6 +134,7 @@ public class PlayerController : MonoBehaviour
         else if (bIsTouchingStatBlockE && Input.GetKeyDown(KeyCode.E) && bInMenuE && statBlockUI.iPointsLeftE == 0)
         {
             bInMenuE = false;
+            closeSource.Play();
             enemyController.fEnemyDir = enemyController.fPrevDir;
             MenuChecks();
         }
@@ -121,10 +158,78 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        jumpSource.Play();
         playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, fPlayerJump);
     }
+    
 
-
+    void MenuChecks()
+    {
+        if (bInMenuP || bInMenuE)
+        {
+            bInMenu = true;
+        }
+        
+        else if (!bInMenuP && !bInMenuE)
+        {
+            bInMenu = false;
+        }
+        statBlockUI.UpdateUI();
+    }
+    
+    
+    // Damage/I-Frames
+    public void TakeDamage(int damage)
+    {
+        if (!bCanTakeDamage)
+        {
+            return;
+        }
+        
+        bCanTakeDamage = false;
+        
+        damageSource.Play();
+        
+        iPlayerHealth -= damage;
+        statBlockUI.statsP[0]--;
+            
+        statBlockUI.iPointsTotalP--;
+        statBlockUI.iPointsLeftP = statBlockUI.iPointsTotalP - statBlockUI.statsP.Sum();
+            
+        gameManagerScript.StatChangePHealth();
+        bInMenuP = true;
+        statBlockUI.UpdateUI();
+        bInMenuP = false;
+        statBlockUI.UpdateUI();
+            
+            
+        // I-frames
+        if (iPlayerHealth > 0)
+        {
+            StartCoroutine(Invulnerability());
+        }
+            
+        else if (iPlayerHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+    private IEnumerator Invulnerability()
+    {
+        Physics2D.IgnoreLayerCollision(10, 11, true);
+        
+      
+        for (int i = 0; i < iNumberOfFlashes; i++)
+        {
+            cSpriteRenderer.color = new Color(0, 0.25f, 1, 0.5f);
+            yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
+            cSpriteRenderer.color = Color.blue;
+            yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
+        }
+        
+        Physics2D.IgnoreLayerCollision(10, 11, false);
+        bCanTakeDamage = true;
+    }
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Spike"))
@@ -137,7 +242,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Finish"))
         {  
             Debug.Log("Level Complete!");
-            audioSource.Play();
+            completionSource.Play();
             yield return new WaitForSeconds(4);
             gameManagerScript.LoadScene();
         }
@@ -222,70 +327,5 @@ public class PlayerController : MonoBehaviour
     }
     
 
-    void MenuChecks()
-    {
-        if (bInMenuP || bInMenuE)
-        {
-            bInMenu = true;
-        }
-        
-        else if (!bInMenuP && !bInMenuE)
-        {
-            bInMenu = false;
-        }
-        statBlockUI.UpdateUI();
-    }
-    
-    
-    // Damage/I-Frames
-    public void TakeDamage(int damage)
-    {
-        if (!bCanTakeDamage)
-        {
-            return;
-        }
-        
-        bCanTakeDamage = false;
-            
-        iPlayerHealth -= damage;
-        statBlockUI.statsP[0]--;
-            
-        statBlockUI.iPointsTotalP--;
-        statBlockUI.iPointsLeftP = statBlockUI.iPointsTotalP - statBlockUI.statsP.Sum();
-            
-        gameManagerScript.StatChangePHealth();
-        bInMenuP = true;
-        statBlockUI.UpdateUI();
-        bInMenuP = false;
-        statBlockUI.UpdateUI();
-            
-            
-        // I-frames
-        if (iPlayerHealth > 0)
-        {
-            StartCoroutine(Invulnerability());
-        }
-            
-        else if (iPlayerHealth <= 0)
-        {
-            Destroy(gameObject);
-        }
-    }
-    private IEnumerator Invulnerability()
-    {
-        Physics2D.IgnoreLayerCollision(10, 11, true);
-        
-      
-        for (int i = 0; i < iNumberOfFlashes; i++)
-        {
-            cSpriteRenderer.color = new Color(0, 0.25f, 1, 0.5f);
-            yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
-            cSpriteRenderer.color = Color.blue;
-            yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
-        }
-        
-        Physics2D.IgnoreLayerCollision(10, 11, false);
-        bCanTakeDamage = true;
-    }
-
 }
+

@@ -34,7 +34,11 @@ public class StatBlockUI : MonoBehaviour
     public string sUser;
     public int prevSize;
 
-
+    private AudioSource indexSource;
+    private AudioSource upSource;
+    private AudioSource downSource;
+    
+    
     
     void Start()
     {
@@ -60,23 +64,33 @@ public class StatBlockUI : MonoBehaviour
         GameObject jump = GameObject.FindGameObjectWithTag("Jump");
         showHideS = size.GetComponent<ShowHide>();
         showHideJ = jump.GetComponent<ShowHide>();
+        
+        
+        
+        GameObject upAudio = GameObject.Find("Up");
+        if (upAudio != null)
+        {
+            upSource = upAudio.GetComponent<AudioSource>();
+        }
+        
+        GameObject downAudio = GameObject.Find("Down");
+        if (downAudio != null)
+        {
+            downSource = downAudio.GetComponent<AudioSource>();
+        }
+        
+        GameObject indexAudio = GameObject.Find("Index");
+        if (indexAudio != null)
+        {
+            indexSource = indexAudio.GetComponent<AudioSource>();
+        }
 
         selectedIndex = 0;
 
         holder.SetActive(false);
-        // for (int i = 0; i < valueTexts.Length; i++)
-        // {
-        //     
-        //     valueTexts[i].text = " ";
-        //     showHideJ.Hide();
-        //     showHideS.Hide();
-        //     
-        // }
+        
         UIPosition = holderRT.anchoredPosition;
         
-
-
-
         iPointsLeftP = iPointsTotalP - statsP.Sum();
         iPointsLeftE = iPointsTotalE - statsE.Sum();
         
@@ -87,12 +101,7 @@ public class StatBlockUI : MonoBehaviour
         
         
            
-        if (playerController == null)
-        {
-                
-        }
-
-        else
+        if (playerController != null)
         {
             if (playerController.bInMenu)
             {
@@ -102,6 +111,7 @@ public class StatBlockUI : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
                 {
                     selectedIndex--;
+                    indexSource.Play();
                     if (selectedIndex < 0 && playerController.bInMenuP)
                     {
                         selectedIndex = statsP.Length - 1;
@@ -118,6 +128,7 @@ public class StatBlockUI : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
                 {
                     selectedIndex++;
+                    indexSource.Play();
                     if (selectedIndex >= statsP.Length && playerController.bInMenuP)
                     {
                         selectedIndex = 0;
@@ -136,6 +147,7 @@ public class StatBlockUI : MonoBehaviour
                     if (playerController.bInMenuP && iPointsLeftP > 0)
                     {
                         statsP[selectedIndex]++;
+                        upSource.Play();
 
                         if (statsP[selectedIndex] > 3)
                         {
@@ -165,6 +177,7 @@ public class StatBlockUI : MonoBehaviour
                         }
                         
                         statsE[selectedIndex]++;
+                        upSource.Play();
                         
                         
                         
@@ -197,6 +210,7 @@ public class StatBlockUI : MonoBehaviour
                     if (playerController.bInMenuP)
                     {
                         statsP[selectedIndex]--;
+                        downSource.Play();
                         
                         if (statsP[0] < 1)
                         {
@@ -233,6 +247,7 @@ public class StatBlockUI : MonoBehaviour
                             prevSize = statsE[2];
                         }
                         statsE[selectedIndex]--;
+                        downSource.Play();
 
                         if (statsE[0] < 1)
                         {
