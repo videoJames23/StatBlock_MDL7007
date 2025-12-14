@@ -63,15 +63,15 @@ public class StatBlockUI : MonoBehaviour
 
         selectedIndex = 0;
 
-
-        for (int i = 0; i < valueTexts.Length; i++)
-        {
-            
-            valueTexts[i].text = " ";
-            showHideJ.Hide();
-            showHideS.Hide();
-            
-        }
+        holder.SetActive(false);
+        // for (int i = 0; i < valueTexts.Length; i++)
+        // {
+        //     
+        //     valueTexts[i].text = " ";
+        //     showHideJ.Hide();
+        //     showHideS.Hide();
+        //     
+        // }
         UIPosition = holderRT.anchoredPosition;
         
 
@@ -275,7 +275,7 @@ public class StatBlockUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        
+        holder.SetActive(true);
         iPointsLeftP = iPointsTotalP - statsP.Sum();
         iPointsLeftE = iPointsTotalE - statsE.Sum();
         

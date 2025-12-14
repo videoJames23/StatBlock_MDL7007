@@ -48,12 +48,8 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(buildIndex);
         }
-        if (playerController == null)
-        {
-                
-        }
-
-        else
+        
+        if (playerController != null)
         {
             if (playerController.bInMenu)
             {
@@ -151,7 +147,11 @@ public class GameManager : MonoBehaviour
                 // If enemy grows into wall, movement stops
                 case 1:
                     enemyController.fEnemySize = 1.5f;
-                    enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y - 0.81f);
+                    if (statBlockUI.prevSize != 1)
+                    {
+                        enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y - 0.81f);
+                    }
+
                     break;
                 case 2:
                     
@@ -169,9 +169,12 @@ public class GameManager : MonoBehaviour
 
                     break;
                 case 3:
-                    
-                    enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y + 0.726443f);
-                    enemyController.fEnemySize = 4.5f;
+                    if (statBlockUI.prevSize != 3)
+                    {
+                        enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y + 0.726443f);
+                        enemyController.fEnemySize = 4.5f;
+                    }
+
                     break;
             }
         }

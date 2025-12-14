@@ -4,151 +4,101 @@ using UnityEngine;
 
 public class InstructionManager : MonoBehaviour
 {
-    private GameObject controls;
-    private bool inControlsArea;
+    private GameObject text1;
+    private GameObject text2;
+    private GameObject text3;
+    private GameObject text4;
 
-    private GameObject health;
-    private bool inHealthArea;
+    private TMP_Text text1TMP;
+    private TMP_Text text2TMP;
+    private TMP_Text text3TMP;
+    private TMP_Text text4TMP;
 
-    private GameObject jump;
-    private bool inJumpArea;
-
-    private GameObject speed;
-    private bool inSpeedArea;
-
-    private GameObject player;
-
-    private Rigidbody2D playerRb;
-    private int fadeTime;
-    
-    private TMP_Text controlsText;
-    private TMP_Text healthText;
-    private TMP_Text jumpText;
-    private TMP_Text speedText;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        controls = GameObject.FindGameObjectWithTag("ControlsText");
-        health = GameObject.FindGameObjectWithTag("HealthText");
-        jump = GameObject.FindGameObjectWithTag("JumpText");
-        speed = GameObject.FindGameObjectWithTag("SpeedText");
-        
-        controlsText = controls.GetComponent<TMP_Text>();
-        healthText = health.GetComponent<TMP_Text>();
-        jumpText = jump.GetComponent<TMP_Text>();
-        speedText = speed.GetComponent<TMP_Text>();
+        text1 = GameObject.FindGameObjectWithTag("Text1");
+        text2 = GameObject.FindGameObjectWithTag("Text2");
+        text3 = GameObject.FindGameObjectWithTag("Text3");
+        text4 = GameObject.FindGameObjectWithTag("Text4");
 
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerRb = player.GetComponent<Rigidbody2D>();
+        text1TMP = text1.GetComponent<TMP_Text>();
+        text2TMP = text2.GetComponent<TMP_Text>();
+        text3TMP = text3.GetComponent<TMP_Text>();
+        text4TMP = text4.GetComponent<TMP_Text>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
 
     public void StartFadeIn(string area)
     {
+        
         StartCoroutine(FadeIn(area));
     }
-    
+
     public void StartFadeOut(string area)
     {
-        string a = area;
-        StartCoroutine(FadeOut(a));
+        
+        StartCoroutine(FadeOut(area));
     }
 
-    
-
+    // ReSharper disable Unity.PerformanceAnalysis
     IEnumerator FadeIn(string area)
     {
+        Debug.Log("FadeIn called");
         switch (area)
         {
-            case "Controls":
-                for (float f = 0; f < 255; f += 5)
-                {
-                    controlsText.color = new Color(255, 255, 255, f/255);
-                    yield return new WaitForSeconds(5/255);
+            case "text1":
+                yield return FadeText(text1TMP, 0f, 1f);
+                break;
 
-                }
-                
+            case "text2":
+                yield return FadeText(text2TMP, 0f, 1f);
                 break;
-            
-            case "Health":
-                
-                for (float f = 0; f < 255; f += 5)
-                {
-                    healthText.color = new Color(255, 255, 255, f/255);
-                    yield return new WaitForSeconds(5/255);
-                }
+
+            case "text3":
+                yield return FadeText(text3TMP, 0f, 1f);
                 break;
-            
-            case "Jump":
-                
-                break; 
-            
-            case "Speed":
-                
+
+            case "text4":
+                yield return FadeText(text4TMP, 0f, 1f);
                 break;
         }
+        StopCoroutine(FadeIn(area));
     }
+
     IEnumerator FadeOut(string area)
     {
         switch (area)
         {
-            case "Controls":
-                for (float f = 255; f < 0; f -= 5)
-                {
-                    controlsText.color = new Color(255, 255, 255, f/255);
-                    yield return new WaitForSeconds(5/255);
-
-                }
-                
+            case "text1":
+                yield return FadeText(text1TMP, 1f, 0f);
                 break;
-            
-            case "Health":
-                
-                for (float f = 255; f < 0; f -= 5)
-                {
-                    healthText.color = new Color(255, 255, 255, f/255);
-                    yield return new WaitForSeconds(5/255);
 
-                }
+            case "text2":
+                yield return FadeText(text2TMP, 1f, 0f);
                 break;
-            
-            case "Jump":
-                
-                break; 
-            
-            case "Speed":
-                
+
+            case "text3":
+                yield return FadeText(text3TMP, 1f, 0f);
+                break;
+
+            case "text4":
+                yield return FadeText(text4TMP, 1f, 0f);
                 break;
         }
+        StopCoroutine(FadeOut(area));
     }
 
-    public void FadeOut(string area)
+    IEnumerator FadeText(TMP_Text text, float start, float end)
     {
-    //     switch (area)
-    //     {
-    //         case "Controls":
-    //             controls.GetComponent<Animator>().SetTrigger("FadeOut");
-    //             break;
-    //         
-    //         case "Health":
-    //             health.GetComponent<Animator>().SetTrigger("FadeOut");
-    //             break;
-    //         
-    //         case "Jump":
-    //             jump.GetComponent<Animator>().SetTrigger("FadeOut");
-    //             break; 
-    //         
-    //         case "Speed":
-    //             speed.GetComponent<Animator>().SetTrigger("FadeOut");
-    //             break;
-    //     }
+        float t = 0f;
+
+        while (t < 1f)
+        {
+            float a = Mathf.Lerp(start, end, t);
+            text.color = new Color(text.color.r, text.color.g, text.color.b, a);
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        text.color = new Color(text.color.r, text.color.g, text.color.b, end);
     }
 }

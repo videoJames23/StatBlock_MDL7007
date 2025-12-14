@@ -141,27 +141,21 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(4);
             gameManagerScript.LoadScene();
         }
-        else if (other.gameObject.CompareTag("ControlsText"))
+        else if (other.gameObject.CompareTag("Text1"))
         {
-            instructionManagerScript.StartFadeIn("controls");
-            instructionManagerScript.FadeOut("health");
+            instructionManagerScript.StartFadeIn("text1");
         }
-        else if (other.gameObject.CompareTag("HealthText"))
+        else if (other.gameObject.CompareTag("Text2"))
         {
-            instructionManagerScript.FadeOut("controls");
-            instructionManagerScript.StartFadeIn("health");
-            instructionManagerScript.FadeOut("jump");
+            instructionManagerScript.StartFadeIn("text2");
         }
-        else if (other.gameObject.CompareTag("JumpText"))
+        else if (other.gameObject.CompareTag("Text3"))
         {
-            instructionManagerScript.FadeOut("health");
-            instructionManagerScript.StartFadeIn("jump");
-            instructionManagerScript.FadeOut("speed");
+            instructionManagerScript.StartFadeIn("text3");
         }
-        else if (other.gameObject.CompareTag("SpeedText"))
+        else if (other.gameObject.CompareTag("Text4"))
         {
-            instructionManagerScript.FadeOut("jump");
-            instructionManagerScript.StartFadeIn("speed");
+            instructionManagerScript.StartFadeIn("text4");
         }
         
     }
@@ -207,7 +201,26 @@ public class PlayerController : MonoBehaviour
         {
             bIsTouchingStatBlockE = false;
         }
+        
+        else if (other.gameObject.CompareTag("Text1"))
+        {
+            instructionManagerScript.StartFadeOut("text1");
+        }
+        else if (other.gameObject.CompareTag("Text2"))
+        {
+            instructionManagerScript.StartFadeOut("text2");
+        }
+        else if (other.gameObject.CompareTag("Text3"))
+        {
+            instructionManagerScript.StartFadeOut("text3");
+        }
+        else if (other.gameObject.CompareTag("Text4"))
+        {
+            instructionManagerScript.StartFadeOut("text4");
+        }
+        
     }
+    
 
     void MenuChecks()
     {
@@ -226,38 +239,38 @@ public class PlayerController : MonoBehaviour
     
     // Damage/I-Frames
     public void TakeDamage(int damage)
+    {
+        if (!bCanTakeDamage)
         {
-            if (!bCanTakeDamage)
-            {
-                return;
-            }
-        
-            bCanTakeDamage = false;
-            
-            iPlayerHealth -= damage;
-            statBlockUI.statsP[0]--;
-            
-            statBlockUI.iPointsTotalP--;
-            statBlockUI.iPointsLeftP = statBlockUI.iPointsTotalP - statBlockUI.statsP.Sum();
-            
-            gameManagerScript.StatChangePHealth();
-            bInMenuP = true;
-            statBlockUI.UpdateUI();
-            bInMenuP = false;
-            statBlockUI.UpdateUI();
-            
-            
-            // I-frames
-            if (iPlayerHealth > 0)
-            {
-                StartCoroutine(Invulnerability());
-            }
-            
-            else if (iPlayerHealth <= 0)
-            {
-                Destroy(gameObject);
-            }
+            return;
         }
+        
+        bCanTakeDamage = false;
+            
+        iPlayerHealth -= damage;
+        statBlockUI.statsP[0]--;
+            
+        statBlockUI.iPointsTotalP--;
+        statBlockUI.iPointsLeftP = statBlockUI.iPointsTotalP - statBlockUI.statsP.Sum();
+            
+        gameManagerScript.StatChangePHealth();
+        bInMenuP = true;
+        statBlockUI.UpdateUI();
+        bInMenuP = false;
+        statBlockUI.UpdateUI();
+            
+            
+        // I-frames
+        if (iPlayerHealth > 0)
+        {
+            StartCoroutine(Invulnerability());
+        }
+            
+        else if (iPlayerHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
     private IEnumerator Invulnerability()
     {
         Physics2D.IgnoreLayerCollision(10, 11, true);

@@ -29,6 +29,10 @@ TagManager:
   - JumpText
   - SpeedText
   - Instruction Manager
+  - Text1
+  - Text2
+  - Text3
+  - Text4
   layers:
   - Default
   - TransparentFX
