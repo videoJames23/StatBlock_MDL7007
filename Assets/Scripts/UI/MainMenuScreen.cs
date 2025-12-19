@@ -24,7 +24,7 @@ namespace UI
             {
                 upSource = upAudio.GetComponent<AudioSource>();
             }
-
+            
             buttonStart.clicked += () => SceneManager.LoadScene(1);
             
             buttonLevelSelect.clicked += () => Destroy(gameObject);

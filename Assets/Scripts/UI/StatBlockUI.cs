@@ -37,6 +37,8 @@ public class StatBlockUI : MonoBehaviour
     private AudioSource indexSource;
     private AudioSource upSource;
     private AudioSource downSource;
+    public AudioSource errorSource;
+    
     
     
     
@@ -79,6 +81,14 @@ public class StatBlockUI : MonoBehaviour
         {
             indexSource = indexAudio.GetComponent<AudioSource>();
         }
+        
+        GameObject errorAudio = GameObject.Find("Error");
+        if (errorAudio != null)
+        {
+            errorSource = errorAudio.GetComponent<AudioSource>();
+        }
+        
+        
 
         selectedIndex = 0;
 
@@ -139,64 +149,83 @@ public class StatBlockUI : MonoBehaviour
                 // change value
                 if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
                 {
-                    upSource.Play();
-                    if (playerController.bInMenuP && iPointsLeftP > 0)
+                    
+                    if (playerController.bInMenuP)
                     {
-                        statsP[selectedIndex]++;
+                        if (iPointsLeftP > 0)
+                        {
+                            statsP[selectedIndex]++;
+                            upSource.Play();
+                            if (statsP[selectedIndex] > 3)
+                            {
+                                errorSource.Play();
+                                statsP[selectedIndex] = 3;
+                            }
 
-                        if (statsP[selectedIndex] > 3)
-                        {
-                            statsP[selectedIndex] = 3;
+                            switch (selectedIndex)
+                            {
+                                case 0:
+                                    gameManagerScript.StatChangePHealth();
+                                    break;
+                                case 1:
+                                    gameManagerScript.StatChangePSpeed();
+                                    break;
+                                case 2:
+                                    gameManagerScript.StatChangePJump();
+                                    break;
+                            }
                         }
-                        switch (selectedIndex)
+                        else if (iPointsLeftP == 0)
                         {
-                            case 0:
-                                gameManagerScript.StatChangePHealth();
-                                break;
-                            case 1:
-                                gameManagerScript.StatChangePSpeed();
-                                break;
-                            case 2:
-                                gameManagerScript.StatChangePJump();
-                                break;
+                            errorSource.Play();
                         }
-                        
+
+
+                    }
+                    else if (playerController.bInMenuE)
+                    {
+                        if (iPointsLeftE > 0)
+                        {
+
+
+                            if (selectedIndex == 2)
+                            {
+                                iPrevSize = statsE[2];
+                            }
+
+                            statsE[selectedIndex]++;
+                            upSource.Play();
+
+
+
+                            if (statsE[selectedIndex] > 3)
+                            {
+                                errorSource.Play();
+                                statsE[selectedIndex] = 3;
+                            }
+
+                            switch (selectedIndex)
+                            {
+                                case 0:
+                                    gameManagerScript.StatChangeEHealth();
+                                    break;
+                                case 1:
+                                    gameManagerScript.StatChangeESpeed();
+                                    break;
+                                case 2:
+                                    gameManagerScript.StatChangeESize();
+                                    break;
+                            }
+
+
+                        }
+                        else if (iPointsLeftE == 0)
+                        {
+                            errorSource.Play();
+                        }
+
                         
                     }
-                    else if (playerController.bInMenuE && iPointsLeftE > 0)
-                    {
-                        
-                        if (selectedIndex == 2)
-                        {
-                            iPrevSize = statsE[2];
-                        }
-                        
-                        statsE[selectedIndex]++;
-                        
-                        
-                        
-                        
-                        if (statsE[selectedIndex] > 3)
-                        {
-                            statsE[selectedIndex] = 3;
-                        }
-
-                        switch (selectedIndex)
-                        {
-                            case 0:
-                            gameManagerScript.StatChangeEHealth();
-                            break;
-                            case 1:
-                                gameManagerScript.StatChangeESpeed();
-                                break;
-                            case 2:
-                                gameManagerScript.StatChangeESize();
-                                break;
-                        }
-                        
-                        
-                    }
-
                     UpdateUI();
                 }
 
@@ -209,16 +238,19 @@ public class StatBlockUI : MonoBehaviour
                         
                         if (statsP[0] < 1)
                         {
+                            errorSource.Play();
                             statsP[0] = 1;
                         }
 
                         else if (statsP[1] < 0)
                         {
+                            errorSource.Play();
                             statsP[1] = 0;
                         }
 
                         else if (statsP[2] < 0)
                         {
+                            errorSource.Play();
                             statsP[2] = 0;
                         }
                         switch (selectedIndex)
@@ -246,16 +278,19 @@ public class StatBlockUI : MonoBehaviour
                         
                         if (statsE[0] < 1)
                         {
+                            errorSource.Play();
                             statsE[0] = 1;
                         }
 
                         else if (statsE[1] < 0)
                         {
+                            errorSource.Play();
                             statsE[1] = 0;
                         }
 
                         else if (statsE[2] < 1)
                         {
+                            errorSource.Play();
                             statsE[2] = 1;
                         }
                         switch (selectedIndex)

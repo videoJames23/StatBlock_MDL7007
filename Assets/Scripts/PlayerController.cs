@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
         {  
             Debug.Log("Level Complete!");
             completionSource.Play();
-            yield return new WaitForSeconds(4);
+            yield return new WaitForSeconds(1.8f);
             gameManagerScript.LoadScene();
         }
         else if (instructionManagerScript != null)

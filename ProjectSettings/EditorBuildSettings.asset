@@ -6,13 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Main Menu.unity
+    path: Assets/Scenes/MenuCredits/Main Menu.unity
     guid: 846abfb03ea7bfe4c8075157cd85fc7a
   - enabled: 1
-    path: Assets/Scenes/Tutorial.unity
+    path: Assets/Scenes/Tutorials/Tutorial.unity
     guid: 4ece55238c8b05442948803f31c80d89
   - enabled: 1
-    path: Assets/Scenes/Tutorial Enemy.unity
+    path: Assets/Scenes/Tutorials/Tutorial Enemy.unity
     guid: f37cef52ffafefe4388d71f842f44912
   - enabled: 1
     path: Assets/Scenes/Boxed In.unity
@@ -27,7 +27,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Controller.unity
     guid: 6ac73623e9c66264894570c037a766ab
   - enabled: 1
-    path: Assets/Scenes/Credits.unity
+    path: Assets/Scenes/MenuCredits/Credits.unity
     guid: 7a028eea3fdb7fa46b8404a9d0599ca2
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

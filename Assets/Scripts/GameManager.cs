@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         {
             closeSource = closeAudio.GetComponent<AudioSource>();
         }
+        
 
         StatChangePHealth();
         StatChangePSpeed();
@@ -68,6 +69,7 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(iBuildIndex);
         }
+        
         if (playerController.bIsTouchingStatBlockP && Input.GetKeyDown(KeyCode.E))
         {
             playerController.bInMenuP = !playerController.bInMenuP;
@@ -82,21 +84,32 @@ public class GameManager : MonoBehaviour
             MenuChecks();
         }
         
-        if (playerController.bIsTouchingStatBlockE && Input.GetKeyDown(KeyCode.E) && !playerController.bInMenuE)
+        if (playerController.bIsTouchingStatBlockE && Input.GetKeyDown(KeyCode.E))
         {
-            playerController.bInMenuE = true;
-            openSource.Play();
-            enemyController.fPrevDir = enemyController.fEnemyDir;
-            MenuChecks();
+            if (!playerController.bInMenuE)
+            {
+                playerController.bInMenuE = true;
+                openSource.Play();
+                enemyController.fPrevDir = enemyController.fEnemyDir;
+                MenuChecks();
+            }
+            else if (playerController.bInMenuE)
+            {
+                if (statBlockUI.iPointsLeftE == 0)
+                {
+                    playerController.bInMenuE = false;
+                    closeSource.Play();
+                    enemyController.fEnemyDir = enemyController.fPrevDir;
+                    MenuChecks();
+                }
+                else if (statBlockUI.iPointsLeftE > 0)
+                {
+                    statBlockUI.errorSource.Play();
+                }
+                
+            }
         }
         
-        else if (playerController.bIsTouchingStatBlockE && Input.GetKeyDown(KeyCode.E) && playerController.bInMenuE && statBlockUI.iPointsLeftE == 0)
-        {
-            playerController.bInMenuE = false;
-            closeSource.Play();
-            enemyController.fEnemyDir = enemyController.fPrevDir;
-            MenuChecks();
-        }
         if (playerController != null)
         {
             if (playerController.bInMenu)
