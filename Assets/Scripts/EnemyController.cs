@@ -56,10 +56,11 @@ public class EnemyController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {   
+    
+
+    private void FixedUpdate()
+    {
         enemyRb.linearVelocity = new Vector2(fEnemySpeed * fEnemyDir, enemyRb.linearVelocity.y);
-        enemyRb.transform.localScale = new Vector2(fEnemySize, fEnemySize);
     }
 
     private void OnCollisionEnter2D(Collision2D other)

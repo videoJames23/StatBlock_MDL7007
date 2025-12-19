@@ -16,17 +16,17 @@ public class PlayerController : MonoBehaviour
     public float fPlayerSpeed;
     public float fPlayerJump;
     
-    
-    
     public bool bIsTouchingStatBlockP;
     public bool bIsTouchingStatBlockE;
     public bool bInMenu;
     public bool bInMenuP;
     public bool bInMenuE;
+    
     private bool bIsGrounded;
     private bool bCanTakeDamage = true;
 
-    
+    public float acceleration = 12f;
+    public float airControlMultiplier = 0.5f;
     
     private float fIFramesDuration = 1;
     private int iNumberOfFlashes = 5;
@@ -59,26 +59,26 @@ public class PlayerController : MonoBehaviour
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
         
         GameObject jumpAudio = GameObject.Find("Jump");
-        if (jumpAudio != null)
+        if (jumpAudio)
         {
             jumpSource = jumpAudio.GetComponent<AudioSource>();
         }
         
         GameObject damageAudio = GameObject.Find("Damage");
-        if (damageAudio != null)
+        if (damageAudio)
         {
             damageSource = damageAudio.GetComponent<AudioSource>();
         }
         
         GameObject completionAudio = GameObject.FindGameObjectWithTag("Completion Audio");
-        if (completionAudio != null)
+        if (completionAudio)
         {
             completionSource = completionAudio.GetComponent<AudioSource>();
         }
         
         
         GameObject instructionManager = GameObject.FindGameObjectWithTag("Instruction Manager");
-        if (instructionManager != null)
+        if (instructionManager)
         {
             instructionManagerScript = instructionManager.GetComponent<InstructionManager>();
         }
@@ -91,8 +91,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         
-        playerRb.linearVelocity = new Vector2(Input.GetAxis("Horizontal") * fPlayerSpeed, playerRb.linearVelocity.y);
-        
         
         if (Input.GetKeyDown(KeyCode.W) && bIsGrounded && !bInMenu)
         {
@@ -100,6 +98,21 @@ public class PlayerController : MonoBehaviour
         
         }
         
+    }
+
+    void FixedUpdate()
+    {
+
+        if (!bInMenu)
+        {
+            float fInput = Input.GetAxisRaw("Horizontal");
+
+            Vector2 vTargetVelocity = new Vector2(fInput * fPlayerSpeed, playerRb.linearVelocity.y);
+
+            float fControl = bIsGrounded ? 1f : airControlMultiplier;
+
+            playerRb.linearVelocity = Vector2.Lerp(playerRb.linearVelocity, vTargetVelocity,acceleration * fControl * Time.fixedDeltaTime);
+        }
     }
 
     public void Jump()
@@ -177,7 +190,7 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(1.8f);
             gameManagerScript.LoadScene();
         }
-        else if (instructionManagerScript != null)
+        else if (instructionManagerScript)
         {
             if (other.gameObject.CompareTag("Text1"))
             {
@@ -240,7 +253,7 @@ public class PlayerController : MonoBehaviour
         {
             bIsTouchingStatBlockE = false;
         }
-        else if (instructionManagerScript != null)
+        else if (instructionManagerScript)
         {
             if (other.gameObject.CompareTag("Text1"))
             {

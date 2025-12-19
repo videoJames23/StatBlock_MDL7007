@@ -22,22 +22,22 @@ public class InstructionManager : MonoBehaviour
         text4 = GameObject.FindGameObjectWithTag("Text4");
         
 
-        if (text1 != null)
+        if (text1)
         {
             text1TMP = text1.GetComponent<TMP_Text>();
         }
 
-        if (text2 != null)
+        if (text2)
         {
             text2TMP = text2.GetComponent<TMP_Text>();
         }
 
-        if (text3 != null)
+        if (text3)
         {
             text3TMP = text3.GetComponent<TMP_Text>();
         }
 
-        if (text4 != null)
+        if (text4)
         {
             text4TMP = text4.GetComponent<TMP_Text>();
         }

@@ -65,25 +65,25 @@ public class StatBlockUI : MonoBehaviour
         
         
         GameObject upAudio = GameObject.Find("Up");
-        if (upAudio != null)
+        if (upAudio)
         {
             upSource = upAudio.GetComponent<AudioSource>();
         }
         
         GameObject downAudio = GameObject.Find("Down");
-        if (downAudio != null)
+        if (downAudio)
         {
             downSource = downAudio.GetComponent<AudioSource>();
         }
         
         GameObject indexAudio = GameObject.Find("Index");
-        if (indexAudio != null)
+        if (indexAudio)
         {
             indexSource = indexAudio.GetComponent<AudioSource>();
         }
         
         GameObject errorAudio = GameObject.Find("Error");
-        if (errorAudio != null)
+        if (errorAudio)
         {
             errorSource = errorAudio.GetComponent<AudioSource>();
         }
@@ -106,7 +106,7 @@ public class StatBlockUI : MonoBehaviour
         
         
            
-        if (playerController != null)
+        if (playerController)
         {
             if (playerController.bInMenu)
             {

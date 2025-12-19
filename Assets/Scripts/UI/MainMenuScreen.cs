@@ -20,7 +20,7 @@ namespace UI
             Button buttonCredits = root.Q<Button>("credits__button");
             
             GameObject upAudio = GameObject.Find("Up");
-            if (upAudio != null)
+            if (upAudio)
             {
                 upSource = upAudio.GetComponent<AudioSource>();
             }

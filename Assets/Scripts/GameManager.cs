@@ -9,15 +9,16 @@ public class GameManager : MonoBehaviour
     private Rigidbody2D enemyRb;
     private EnemyController enemyController;
     private StatBlockUI statBlockUI;
-    [FormerlySerializedAs("buildIndex")] public int iBuildIndex;
+    public int iBuildIndex;
     
     private AudioSource completionSource;
     private AudioSource jumpSource;
-    public AudioSource damageSource;
     private AudioSource openSource;
     private AudioSource closeSource;
+
+    private Vector2 vPlayerVelocity;
+    private Vector2 vEnemyVelocity;
     
-   
     void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
         
         iBuildIndex = SceneManager.GetActiveScene().buildIndex;
         GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
-        if (enemy != null)
+        if (enemy)
         {
             enemyRb = enemy.GetComponent<Rigidbody2D>();
             enemyController = enemy.GetComponent<EnemyController>();
@@ -37,13 +38,13 @@ public class GameManager : MonoBehaviour
         
         
         GameObject openAudio = GameObject.Find("Open");
-        if (openAudio != null)
+        if (openAudio)
         {
             openSource = openAudio.GetComponent<AudioSource>();
         }
         
         GameObject closeAudio = GameObject.Find("Close");
-        if (closeAudio != null)
+        if (closeAudio)
         {
             closeSource = closeAudio.GetComponent<AudioSource>();
         }
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
         if (playerController.bIsTouchingStatBlockP && Input.GetKeyDown(KeyCode.E))
         {
             playerController.bInMenuP = !playerController.bInMenuP;
+            
             if (playerController.bInMenuP)
             {
                 openSource.Play();
@@ -82,6 +84,7 @@ public class GameManager : MonoBehaviour
                 closeSource.Play();
             }
             MenuChecks();
+            MenuFreezeToggle();
         }
         
         if (playerController.bIsTouchingStatBlockE && Input.GetKeyDown(KeyCode.E))
@@ -108,37 +111,10 @@ public class GameManager : MonoBehaviour
                 }
                 
             }
+            MenuFreezeToggle();
         }
         
-        if (playerController != null)
-        {
-            if (playerController.bInMenu)
-            {
-                if (enemyRb)
-                {
-                    enemyRb.constraints = RigidbodyConstraints2D.FreezeAll;
-                }
-
-                if (playerRb)
-                {
-                    playerRb.constraints = RigidbodyConstraints2D.FreezeAll;
-                }
-
-            }
-            else if (!playerController.bInMenu)
-            {
-                if (enemyRb)
-                {
-                     enemyRb.constraints = RigidbodyConstraints2D.FreezeRotation;
-                }
-
-                if (playerRb)
-                {
-                    playerRb.constraints = RigidbodyConstraints2D.None;
-                }
-                
-            }
-        }
+        
         
 
         
@@ -157,15 +133,48 @@ public class GameManager : MonoBehaviour
         }
         statBlockUI.UpdateUI();
     }
-   
 
+    void MenuFreezeToggle()
+    {
+        if (playerController.bInMenu)
+        {
+            if (enemyRb)
+            {
+                vEnemyVelocity = enemyRb.linearVelocity;
+                enemyRb.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+
+            if (playerRb)
+            {
+                vPlayerVelocity = playerRb.linearVelocity;
+                playerRb.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+
+        }
+        else if (!playerController.bInMenu)
+        {
+            if (enemyRb)
+            {
+                enemyRb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                enemyRb.linearVelocity = vEnemyVelocity;
+            }
+
+            if (playerRb)
+            {
+                playerRb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                playerRb.linearVelocity =  vPlayerVelocity;
+            }
+                
+        }
+    }
+    
     public void StatChangePHealth()
     {
         playerController.iPlayerHealth = statBlockUI.statsP[0];
     }
     public void StatChangePSpeed()
     {
-        if (playerController != null)
+        if (playerController)
         {
             switch (statBlockUI.statsP[1]) // player speeds
             {
@@ -178,7 +187,7 @@ public class GameManager : MonoBehaviour
     }
     public void StatChangePJump()
     {
-        if (playerController != null)
+        if (playerController)
         {
             switch (statBlockUI.statsP[2]) //player jump heights
             {
@@ -193,14 +202,14 @@ public class GameManager : MonoBehaviour
     
     public void StatChangeEHealth()
     {
-        if (enemyController != null)
+        if (enemyController)
         {
             enemyController.iEnemyHealth = statBlockUI.statsE[0];
         }
     }
     public void StatChangeESpeed()
     {
-        if (enemyController != null)
+        if (enemyController)
         {
             switch (statBlockUI.statsE[1]) // enemy speeds
             {
@@ -213,7 +222,7 @@ public class GameManager : MonoBehaviour
     }
     public void StatChangeESize()
     {
-        if (enemyController != null)
+        if (enemyController)
         {
             switch (statBlockUI.statsE[2]) //enemy sizes
             {
@@ -250,6 +259,7 @@ public class GameManager : MonoBehaviour
 
                     break;
             }
+            enemyRb.transform.localScale = new Vector2(enemyController.fEnemySize, enemyController.fEnemySize);
         }
     }
 

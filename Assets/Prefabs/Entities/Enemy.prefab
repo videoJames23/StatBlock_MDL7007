@@ -52,6 +52,9 @@ MonoBehaviour:
   fEnemySpeed: 2
   fEnemySize: 3
   fEnemyDir: 1
+  fPrevDir: 0
+  iDamage: 0
+  fCosAngle: 0.70710677
 --- !u!212 &8491414037366413147
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -133,7 +136,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &5195677660833435738
 BoxCollider2D:
   m_ObjectHideFlags: 0
