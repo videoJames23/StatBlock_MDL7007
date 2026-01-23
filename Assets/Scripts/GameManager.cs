@@ -226,7 +226,7 @@ public class GameManager : MonoBehaviour
         {
             switch (statBlockUI.statsE[2]) //enemy sizes
             {
-                // If enemy grows into wall, movement stops
+                
                 case 1:
                     enemyController.fEnemySize = 1.5f;
                     if (statBlockUI.iPrevSize != 1)

@@ -183,31 +183,35 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Finish"))
-        {  
-            Debug.Log("Level Complete!");
-            completionSource.Play();
-            yield return new WaitForSeconds(1.8f);
-            gameManagerScript.LoadScene();
-        }
-        else if (instructionManagerScript)
+        switch (other.gameObject.tag)
         {
-            if (other.gameObject.CompareTag("Text1"))
+            case "Finish":
+                Debug.Log("Level Complete!");
+                completionSource.Play();
+                yield return new WaitForSeconds(1.8f);
+                gameManagerScript.LoadScene();
+                break;
+            
+        }
+        
+        if (instructionManagerScript)
+        {
+            switch (other.gameObject.tag)
             {
-                instructionManagerScript.StartFadeIn("text1");
+                case "Text1":
+                    instructionManagerScript.StartFadeIn("text1");
+                    break;
+                case "Text2":
+                    instructionManagerScript.StartFadeIn("text2");
+                    break;
+                case "Text3":
+                    instructionManagerScript.StartFadeIn("text3");
+                    break;
+                case "Text4":
+                    instructionManagerScript.StartFadeIn("text4");
+                    break;
             }
-            else if (other.gameObject.CompareTag("Text2"))
-            {
-                instructionManagerScript.StartFadeIn("text2");
-            }
-            else if (other.gameObject.CompareTag("Text3"))
-            {
-                instructionManagerScript.StartFadeIn("text3");
-            }
-            else if (other.gameObject.CompareTag("Text4"))
-            {
-                instructionManagerScript.StartFadeIn("text4");
-            }
+            
         }
 
     }
@@ -223,14 +227,17 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("StatBlockP"))
+        switch (other.gameObject.tag)
         {
-            bIsTouchingStatBlockP = true;
+            case "StatBlockP":
+                bIsTouchingStatBlockP = true;
+                break;
+            case  "StatBlockE":
+                bIsTouchingStatBlockE = true;
+                break;
         }
-        else if (other.gameObject.CompareTag("StatBlockE"))
-        {
-            bIsTouchingStatBlockE = true;
-        }
+        
+        
     }
    
     
@@ -245,32 +252,34 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("StatBlockP"))
+        switch (other.gameObject.tag)
         {
-            bIsTouchingStatBlockP = false;
+            case "StatBlockP":
+                bIsTouchingStatBlockP = false;
+                break;
+            case "StatBlockE":
+                bIsTouchingStatBlockE = false;
+                break;
         }
-        if (other.gameObject.CompareTag("StatBlockE"))
+       
+        if (instructionManagerScript)
         {
-            bIsTouchingStatBlockE = false;
-        }
-        else if (instructionManagerScript)
-        {
-            if (other.gameObject.CompareTag("Text1"))
+            switch (other.gameObject.tag)
             {
-                instructionManagerScript.StartFadeOut("text1");
+                case "Text1":
+                    instructionManagerScript.StartFadeOut("text1");
+                    break;
+                case "Text2":
+                    instructionManagerScript.StartFadeOut("text2");
+                    break;
+                case "Text3":
+                    instructionManagerScript.StartFadeOut("text3");
+                    break;
+                case "Text4":
+                    instructionManagerScript.StartFadeOut("text4");
+                    break;
             }
-            else if (other.gameObject.CompareTag("Text2"))
-            {
-                instructionManagerScript.StartFadeOut("text2");
-            }
-            else if (other.gameObject.CompareTag("Text3"))
-            {
-                instructionManagerScript.StartFadeOut("text3");
-            }
-            else if (other.gameObject.CompareTag("Text4"))
-            {
-                instructionManagerScript.StartFadeOut("text4");
-            }
+            
         }
 
     }

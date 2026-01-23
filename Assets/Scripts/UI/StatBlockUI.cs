@@ -110,7 +110,7 @@ public class StatBlockUI : MonoBehaviour
         {
             if (playerController.bInMenu)
             {
-
+            
 
                 // select stat
                 if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
