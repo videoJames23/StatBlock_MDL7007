@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    //fred here, adding this comment to test version control
     public GameObject player;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
