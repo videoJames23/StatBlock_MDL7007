@@ -4,6 +4,7 @@ using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
+    //serializedfield stuff here again -F
     private Rigidbody2D playerRb;
     private PlayerController playerController;
     private Rigidbody2D enemyRb;
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
     private StatBlockUI statBlockUI;
     public int iBuildIndex;
     
+    //audio stuff could have gone into music.cs maybe? idk if you were planning on that -F
     private AudioSource completionSource;
     private AudioSource jumpSource;
     private AudioSource openSource;
@@ -56,16 +58,12 @@ public class GameManager : MonoBehaviour
         StatChangeEHealth();
         StatChangeESpeed();
         StatChangeESize();
-        
-        
-        
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //there has to be a better way to do this that doesn't involve this many if/else statements -F
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(iBuildIndex);
@@ -107,17 +105,11 @@ public class GameManager : MonoBehaviour
                 }
                 else if (statBlockUI.iPointsLeftE > 0)
                 {
-                    statBlockUI.errorSource.Play();
+                    statBlockUI.errorSource.Play(); 
                 }
-                
             }
             MenuFreezeToggle();
         }
-        
-        
-        
-
-        
     }
 
     void MenuChecks()
@@ -127,13 +119,14 @@ public class GameManager : MonoBehaviour
             playerController.bInMenu = true;
         }
         
-        else if (!playerController.bInMenuP && !playerController.bInMenuE)
+        else if (!playerController.bInMenuP && !playerController.bInMenuE) //redundant condition -F
         {
             playerController.bInMenu = false;
         }
         statBlockUI.UpdateUI();
     }
 
+    //Pausing in general could be implemented better and this is just part of that -F
     void MenuFreezeToggle()
     {
         if (playerController.bInMenu)
@@ -178,6 +171,7 @@ public class GameManager : MonoBehaviour
         {
             switch (statBlockUI.statsP[1]) // player speeds
             {
+                //MAGIC NUMBERS RAAAAAAAAAAAAAAAAH I HATE MAGIC NUMBERS -F
                 case 0: playerController.fPlayerSpeed = 0; break;
                 case 1: playerController.fPlayerSpeed = 3; break;
                 case 2: playerController.fPlayerSpeed = 7; break;
@@ -191,6 +185,7 @@ public class GameManager : MonoBehaviour
         {
             switch (statBlockUI.statsP[2]) //player jump heights
             {
+                //MAGIC NUMBERS RAAAAAAAAAAAAAAAAH I HATE MAGIC NUMBERS -F
                 case 0: playerController.fPlayerJump = 0; break;
                 case 1: playerController.fPlayerJump = 5; break;
                 case 2: playerController.fPlayerJump = 7; break;
