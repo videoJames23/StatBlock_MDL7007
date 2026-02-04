@@ -31,7 +31,7 @@ public class SpikesController : MonoBehaviour
             {
                 spikeRb.constraints = RigidbodyConstraints2D.FreezeAll;
             }
-            else if //(!playerController.bInMenu) this is an extra condition check for no reason you're already using else -F
+            else //if (!playerController.bInMenu) this is an extra condition check for no reason you're already using else -F
             {
                 spikeRb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
                 if (bEntityDetected)
