@@ -26,11 +26,12 @@ public class SpikesController : MonoBehaviour
     {
         if (playerController != null)
         {
+            //this should all be replaced with a proper pause menu system -F
             if (playerController.bInMenu)
             {
                 spikeRb.constraints = RigidbodyConstraints2D.FreezeAll;
             }
-            else if (!playerController.bInMenu)
+            else //if (!playerController.bInMenu) this is an extra condition check for no reason you're already using else -F
             {
                 spikeRb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
                 if (bEntityDetected)

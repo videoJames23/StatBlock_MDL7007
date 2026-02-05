@@ -169,6 +169,8 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
             cSpriteRenderer.color = Color.blue;
             yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
+            //might be a way to just target the alpha channel instead of the whole colour,
+            //which would let you change the player's colour without having to adjust it here too -F
         }
         
         Physics2D.IgnoreLayerCollision(10, 11, false);
@@ -185,6 +187,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Finish"))
         {  
+            //Why is the playercontroller responsible for ending the level? This should probably be in a different script. -F
             Debug.Log("Level Complete!");
             completionSource.Play();
             yield return new WaitForSeconds(1.8f);
