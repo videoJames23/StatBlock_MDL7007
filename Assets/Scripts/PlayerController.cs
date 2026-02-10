@@ -151,6 +151,8 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
             cSpriteRenderer.color = Color.blue;
             yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
+            //might be a way to just target the alpha channel instead of the whole colour,
+            //which would let you change the player's colour without having to adjust it here too -F
         }
         
         Physics2D.IgnoreLayerCollision(10, 11, false);

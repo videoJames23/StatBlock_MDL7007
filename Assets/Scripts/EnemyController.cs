@@ -1,15 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
-<<<<<<< Updated upstream
-using UnityEngine.Splines.ExtrusionShapes;
-=======
-//pretty sure you don't need all of these, did you click on visual scripting or something by accident? -F
 
->>>>>>> Stashed changes
+
 
 public class EnemyController : MonoBehaviour
 {
+    // putting [SerializedField] above each of these would let you view it in the editor -F
     private GameManager gameManagerScript;
     private Rigidbody2D enemyRb;
     private Rigidbody2D playerRb;
@@ -22,6 +19,9 @@ public class EnemyController : MonoBehaviour
     public int iEnemyHealth;
     public float fEnemySpeed;
     public float fEnemySize;
+    
+    // fEnemyDir controls whether the enemy is moving left or right, but you've used a float even though it can only be -1 or 1, maybe another type would work better.
+    // This would involve changing the places where it's being used though -F
     public float fEnemyDir;
     public float fPrevDir;
     public int iDamage;
@@ -75,6 +75,7 @@ public class EnemyController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Wall"))
         {
+            //Is the Mathf part here nescessary? -F
             if (Mathf.Abs(enemyRb.linearVelocity.x) < 0.1f)
             {
                 fEnemyDir *= -1;
@@ -83,7 +84,7 @@ public class EnemyController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {  
-            
+            //I know this was a way to shoehorn in the maths content, but a raycast would probably be easier for detecting if the player is jumping on the enemy's head -F
             
             // MATHS CONTENT HERE
             // ((px x ex) + (py + ey))/|p||e| = cosangle
