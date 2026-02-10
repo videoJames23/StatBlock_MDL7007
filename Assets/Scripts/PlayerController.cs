@@ -35,12 +35,7 @@ public class PlayerController : MonoBehaviour
     private GameManager gameManagerScript;
     private InstructionManager instructionManagerScript;
     private SpriteRenderer cSpriteRenderer;
-    
-    private AudioSource completionSource;
-    private AudioSource jumpSource;
-    public AudioSource damageSource;
-    private AudioSource openSource;
-    private AudioSource closeSource;
+    public AudioController audioController;
     
 
 
@@ -58,29 +53,16 @@ public class PlayerController : MonoBehaviour
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
         
-        GameObject jumpAudio = GameObject.Find("Jump");
-        if (jumpAudio)
-        {
-            jumpSource = jumpAudio.GetComponent<AudioSource>();
-        }
-        
-        GameObject damageAudio = GameObject.Find("Damage");
-        if (damageAudio)
-        {
-            damageSource = damageAudio.GetComponent<AudioSource>();
-        }
-        
-        GameObject completionAudio = GameObject.FindGameObjectWithTag("Completion Audio");
-        if (completionAudio)
-        {
-            completionSource = completionAudio.GetComponent<AudioSource>();
-        }
-        
-        
         GameObject instructionManager = GameObject.FindGameObjectWithTag("Instruction Manager");
         if (instructionManager)
         {
             instructionManagerScript = instructionManager.GetComponent<InstructionManager>();
+        }
+        
+        GameObject audio =  GameObject.FindGameObjectWithTag("Audio");
+        if (audio)
+        {
+            audioController = audio.GetComponent<AudioController>();
         }
         
         
@@ -117,7 +99,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        jumpSource.Play();
+        audioController.jumpSource.Play();
         playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, fPlayerJump);
     }
     
@@ -135,7 +117,7 @@ public class PlayerController : MonoBehaviour
         
         bCanTakeDamage = false;
         
-        damageSource.Play();
+        audioController.damageSource.Play();
         
         statBlockUI.statsP[0] -= damage;
         statBlockUI.iPointsTotalP--;
@@ -183,7 +165,19 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator OnTriggerEnter2D(Collider2D other)
     {
+<<<<<<< Updated upstream
         switch (other.gameObject.tag)
+=======
+        if (other.gameObject.CompareTag("Finish"))
+        {  
+            //Why is the playercontroller responsible for ending the level? This should probably be in a different script. -F
+            Debug.Log("Level Complete!");
+            audioController.completionSource.Play();
+            yield return new WaitForSeconds(1.8f);
+            gameManagerScript.LoadScene();
+        }
+        else if (instructionManagerScript)
+>>>>>>> Stashed changes
         {
             case "Finish":
                 Debug.Log("Level Complete!");
@@ -264,7 +258,15 @@ public class PlayerController : MonoBehaviour
        
         if (instructionManagerScript)
         {
+<<<<<<< Updated upstream
             switch (other.gameObject.tag)
+=======
+            bIsTouchingStatBlockE = false;
+        }
+        if (instructionManagerScript)
+        {
+            if (other.gameObject.CompareTag("Text1"))
+>>>>>>> Stashed changes
             {
                 case "Text1":
                     instructionManagerScript.StartFadeOut("text1");

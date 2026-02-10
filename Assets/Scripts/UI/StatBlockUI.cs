@@ -16,6 +16,7 @@ public class StatBlockUI : MonoBehaviour
     
     public PlayerController playerController;
     public GameManager gameManagerScript;
+    public AudioController audioController;
 
     public GameObject holder;
     public GameObject background;
@@ -34,10 +35,6 @@ public class StatBlockUI : MonoBehaviour
     public string sUser;
     [FormerlySerializedAs("prevSize")] public int iPrevSize;
 
-    private AudioSource indexSource;
-    private AudioSource upSource;
-    private AudioSource downSource;
-    public AudioSource errorSource;
     
     
     
@@ -62,31 +59,14 @@ public class StatBlockUI : MonoBehaviour
         showHideS = size.GetComponent<ShowHide>();
         showHideJ = jump.GetComponent<ShowHide>();
         
-        
-        
-        GameObject upAudio = GameObject.Find("Up");
-        if (upAudio)
+        GameObject audio = GameObject.FindGameObjectWithTag("Audio");
+        if (audio)
         {
-            upSource = upAudio.GetComponent<AudioSource>();
+            audioController = audio.GetComponent<AudioController>();
         }
         
-        GameObject downAudio = GameObject.Find("Down");
-        if (downAudio)
-        {
-            downSource = downAudio.GetComponent<AudioSource>();
-        }
         
-        GameObject indexAudio = GameObject.Find("Index");
-        if (indexAudio)
-        {
-            indexSource = indexAudio.GetComponent<AudioSource>();
-        }
         
-        GameObject errorAudio = GameObject.Find("Error");
-        if (errorAudio)
-        {
-            errorSource = errorAudio.GetComponent<AudioSource>();
-        }
         
         
 
@@ -116,7 +96,7 @@ public class StatBlockUI : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
                 {
                     selectedIndex--;
-                    indexSource.Play();
+                    audioController.indexSource.Play();
                     if (selectedIndex < 0 && playerController.bInMenuP)
                     {
                         selectedIndex = statsP.Length - 1;
@@ -133,7 +113,7 @@ public class StatBlockUI : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
                 {
                     selectedIndex++;
-                    indexSource.Play();
+                    audioController.indexSource.Play();
                     if (selectedIndex >= statsP.Length && playerController.bInMenuP)
                     {
                         selectedIndex = 0;
@@ -155,10 +135,10 @@ public class StatBlockUI : MonoBehaviour
                         if (iPointsLeftP > 0)
                         {
                             statsP[selectedIndex]++;
-                            upSource.Play();
+                            audioController.upSource.Play();
                             if (statsP[selectedIndex] > 3)
                             {
-                                errorSource.Play();
+                                audioController.errorSource.Play();
                                 statsP[selectedIndex] = 3;
                             }
 
@@ -177,7 +157,7 @@ public class StatBlockUI : MonoBehaviour
                         }
                         else if (iPointsLeftP == 0)
                         {
-                            errorSource.Play();
+                            audioController.errorSource.Play();
                         }
 
 
@@ -194,13 +174,13 @@ public class StatBlockUI : MonoBehaviour
                             }
 
                             statsE[selectedIndex]++;
-                            upSource.Play();
+                            audioController.upSource.Play();
 
 
 
                             if (statsE[selectedIndex] > 3)
                             {
-                                errorSource.Play();
+                                audioController.errorSource.Play();
                                 statsE[selectedIndex] = 3;
                             }
 
@@ -221,7 +201,7 @@ public class StatBlockUI : MonoBehaviour
                         }
                         else if (iPointsLeftE == 0)
                         {
-                            errorSource.Play();
+                            audioController.errorSource.Play();
                         }
 
                         
@@ -231,26 +211,26 @@ public class StatBlockUI : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
                 {
-                    downSource.Play();
+                    audioController.downSource.Play();
                     if (playerController.bInMenuP)
                     {
                         statsP[selectedIndex]--;
                         
                         if (statsP[0] < 1)
                         {
-                            errorSource.Play();
+                            audioController.errorSource.Play();
                             statsP[0] = 1;
                         }
 
                         else if (statsP[1] < 0)
                         {
-                            errorSource.Play();
+                            audioController.errorSource.Play();
                             statsP[1] = 0;
                         }
 
                         else if (statsP[2] < 0)
                         {
-                            errorSource.Play();
+                            audioController.errorSource.Play();
                             statsP[2] = 0;
                         }
                         switch (selectedIndex)
@@ -278,19 +258,19 @@ public class StatBlockUI : MonoBehaviour
                         
                         if (statsE[0] < 1)
                         {
-                            errorSource.Play();
+                            audioController.errorSource.Play();
                             statsE[0] = 1;
                         }
 
                         else if (statsE[1] < 0)
                         {
-                            errorSource.Play();
+                            audioController.errorSource.Play();
                             statsE[1] = 0;
                         }
 
                         else if (statsE[2] < 1)
                         {
-                            errorSource.Play();
+                            audioController.errorSource.Play();
                             statsE[2] = 1;
                         }
                         switch (selectedIndex)

@@ -33,6 +33,7 @@ TagManager:
   - Text2
   - Text3
   - Text4
+  - Audio
   layers:
   - Default
   - TransparentFX

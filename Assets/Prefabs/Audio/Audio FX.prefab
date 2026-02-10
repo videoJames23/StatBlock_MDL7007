@@ -143,7 +143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 829013946182660773}
   - component: {fileID: 402662363279050664}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Damage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +272,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6873837679988875725}
   - component: {fileID: 4376832218732338760}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Error
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -799,9 +799,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5013173758531391658}
+  - component: {fileID: 5988757548258676963}
   m_Layer: 10
   m_Name: Audio FX
-  m_TagString: Untagged
+  m_TagString: Audio
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -814,7 +815,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6335027161824845103}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.11, y: -0.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -829,6 +830,27 @@ Transform:
   - {fileID: 6873837679988875725}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5988757548258676963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6335027161824845103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb2768a7054e7341ae87187d860c60d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  completionSource: {fileID: 0}
+  jumpSource: {fileID: 0}
+  openSource: {fileID: 0}
+  closeSource: {fileID: 0}
+  damageSource: {fileID: 0}
+  upSource: {fileID: 0}
+  downSource: {fileID: 0}
+  indexSource: {fileID: 0}
+  errorSource: {fileID: 0}
 --- !u!1 &8092162196794141940
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,7 +861,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5284866042082486592}
   - component: {fileID: 3033374036785285606}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}

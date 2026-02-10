@@ -9,12 +9,18 @@ public class GameManager : MonoBehaviour
     private Rigidbody2D enemyRb;
     private EnemyController enemyController;
     private StatBlockUI statBlockUI;
+    private AudioController audioController;
     public int iBuildIndex;
     
+<<<<<<< Updated upstream
     private AudioSource completionSource;
     private AudioSource jumpSource;
     private AudioSource openSource;
     private AudioSource closeSource;
+=======
+    //audio stuff could have gone into music.cs maybe? idk if you were planning on that -F
+    
+>>>>>>> Stashed changes
 
     private Vector2 vPlayerVelocity;
     private Vector2 vEnemyVelocity;
@@ -35,19 +41,13 @@ public class GameManager : MonoBehaviour
             enemyRb = enemy.GetComponent<Rigidbody2D>();
             enemyController = enemy.GetComponent<EnemyController>();
         }
-        
-        
-        GameObject openAudio = GameObject.Find("Open");
-        if (openAudio)
+        GameObject audio =  GameObject.FindGameObjectWithTag("Audio");
+        if (audio)
         {
-            openSource = openAudio.GetComponent<AudioSource>();
+            audioController =  audio.GetComponent<AudioController>();
         }
         
-        GameObject closeAudio = GameObject.Find("Close");
-        if (closeAudio)
-        {
-            closeSource = closeAudio.GetComponent<AudioSource>();
-        }
+       
         
 
         StatChangePHealth();
@@ -77,11 +77,11 @@ public class GameManager : MonoBehaviour
             
             if (playerController.bInMenuP)
             {
-                openSource.Play();
+                audioController.openSource.Play();
             }
             else if (!playerController.bInMenuP)
             {
-                closeSource.Play();
+                audioController.closeSource.Play();
             }
             MenuChecks();
             MenuFreezeToggle();
@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
             if (!playerController.bInMenuE)
             {
                 playerController.bInMenuE = true;
-                openSource.Play();
+                audioController.openSource.Play();
                 enemyController.fPrevDir = enemyController.fEnemyDir;
                 MenuChecks();
             }
@@ -101,13 +101,17 @@ public class GameManager : MonoBehaviour
                 if (statBlockUI.iPointsLeftE == 0)
                 {
                     playerController.bInMenuE = false;
-                    closeSource.Play();
+                    audioController.closeSource.Play();
                     enemyController.fEnemyDir = enemyController.fPrevDir;
                     MenuChecks();
                 }
                 else if (statBlockUI.iPointsLeftE > 0)
                 {
+<<<<<<< Updated upstream
                     statBlockUI.errorSource.Play();
+=======
+                    audioController.errorSource.Play(); 
+>>>>>>> Stashed changes
                 }
                 
             }

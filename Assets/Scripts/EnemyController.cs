@@ -1,11 +1,12 @@
-using System;
 using System.Collections;
-using System.ComponentModel;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+<<<<<<< Updated upstream
 using UnityEngine.Splines.ExtrusionShapes;
+=======
+//pretty sure you don't need all of these, did you click on visual scripting or something by accident? -F
+
+>>>>>>> Stashed changes
 
 public class EnemyController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D enemyRb;
     private Rigidbody2D playerRb;
     public PlayerController playerController;
+    public AudioController audioController;
  
     private SpriteRenderer cSpriteRenderer;
 
@@ -49,6 +51,12 @@ public class EnemyController : MonoBehaviour
         
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
+
+        GameObject audio = GameObject.FindGameObjectWithTag("Audio");
+        if (audio)
+        {
+            audioController = audio.GetComponent<AudioController>();
+        }
 
         iDamage = 1;
 
@@ -121,7 +129,7 @@ public class EnemyController : MonoBehaviour
     }
     void TakeDamage(int damage)
     {
-        playerController.damageSource.Play();
+        audioController.damageSource.Play();
         
         statBlockUI.statsE[0] -= damage;
         

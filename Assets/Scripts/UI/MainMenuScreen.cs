@@ -8,8 +8,9 @@ namespace UI
     {
         public GameObject levelSelectUI;
         public GameObject creditsUI;
-
-        private AudioSource upSource;
+        
+        public AudioController audioController;
+        
         
         private void OnEnable()
         {
@@ -19,21 +20,23 @@ namespace UI
             Button buttonLevelSelect = root.Q<Button>("level__select__button");
             Button buttonCredits = root.Q<Button>("credits__button");
             
-            GameObject upAudio = GameObject.Find("Up");
-            if (upAudio)
+            GameObject audio = GameObject.FindGameObjectWithTag("Audio");
+            if (audio)
             {
-                upSource = upAudio.GetComponent<AudioSource>();
+                audioController = audio.GetComponent<AudioController>();
             }
+            
+           
             
             buttonStart.clicked += () => SceneManager.LoadScene(1);
             
             buttonLevelSelect.clicked += () => Destroy(gameObject);
             buttonLevelSelect.clicked += () => Instantiate(levelSelectUI);
-            buttonLevelSelect.clicked += () => upSource.Play();
+            buttonLevelSelect.clicked += () => audioController.upSource.Play();
             
             buttonCredits.clicked += () => Destroy(gameObject);
             buttonCredits.clicked += () => Instantiate(creditsUI);
-            buttonCredits.clicked += () => upSource.Play();
+            buttonCredits.clicked += () => audioController.upSource.Play();
         }
 
     }
