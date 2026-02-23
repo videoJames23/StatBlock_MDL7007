@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iBuildIndex: 0
   playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
+  enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
   enemySpeedLVL0: 0
   enemySpeedLVL1: 3
   enemySpeedLVL2: 7

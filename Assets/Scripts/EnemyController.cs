@@ -15,17 +15,13 @@ public class EnemyController : MonoBehaviour
  
     private SpriteRenderer cSpriteRenderer;
 
+    [SerializeField] private EnemyStats enemyStats;
     
-    public int iEnemyHealth;
-    public float fEnemySpeed;
-    public float fEnemySize;
-    
-    // fEnemyDir controls whether the enemy is moving left or right, but you've used a float even though it can only be -1 or 1, maybe another type would work better.
-    // This would involve changing the places where it's being used though -F
     public float fEnemyDir;
     public float fPrevDir;
-    public int iDamage;
-    [FormerlySerializedAs("cosAngle")] public float fCosAngle = 0.70710678118f;
+    
+
+    
     
     private StatBlockUI statBlockUI;
     
@@ -58,7 +54,7 @@ public class EnemyController : MonoBehaviour
             audioController = audio.GetComponent<AudioController>();
         }
 
-        iDamage = 1;
+        enemyStats.iDamage = 1;
 
 
     }
@@ -68,7 +64,7 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        enemyRb.linearVelocity = new Vector2(fEnemySpeed * fEnemyDir, enemyRb.linearVelocity.y);
+        enemyRb.linearVelocity = new Vector2(enemyStats.fEnemySpeed * fEnemyDir, enemyRb.linearVelocity.y);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -97,18 +93,18 @@ public class EnemyController : MonoBehaviour
             bool bPlayerIsFalling = playerRb.linearVelocity.y <= 0f;
             
            
-            if (playerCosAngle > fCosAngle && bPlayerIsFalling)
+            if (playerCosAngle > enemyStats.fCosAngle && bPlayerIsFalling)
             {
                 Debug.Log("Squash!");
                 TakeDamage(1);
                 playerController.Jump();
-                if (iEnemyHealth <= 0)
+                if (enemyStats.iEnemyHealth <= 0)
                 {
                     Destroy(gameObject);
                 }
             }
             
-            else if (playerCosAngle < fCosAngle || !bPlayerIsFalling)
+            else if (playerCosAngle < enemyStats.fCosAngle || !bPlayerIsFalling)
             {
                 Debug.Log("Ow!");
                 playerController.TakeDamage(1);
@@ -117,11 +113,11 @@ public class EnemyController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Spike"))
         {
-            TakeDamage(iDamage);
+            TakeDamage(enemyStats.iDamage);
             
             fEnemyDir *= -1;
                 
-            if (iEnemyHealth > 0)
+            if (enemyStats.iEnemyHealth > 0)
             {
                 StartCoroutine(Invulnerability());
             }
@@ -151,14 +147,14 @@ public class EnemyController : MonoBehaviour
         
 
         // I-frames
-        if (iEnemyHealth <= 0)
+        if (enemyStats.iEnemyHealth <= 0)
         {
             Destroy(gameObject);
         }
     }
     private IEnumerator Invulnerability()
     {
-        iDamage = 0;
+        enemyStats.iDamage = 0;
         
         for (int i = 0; i < iNumberOfFlashes; i++)
         {
@@ -168,7 +164,7 @@ public class EnemyController : MonoBehaviour
             yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
         }
         
-        iDamage = 1;
+        enemyStats.iDamage = 1;
     }
     
 

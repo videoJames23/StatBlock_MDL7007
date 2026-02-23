@@ -2136,6 +2136,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8996469096489661993, guid: c915e9bc40b27c84a8cb2adf38be9d6e, type: 3}
+      propertyPath: fEnemyDir
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8996469096489661993, guid: c915e9bc40b27c84a8cb2adf38be9d6e, type: 3}
       propertyPath: fEnemySize
       value: 3
       objectReference: {fileID: 0}

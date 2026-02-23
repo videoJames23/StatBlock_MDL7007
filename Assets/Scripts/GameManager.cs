@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public int iBuildIndex;
     
     [SerializeField] private PlayerStats  playerStats;
+    [SerializeField] private EnemyStats enemyStats;
     
     private AudioSource completionSource;
     private AudioSource jumpSource;
@@ -206,7 +207,7 @@ public class GameManager : MonoBehaviour
     {
         if (enemyController)
         {
-            enemyController.iEnemyHealth = statBlockUI.statsE[0];
+            enemyStats.iEnemyHealth = statBlockUI.statsE[0];
         }
     }
     public void StatChangeESpeed()
@@ -215,10 +216,10 @@ public class GameManager : MonoBehaviour
         {
             switch (statBlockUI.statsE[1]) // enemy speeds
             {
-                case 0: enemyController.fEnemySpeed = enemySpeedLVL0; break;
-                case 1: enemyController.fEnemySpeed = enemySpeedLVL1; break;
-                case 2: enemyController.fEnemySpeed = enemySpeedLVL2; break;
-                case 3: enemyController.fEnemySpeed = enemySpeedLVL3; break;
+                case 0: enemyStats.fEnemySpeed = enemySpeedLVL0; break;
+                case 1: enemyStats.fEnemySpeed = enemySpeedLVL1; break;
+                case 2: enemyStats.fEnemySpeed = enemySpeedLVL2; break;
+                case 3: enemyStats.fEnemySpeed = enemySpeedLVL3; break;
             }
         }
     }
@@ -235,7 +236,7 @@ public class GameManager : MonoBehaviour
                 //which could be replaced with a calculation which works regardless of what you set the sizes to -F
 
                 case 1:
-                    enemyController.fEnemySize = enemySizeLVL1;
+                    enemyStats.fEnemySize = enemySizeLVL1;
                     if (statBlockUI.iPrevSize != 1)
                     {
                         enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y - 0.81f);
@@ -248,10 +249,10 @@ public class GameManager : MonoBehaviour
                     {
                         case 1:
                             enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y + 0.81f);
-                            enemyController.fEnemySize = enemySizeLVL2;
+                            enemyStats.fEnemySize = enemySizeLVL2;
                             break;
                         case 3:
-                            enemyController.fEnemySize = enemySizeLVL2;
+                            enemyStats.fEnemySize = enemySizeLVL2;
                             enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y - 0.726443f);
                             break;
                     }
@@ -261,12 +262,12 @@ public class GameManager : MonoBehaviour
                     if (statBlockUI.iPrevSize != 3)
                     {
                         enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y + 0.726443f);
-                        enemyController.fEnemySize = enemySizeLVL3;
+                        enemyStats.fEnemySize = enemySizeLVL3;
                     }
 
                     break;
             }
-            enemyRb.transform.localScale = new Vector2(enemyController.fEnemySize, enemyController.fEnemySize);
+            enemyRb.transform.localScale = new Vector2(enemyStats.fEnemySize, enemyStats.fEnemySize);
         }
     }
 
