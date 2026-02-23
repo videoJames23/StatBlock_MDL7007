@@ -639,34 +639,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: StatBlockUI
       objectReference: {fileID: 0}
-    - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
-      propertyPath: iPointsTotalE
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
-      propertyPath: iPointsTotalP
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
-      propertyPath: 'statsE.Array.data[0]'
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
-      propertyPath: 'statsE.Array.data[1]'
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
-      propertyPath: 'statsE.Array.data[2]'
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
-      propertyPath: 'statsP.Array.data[0]'
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
-      propertyPath: 'statsP.Array.data[2]'
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -925,14 +897,6 @@ PrefabInstance:
     - target: {fileID: 2614926581154918743, guid: 2bebbbe7e30cea34fa21c63ea4a824d4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4277488488149247715, guid: 2bebbbe7e30cea34fa21c63ea4a824d4, type: 3}
-      propertyPath: fPlayerJump
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4277488488149247715, guid: 2bebbbe7e30cea34fa21c63ea4a824d4, type: 3}
-      propertyPath: iPlayerHealth
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5744648186350750262, guid: 2bebbbe7e30cea34fa21c63ea4a824d4, type: 3}
       propertyPath: m_Name
