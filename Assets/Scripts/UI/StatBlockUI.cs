@@ -9,7 +9,8 @@ public class StatBlockUI : MonoBehaviour
 {
     public TextMeshProUGUI[] valueTexts;
 
-   
+    [SerializeField] private PlayerStats  playerStats;
+    
     public int[] statsP = {1, 1, 1};
     public int[] statsE = {1, 1, 1};
     private int selectedIndex;
@@ -136,10 +137,10 @@ public class StatBlockUI : MonoBehaviour
                         {
                             statsP[selectedIndex]++;
                             audioController.upSource.Play();
-                            if (statsP[selectedIndex] > 3)
+                            if (statsP[selectedIndex] > playerStats.aPlayerStatBounds[selectedIndex, 1])
                             {
                                 audioController.errorSource.Play();
-                                statsP[selectedIndex] = 3;
+                                statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 1];
                             }
 
                             switch (selectedIndex)
@@ -216,23 +217,12 @@ public class StatBlockUI : MonoBehaviour
                     {
                         statsP[selectedIndex]--;
                         
-                        if (statsP[0] < 1)
+                        if (statsP[selectedIndex] < playerStats.aPlayerStatBounds[selectedIndex, 0])
                         {
                             audioController.errorSource.Play();
-                            statsP[0] = 1;
+                            statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 0];
                         }
-
-                        else if (statsP[1] < 0)
-                        {
-                            audioController.errorSource.Play();
-                            statsP[1] = 0;
-                        }
-
-                        else if (statsP[2] < 0)
-                        {
-                            audioController.errorSource.Play();
-                            statsP[2] = 0;
-                        }
+                        
                         switch (selectedIndex)
                         {
                             case 0:

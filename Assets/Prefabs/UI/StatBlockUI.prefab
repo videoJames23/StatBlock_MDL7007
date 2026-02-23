@@ -691,21 +691,22 @@ MonoBehaviour:
   - {fileID: 5654618725045004365}
   - {fileID: 5445885438135700974}
   - {fileID: 750530754885650575}
-  statsP: 030000000100000002000000
-  statsE: 030000000000000003000000
+  playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
+  statsP: 010000000100000001000000
+  statsE: 000000000000000000000000
   playerController: {fileID: 0}
   gameManagerScript: {fileID: 0}
+  audioController: {fileID: 0}
   holder: {fileID: 7031388086280753611}
   background: {fileID: 1399443520318355992}
   showHideJ: {fileID: 5247032621137200694}
   showHideS: {fileID: 2569729562222940473}
-  iPointsTotalP: 6
-  iPointsLeftP: 0
-  iPointsTotalE: 6
+  iPointsTotalP: 5
+  iPointsLeftP: 2
+  iPointsTotalE: 0
   iPointsLeftE: 0
   sUser: 
   iPrevSize: 0
-  errorSource: {fileID: 0}
 --- !u!223 &5752956506425552972
 Canvas:
   m_ObjectHideFlags: 0

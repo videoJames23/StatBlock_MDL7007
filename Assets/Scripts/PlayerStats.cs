@@ -4,8 +4,12 @@ using UnityEngine;
 public class PlayerStats : ScriptableObject
 {
    public int iPlayerHealth = 3;
+   
    public float fPlayerSpeed = 3;
+   
    public float fPlayerJump = 3;
+
+   public int[,] aPlayerStatBounds = { {1, 3}, {0, 3}, {0, 3} };
    
    public Vector2 vPlayerVelocity;
    
