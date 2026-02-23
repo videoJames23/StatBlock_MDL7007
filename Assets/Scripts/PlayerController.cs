@@ -12,9 +12,8 @@ public class PlayerController : MonoBehaviour
     
     
     [FormerlySerializedAs("fSpeed")] [Header("Stats")]
-    public int iPlayerHealth;
-    public float fPlayerSpeed;
-    public float fPlayerJump;
+    
+    [SerializeField] private PlayerStats  playerStats;
     
     public bool bIsTouchingStatBlockP;
     public bool bIsTouchingStatBlockE;
@@ -89,7 +88,7 @@ public class PlayerController : MonoBehaviour
         {
             float fInput = Input.GetAxisRaw("Horizontal");
 
-            Vector2 vTargetVelocity = new Vector2(fInput * fPlayerSpeed, playerRb.linearVelocity.y);
+            Vector2 vTargetVelocity = new Vector2(fInput * playerStats.fPlayerSpeed, playerRb.linearVelocity.y);
 
             float fControl = bIsGrounded ? 1f : airControlMultiplier;
 
@@ -100,7 +99,7 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
         audioController.jumpSource.Play();
-        playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, fPlayerJump);
+        playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, playerStats.fPlayerJump);
     }
     
 
@@ -130,12 +129,12 @@ public class PlayerController : MonoBehaviour
             
             
         // I-frames
-        if (iPlayerHealth > 0)
+        if (playerStats.iPlayerHealth > 0)
         {
             StartCoroutine(Invulnerability());
         }
             
-        else if (iPlayerHealth <= 0)
+        else if (playerStats.iPlayerHealth <= 0)
         {
             Destroy(gameObject);
         }

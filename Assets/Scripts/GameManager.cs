@@ -13,25 +13,18 @@ public class GameManager : MonoBehaviour
     private AudioController audioController;
     public int iBuildIndex;
     
-
+    [SerializeField] private PlayerStats  playerStats;
+    
     private AudioSource completionSource;
     private AudioSource jumpSource;
     private AudioSource openSource;
     private AudioSource closeSource;
 
-    private Vector2 vPlayerVelocity;
+    
     private Vector2 vEnemyVelocity;
 
     
-    [SerializeField] private float playerSpeedLVL0 = 0f;
-    [SerializeField] private float playerSpeedLVL1 = 3f;
-    [SerializeField] private float playerSpeedLVL2 = 7f;
-    [SerializeField] private float playerSpeedLVL3 = 10f;
-    
-    [SerializeField] private float playerJumpLVL0 = 0f;
-    [SerializeField] private float playerJumpLVL1 = 5f;
-    [SerializeField] private float playerJumpLVL2 = 7f;
-    [SerializeField] private float playerJumpLVL3 = 9f;
+   
 
     [SerializeField] private float enemySpeedLVL0 = 0f;
     [SerializeField] private float enemySpeedLVL1 = 3f;
@@ -154,7 +147,7 @@ public class GameManager : MonoBehaviour
 
             if (playerRb)
             {
-                vPlayerVelocity = playerRb.linearVelocity;
+                playerStats.vPlayerVelocity = playerRb.linearVelocity;
                 playerRb.constraints = RigidbodyConstraints2D.FreezeAll;
             }
 
@@ -170,7 +163,7 @@ public class GameManager : MonoBehaviour
             if (playerRb)
             {
                 playerRb.constraints = RigidbodyConstraints2D.FreezeRotation;
-                playerRb.linearVelocity =  vPlayerVelocity;
+                playerRb.linearVelocity =  playerStats.vPlayerVelocity;
             }
                 
         }
@@ -178,7 +171,7 @@ public class GameManager : MonoBehaviour
     
     public void StatChangePHealth()
     {
-        playerController.iPlayerHealth = statBlockUI.statsP[0];
+        playerStats.iPlayerHealth = statBlockUI.statsP[0];
     }
     public void StatChangePSpeed()
     {
@@ -187,10 +180,10 @@ public class GameManager : MonoBehaviour
             switch (statBlockUI.statsP[1]) // player speeds
             {
                 
-                case 0: playerController.fPlayerSpeed = playerSpeedLVL0; break;
-                case 1: playerController.fPlayerSpeed = playerSpeedLVL1; break;
-                case 2: playerController.fPlayerSpeed = playerSpeedLVL2; break;
-                case 3: playerController.fPlayerSpeed = playerSpeedLVL3; break;
+                case 0: playerStats.fPlayerSpeed = playerStats.playerSpeedLVL0; break;
+                case 1: playerStats.fPlayerSpeed = playerStats.playerSpeedLVL1; break;
+                case 2: playerStats.fPlayerSpeed = playerStats.playerSpeedLVL2; break;
+                case 3: playerStats.fPlayerSpeed = playerStats.playerSpeedLVL3; break;
             }
         }
     }
@@ -201,10 +194,10 @@ public class GameManager : MonoBehaviour
             switch (statBlockUI.statsP[2]) //player jump heights
             {
                 
-                case 0: playerController.fPlayerJump = playerJumpLVL0; break;
-                case 1: playerController.fPlayerJump = playerJumpLVL1; break;
-                case 2: playerController.fPlayerJump = playerJumpLVL2; break;
-                case 3: playerController.fPlayerJump = playerJumpLVL3; break;
+                case 0: playerStats.fPlayerJump = playerStats.playerJumpLVL0; break;
+                case 1: playerStats.fPlayerJump = playerStats.playerJumpLVL1; break;
+                case 2: playerStats.fPlayerJump = playerStats.playerJumpLVL2; break;
+                case 3: playerStats.fPlayerJump = playerStats.playerJumpLVL3; break;
             }
         }
     }

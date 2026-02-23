@@ -44,3 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59196f89aefd4a74bb30889cc6d1212b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iBuildIndex: 0
+  playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
+  enemySpeedLVL0: 0
+  enemySpeedLVL1: 3
+  enemySpeedLVL2: 7
+  enemySpeedLVL3: 10
+  enemySizeLVL1: 1.5
+  enemySizeLVL2: 3
+  enemySizeLVL3: 4.5

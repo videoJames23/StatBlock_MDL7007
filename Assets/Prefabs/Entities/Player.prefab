@@ -47,14 +47,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac79e51691b7d0418619bd7141bf9fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iPlayerHealth: 3
-  fPlayerSpeed: 1
-  fPlayerJump: 0
+  playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
   bIsTouchingStatBlockP: 0
   bIsTouchingStatBlockE: 0
   bInMenu: 0
   bInMenuP: 0
   bInMenuE: 0
+  acceleration: 12
+  airControlMultiplier: 0.5
+  audioController: {fileID: 0}
 --- !u!212 &8678867525025807306
 SpriteRenderer:
   m_ObjectHideFlags: 0
