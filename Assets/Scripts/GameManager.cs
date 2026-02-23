@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private Vector2 vPlayerVelocity;
     private Vector2 vEnemyVelocity;
 
-    //Removing magic numbers using predetermined values for each stat level -F
+    
     [SerializeField] private float playerSpeedLVL0 = 0f;
     [SerializeField] private float playerSpeedLVL1 = 3f;
     [SerializeField] private float playerSpeedLVL2 = 7f;
@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
             playerController.bInMenu = true;
         }
         
-        else //if (!playerController.bInMenuP && !playerController.bInMenuE) redundant condition -F
+        else
         {
             playerController.bInMenu = false;
         }
@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour
         {
             switch (statBlockUI.statsP[1]) // player speeds
             {
-                //MAGIC NUMBERS RAAAAAAAAAAAAAAAAH I HATE MAGIC NUMBERS -F
+                
                 case 0: playerController.fPlayerSpeed = playerSpeedLVL0; break;
                 case 1: playerController.fPlayerSpeed = playerSpeedLVL1; break;
                 case 2: playerController.fPlayerSpeed = playerSpeedLVL2; break;
@@ -200,7 +200,7 @@ public class GameManager : MonoBehaviour
         {
             switch (statBlockUI.statsP[2]) //player jump heights
             {
-                //MAGIC NUMBERS RAAAAAAAAAAAAAAAAH I HATE MAGIC NUMBERS -F
+                
                 case 0: playerController.fPlayerJump = playerJumpLVL0; break;
                 case 1: playerController.fPlayerJump = playerJumpLVL1; break;
                 case 2: playerController.fPlayerJump = playerJumpLVL2; break;
@@ -223,7 +223,6 @@ public class GameManager : MonoBehaviour
         {
             switch (statBlockUI.statsE[1]) // enemy speeds
             {
-                //MAGIC NUMBERS RAAAAAAAAAAAAAAAAH I HATE MAGIC NUMBERS -F
                 case 0: enemyController.fEnemySpeed = enemySpeedLVL0; break;
                 case 1: enemyController.fEnemySpeed = enemySpeedLVL1; break;
                 case 2: enemyController.fEnemySpeed = enemySpeedLVL2; break;

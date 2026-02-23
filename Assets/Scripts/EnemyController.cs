@@ -75,7 +75,7 @@ public class EnemyController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Wall"))
         {
-            //Is the Mathf part here nescessary? -F
+            
             if (Mathf.Abs(enemyRb.linearVelocity.x) < 0.1f)
             {
                 fEnemyDir *= -1;
@@ -84,7 +84,6 @@ public class EnemyController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {  
-            //I know this was a way to shoehorn in the maths content, but a raycast would probably be easier for detecting if the player is jumping on the enemy's head -F
             
             // MATHS CONTENT HERE
             // ((px x ex) + (py + ey))/|p||e| = cosangle

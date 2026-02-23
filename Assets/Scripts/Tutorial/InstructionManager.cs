@@ -56,7 +56,7 @@ public class InstructionManager : MonoBehaviour
         StartCoroutine(FadeOut(area));
     }
 
-    // ReSharper disable Unity.PerformanceAnalysis
+    
     IEnumerator FadeIn(string area)
     {
         Debug.Log("FadeIn called");
