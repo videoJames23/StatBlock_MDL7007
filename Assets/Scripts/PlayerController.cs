@@ -167,27 +167,16 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator OnTriggerEnter2D(Collider2D other)
     {
-<<<<<<< Updated upstream
+
         switch (other.gameObject.tag)
-=======
-        if (other.gameObject.CompareTag("Finish"))
-        {  
+        
+        {  case "Finish":
             //Why is the playercontroller responsible for ending the level? This should probably be in a different script. -F
             Debug.Log("Level Complete!");
             audioController.completionSource.Play();
             yield return new WaitForSeconds(1.8f);
             gameManagerScript.LoadScene();
-        }
-        else if (instructionManagerScript)
->>>>>>> Stashed changes
-        {
-            case "Finish":
-                Debug.Log("Level Complete!");
-                completionSource.Play();
-                yield return new WaitForSeconds(1.8f);
-                gameManagerScript.LoadScene();
-                break;
-            
+            break;
         }
         
         if (instructionManagerScript)
@@ -257,18 +246,10 @@ public class PlayerController : MonoBehaviour
                 bIsTouchingStatBlockE = false;
                 break;
         }
-       
+        
         if (instructionManagerScript)
-        {
-<<<<<<< Updated upstream
-            switch (other.gameObject.tag)
-=======
-            bIsTouchingStatBlockE = false;
-        }
-        if (instructionManagerScript)
-        {
-            if (other.gameObject.CompareTag("Text1"))
->>>>>>> Stashed changes
+        {switch (other.gameObject.tag)
+
             {
                 case "Text1":
                     instructionManagerScript.StartFadeOut("text1");
