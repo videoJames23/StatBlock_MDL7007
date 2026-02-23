@@ -692,6 +692,7 @@ MonoBehaviour:
   - {fileID: 5445885438135700974}
   - {fileID: 750530754885650575}
   playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
+  enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
   statsP: 010000000100000001000000
   statsE: 010000000200000003000000
   playerController: {fileID: 0}

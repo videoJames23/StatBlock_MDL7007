@@ -10,6 +10,7 @@ public class StatBlockUI : MonoBehaviour
     public TextMeshProUGUI[] valueTexts;
 
     [SerializeField] private PlayerStats  playerStats;
+    [SerializeField] private EnemyStats  enemyStats;
     
     public int[] statsP = {1, 1, 1};
     public int[] statsE = {1, 1, 1};
@@ -179,10 +180,10 @@ public class StatBlockUI : MonoBehaviour
 
 
 
-                            if (statsE[selectedIndex] > 3)
+                            if (statsE[selectedIndex] > enemyStats.aEnemyStatBounds[selectedIndex, 1])
                             {
                                 audioController.errorSource.Play();
-                                statsE[selectedIndex] = 3;
+                                statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 1];
                             }
 
                             switch (selectedIndex)
@@ -246,23 +247,12 @@ public class StatBlockUI : MonoBehaviour
 
                         statsE[selectedIndex]--;
                         
-                        if (statsE[0] < 1)
+                        if (statsE[selectedIndex] < enemyStats.aEnemyStatBounds[selectedIndex, 0])
                         {
                             audioController.errorSource.Play();
-                            statsE[0] = 1;
+                            statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 0];
                         }
-
-                        else if (statsE[1] < 0)
-                        {
-                            audioController.errorSource.Play();
-                            statsE[1] = 0;
-                        }
-
-                        else if (statsE[2] < 1)
-                        {
-                            audioController.errorSource.Play();
-                            statsE[2] = 1;
-                        }
+                        
                         switch (selectedIndex)
                         {
                             case 0:
