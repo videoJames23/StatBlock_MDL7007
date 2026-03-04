@@ -7,7 +7,6 @@ public class PlayerCollisions : MonoBehaviour
     private PlayerDamage playerDamage;
     private AudioController audioController;
     private GameManager gameManagerScript;
-    private InstructionManager instructionManagerScript;
     
     public bool bIsTouchingStatBlockP;
     public bool bIsTouchingStatBlockE;
@@ -18,12 +17,6 @@ public class PlayerCollisions : MonoBehaviour
         
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
         gameManagerScript = gameManager.GetComponent<GameManager>();
-        
-        GameObject instructionManager = GameObject.FindGameObjectWithTag("InstructionManager");
-        if (instructionManager)
-        {
-            instructionManagerScript = instructionManager.GetComponent<InstructionManager>();
-        }
         
         
         GameObject audio = GameObject.FindGameObjectWithTag("Audio");
@@ -54,25 +47,6 @@ public class PlayerCollisions : MonoBehaviour
             break;
         }
         
-        if (instructionManagerScript)
-        {
-            switch (other.gameObject.tag)
-            {
-                case "Text1":
-                    instructionManagerScript.StartFadeIn("text1");
-                    break;
-                case "Text2":
-                    instructionManagerScript.StartFadeIn("text2");
-                    break;
-                case "Text3":
-                    instructionManagerScript.StartFadeIn("text3");
-                    break;
-                case "Text4":
-                    instructionManagerScript.StartFadeIn("text4");
-                    break;
-            }
-            
-        }
 
     }
     void OnCollisionStay2D(Collision2D other)
@@ -122,25 +96,7 @@ public class PlayerCollisions : MonoBehaviour
                 break;
         }
         
-        if (instructionManagerScript)
-        {switch (other.gameObject.tag)
-
-            {
-                case "Text1":
-                    instructionManagerScript.StartFadeOut("text1");
-                    break;
-                case "Text2":
-                    instructionManagerScript.StartFadeOut("text2");
-                    break;
-                case "Text3":
-                    instructionManagerScript.StartFadeOut("text3");
-                    break;
-                case "Text4":
-                    instructionManagerScript.StartFadeOut("text4");
-                    break;
-            }
-            
-        }
+       
 
     }
 }

@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     
     private StatBlockUI statBlockUI;
     private GameManager gameManagerScript;
-    private InstructionManager instructionManagerScript;
+    
     
     public AudioController audioController;
     public PlayerMovement playerMovement;
@@ -51,11 +51,6 @@ public class PlayerController : MonoBehaviour
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
         
-        GameObject instructionManager = GameObject.FindGameObjectWithTag("Instruction Manager");
-        if (instructionManager)
-        {
-            instructionManagerScript = instructionManager.GetComponent<InstructionManager>();
-        }
         
         GameObject audio =  GameObject.FindGameObjectWithTag("Audio");
         if (audio)
