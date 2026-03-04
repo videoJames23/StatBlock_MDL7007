@@ -21,11 +21,10 @@ public class PlayerController : MonoBehaviour
     public bool bInMenuP;
     public bool bInMenuE;
     
-    private bool bIsGrounded;
+    
     private bool bCanTakeDamage = true;
 
-    public float acceleration = 12f;
-    public float airControlMultiplier = 0.5f;
+    public float fInput;
     
     private float fIFramesDuration = 1;
     private int iNumberOfFlashes = 5;
@@ -35,7 +34,7 @@ public class PlayerController : MonoBehaviour
     private InstructionManager instructionManagerScript;
     private SpriteRenderer cSpriteRenderer;
     public AudioController audioController;
-    
+    public PlayerMovement playerMovement;
 
 
     
@@ -45,6 +44,7 @@ public class PlayerController : MonoBehaviour
     {   
         playerRb = GetComponent<Rigidbody2D>();
         cSpriteRenderer = GetComponent<SpriteRenderer>();
+        playerMovement = GetComponent<PlayerMovement>();
         
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
         gameManagerScript = gameManager.GetComponent<GameManager>();
@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
         }
         
         
+        
         Physics2D.IgnoreLayerCollision(10, 11, false);
     }
 
@@ -72,35 +73,23 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         
-        
-        if (Input.GetKeyDown(KeyCode.W) && bIsGrounded && !bInMenu)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && !bInMenu)
         {
-            Jump();
-        
+            playerMovement.Jump();
         }
         
     }
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
 
         if (!bInMenu)
         {
-            float fInput = Input.GetAxisRaw("Horizontal");
-
-            Vector2 vTargetVelocity = new Vector2(fInput * playerStats.fPlayerSpeed, playerRb.linearVelocity.y);
-
-            float fControl = bIsGrounded ? 1f : airControlMultiplier;
-
-            playerRb.linearVelocity = Vector2.Lerp(playerRb.linearVelocity, vTargetVelocity,acceleration * fControl * Time.fixedDeltaTime);
+            fInput = Input.GetAxisRaw("Horizontal");
         }
     }
 
-    public void Jump()
-    {
-        audioController.jumpSource.Play();
-        playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, playerStats.fPlayerJump);
-    }
+    
     
 
     
@@ -203,7 +192,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            bIsGrounded = true;
+            playerMovement.bIsGrounded = true;
         }
         
         
@@ -229,7 +218,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            bIsGrounded = false;
+            playerMovement.bIsGrounded = false;
         }
         
     }

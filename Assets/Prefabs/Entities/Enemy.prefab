@@ -48,8 +48,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 0}
+  playerMovement: {fileID: 0}
   audioController: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
+  fEnemyDir: 1
+  fPrevDir: 0
 --- !u!212 &8491414037366413147
 SpriteRenderer:
   m_ObjectHideFlags: 0

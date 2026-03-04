@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2614926581154918743}
+  - component: {fileID: 8498139214254430403}
   - component: {fileID: 4277488488149247715}
   - component: {fileID: 8678867525025807306}
   - component: {fileID: 9062997046339653805}
@@ -35,6 +36,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8498139214254430403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5744648186350750262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05c3a9bc5e6d0084085da37006b506d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceleration: 12
+  airControlMultiplier: 0.5
+  playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
+  bIsGrounded: 0
 --- !u!114 &4277488488149247715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53,9 +70,9 @@ MonoBehaviour:
   bInMenu: 0
   bInMenuP: 0
   bInMenuE: 0
-  acceleration: 12
-  airControlMultiplier: 0.5
+  fInput: 0
   audioController: {fileID: 0}
+  playerMovement: {fileID: 8498139214254430403}
 --- !u!212 &8678867525025807306
 SpriteRenderer:
   m_ObjectHideFlags: 0

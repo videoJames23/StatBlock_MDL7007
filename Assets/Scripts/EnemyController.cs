@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D enemyRb;
     private Rigidbody2D playerRb;
     public PlayerController playerController;
+    public PlayerMovement playerMovement;
     public AudioController audioController;
  
     private SpriteRenderer cSpriteRenderer;
@@ -44,6 +45,7 @@ public class EnemyController : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerRb = player.GetComponent<Rigidbody2D>();
         playerController = player.GetComponent<PlayerController>();
+        playerMovement = player.GetComponent<PlayerMovement>();
         
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
@@ -97,7 +99,8 @@ public class EnemyController : MonoBehaviour
             {
                 Debug.Log("Squash!");
                 TakeDamage(1);
-                playerController.Jump();
+                playerMovement.bIsGrounded = true;
+                playerMovement.Jump();
                 if (enemyStats.iEnemyHealth <= 0)
                 {
                     Destroy(gameObject);
