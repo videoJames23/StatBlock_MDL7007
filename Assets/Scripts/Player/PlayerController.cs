@@ -22,19 +22,19 @@ public class PlayerController : MonoBehaviour
     public bool bInMenuE;
     
     
-    private bool bCanTakeDamage = true;
+    
 
     public float fInput;
     
-    private float fIFramesDuration = 1;
-    private int iNumberOfFlashes = 5;
+    
     
     private StatBlockUI statBlockUI;
     private GameManager gameManagerScript;
     private InstructionManager instructionManagerScript;
-    private SpriteRenderer cSpriteRenderer;
+    
     public AudioController audioController;
     public PlayerMovement playerMovement;
+    public PlayerDamage playerDamage;
 
 
     
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {   
         playerRb = GetComponent<Rigidbody2D>();
-        cSpriteRenderer = GetComponent<SpriteRenderer>();
+        playerDamage = GetComponent<PlayerDamage>();
         playerMovement = GetComponent<PlayerMovement>();
         
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
         
         
         
-        Physics2D.IgnoreLayerCollision(10, 11, false);
+       
     }
 
     // Update is called once per frame
@@ -96,61 +96,12 @@ public class PlayerController : MonoBehaviour
     
     
     // Damage/I-Frames
-    public void TakeDamage(int damage)
-    {
-        if (!bCanTakeDamage)
-        {
-            return;
-        }
-        
-        bCanTakeDamage = false;
-        
-        audioController.damageSource.Play();
-        
-        statBlockUI.statsP[0] -= damage;
-        statBlockUI.iPointsTotalP--;
-            
-        gameManagerScript.StatChangePHealth();
-        bInMenuP = true;
-        statBlockUI.UpdateUI();
-        bInMenuP = false;
-        statBlockUI.UpdateUI();
-            
-            
-        // I-frames
-        if (playerStats.iPlayerHealth > 0)
-        {
-            StartCoroutine(Invulnerability());
-        }
-            
-        else if (playerStats.iPlayerHealth <= 0)
-        {
-            Destroy(gameObject);
-        }
-    }
-    private IEnumerator Invulnerability()
-    {
-        Physics2D.IgnoreLayerCollision(10, 11, true);
-        
-      
-        for (int i = 0; i < iNumberOfFlashes; i++)
-        {
-            cSpriteRenderer.color = new Color(0, 0.25f, 1, 0.5f);
-            yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
-            cSpriteRenderer.color = Color.blue;
-            yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
-            //might be a way to just target the alpha channel instead of the whole colour,
-            //which would let you change the player's colour without having to adjust it here too -F
-        }
-        
-        Physics2D.IgnoreLayerCollision(10, 11, false);
-        bCanTakeDamage = true;
-    }
+    
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Spike"))
         {
-                TakeDamage(1);
+                playerDamage.TakeDamage(1);
         }
     }
     private IEnumerator OnTriggerEnter2D(Collider2D other)

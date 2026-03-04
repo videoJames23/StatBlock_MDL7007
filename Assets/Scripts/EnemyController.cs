@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     public PlayerController playerController;
     public PlayerMovement playerMovement;
     public AudioController audioController;
+    public PlayerDamage playerDamage;
  
     private SpriteRenderer cSpriteRenderer;
 
@@ -46,6 +47,7 @@ public class EnemyController : MonoBehaviour
         playerRb = player.GetComponent<Rigidbody2D>();
         playerController = player.GetComponent<PlayerController>();
         playerMovement = player.GetComponent<PlayerMovement>();
+        playerDamage =  player.GetComponent<PlayerDamage>();
         
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
@@ -110,7 +112,7 @@ public class EnemyController : MonoBehaviour
             else if (playerCosAngle < enemyStats.fCosAngle || !bPlayerIsFalling)
             {
                 Debug.Log("Ow!");
-                playerController.TakeDamage(1);
+                playerDamage.TakeDamage(1);
             }
         }
 
