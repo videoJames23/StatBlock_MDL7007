@@ -322,9 +322,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4277488488149247715, guid: 2bebbbe7e30cea34fa21c63ea4a824d4, type: 3}
-      propertyPath: playerStats
+      propertyPath: audioController
       value: 
-      objectReference: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
+      objectReference: {fileID: 1931545583}
     - target: {fileID: 5744648186350750262, guid: 2bebbbe7e30cea34fa21c63ea4a824d4, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2653,6 +2653,17 @@ MonoBehaviour:
   downSource: {fileID: 1949611970}
   indexSource: {fileID: 1499887714}
   errorSource: {fileID: 1863411194}
+--- !u!114 &1931545583 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5988757548258676963, guid: bef2b071f70da574e94e7dec4744e236, type: 3}
+  m_PrefabInstance: {fileID: 1995601824}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931545581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb2768a7054e7341ae87187d860c60d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &1949611970 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 8736929027066331808, guid: bef2b071f70da574e94e7dec4744e236, type: 3}

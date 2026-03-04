@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private EnemyController enemyController;
     private StatBlockUI statBlockUI;
     private AudioController audioController;
+    private PlayerCollisions  playerCollisions;
     public int iBuildIndex;
     
     [SerializeField] private PlayerStats  playerStats;
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerRb = player.GetComponent<Rigidbody2D>();
         playerController = player.GetComponent<PlayerController>();
+        playerCollisions = player.GetComponent<PlayerCollisions>();
         
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
@@ -77,7 +79,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(iBuildIndex);
         }
         
-        if (playerController.bIsTouchingStatBlockP && Input.GetKeyDown(KeyCode.E))
+        if (playerCollisions.bIsTouchingStatBlockP && Input.GetKeyDown(KeyCode.E))
         {
             playerController.bInMenuP = !playerController.bInMenuP;
             
@@ -93,7 +95,7 @@ public class GameManager : MonoBehaviour
             MenuFreezeToggle();
         }
         
-        if (playerController.bIsTouchingStatBlockE && Input.GetKeyDown(KeyCode.E))
+        if (playerCollisions.bIsTouchingStatBlockE && Input.GetKeyDown(KeyCode.E))
         {
             if (!playerController.bInMenuE)
             {

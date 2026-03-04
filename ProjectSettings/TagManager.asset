@@ -34,6 +34,7 @@ TagManager:
   - Text3
   - Text4
   - Audio
+  - InstructionManager
   layers:
   - Default
   - TransparentFX
