@@ -20,7 +20,8 @@ public class PlayerDamage : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
         playerController = GetComponent<PlayerController>();
         playerMovement = GetComponent<PlayerMovement>();
-        cSpriteRenderer = GetComponent<SpriteRenderer>(); GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
+        cSpriteRenderer = GetComponent<SpriteRenderer>(); 
+        GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
         gameManagerScript = gameManager.GetComponent<GameManager>();
         
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");

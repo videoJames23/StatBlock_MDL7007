@@ -71,64 +71,8 @@ public class EnemyController : MonoBehaviour
         enemyRb.linearVelocity = new Vector2(enemyStats.fEnemySpeed * fEnemyDir, enemyRb.linearVelocity.y);
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Wall"))
-        {
-            
-            if (Mathf.Abs(enemyRb.linearVelocity.x) < 0.1f)
-            {
-                fEnemyDir *= -1;
-            }
-        }
-
-        if (other.gameObject.CompareTag("Player"))
-        {  
-            
-            // MATHS CONTENT HERE
-            // ((px x ex) + (py + ey))/|p||e| = cosangle
-            Vector2 toPlayer = playerRb.position - enemyRb.position;
-            float upMag = Vector2.up.magnitude;
-            float toPlayerMag = toPlayer.magnitude;
-            float magProduct = toPlayerMag * upMag;
-            float playerCosAngle =
-                ((toPlayer.x * Vector2.up.x) + (toPlayer.y * Vector2.up.y)) /
-                magProduct;
-            bool bPlayerIsFalling = playerRb.linearVelocity.y <= 0f;
-            
-           
-            if (playerCosAngle > enemyStats.fCosAngle && bPlayerIsFalling)
-            {
-                Debug.Log("Squash!");
-                TakeDamage(1);
-                playerMovement.bIsGrounded = true;
-                playerMovement.Jump();
-                if (enemyStats.iEnemyHealth <= 0)
-                {
-                    Destroy(gameObject);
-                }
-            }
-            
-            else if (playerCosAngle < enemyStats.fCosAngle || !bPlayerIsFalling)
-            {
-                Debug.Log("Ow!");
-                playerDamage.TakeDamage(1);
-            }
-        }
-
-        if (other.gameObject.CompareTag("Spike"))
-        {
-            TakeDamage(enemyStats.iDamage);
-            
-            fEnemyDir *= -1;
-                
-            if (enemyStats.iEnemyHealth > 0)
-            {
-                StartCoroutine(Invulnerability());
-            }
-        }
-    }
-    void TakeDamage(int damage)
+    
+    public void TakeDamage(int damage)
     {
         audioController.damageSource.Play();
         
@@ -157,7 +101,7 @@ public class EnemyController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private IEnumerator Invulnerability()
+    public IEnumerator Invulnerability()
     {
         enemyStats.iDamage = 0;
         
