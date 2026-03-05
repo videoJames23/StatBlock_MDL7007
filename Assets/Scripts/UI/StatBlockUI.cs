@@ -7,6 +7,8 @@ using UnityEngine.Serialization;
 
 public class StatBlockUI : MonoBehaviour
 {
+    private StatBlockInput statBlockInput;
+    
     public TextMeshProUGUI[] valueTexts;
 
     [SerializeField] private PlayerStats  playerStats;
@@ -14,7 +16,6 @@ public class StatBlockUI : MonoBehaviour
     
     public int[] statsP = {1, 1, 1};
     public int[] statsE = {1, 1, 1};
-    private int selectedIndex;
     
     public PlayerController playerController;
     public GameManager gameManagerScript;
@@ -43,6 +44,8 @@ public class StatBlockUI : MonoBehaviour
     
     void Start()
     {
+        statBlockInput = GetComponent<StatBlockInput>();
+        
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
         
@@ -72,7 +75,7 @@ public class StatBlockUI : MonoBehaviour
         
         
 
-        selectedIndex = 0;
+        statBlockInput.selectedIndex = 0;
 
         holder.SetActive(false);
         
@@ -86,196 +89,7 @@ public class StatBlockUI : MonoBehaviour
     void Update()
     {
         
-        
-           
-        if (playerController)
-        {
-            if (playerController.bInMenu)
-            {
-            
-
-                // select stat
-                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-                {
-                    selectedIndex--;
-                    audioController.indexSource.Play();
-                    if (selectedIndex < 0 && playerController.bInMenuP)
-                    {
-                        selectedIndex = statsP.Length - 1;
-                    }
-                    else if (selectedIndex < 0 && playerController.bInMenuE)
-                    {
-                        selectedIndex = statsE.Length - 1;
-                    }
-
-                    UpdateUI();
-                }
-
-
-                if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-                {
-                    selectedIndex++;
-                    audioController.indexSource.Play();
-                    if (selectedIndex >= statsP.Length && playerController.bInMenuP)
-                    {
-                        selectedIndex = 0;
-                    }
-                    else if (selectedIndex >= statsE.Length && playerController.bInMenuE)
-                    {
-                        selectedIndex = 0;
-                    }
-
-                    UpdateUI();
-                }
-
-                // change value
-                if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-                {
-                    
-                    if (playerController.bInMenuP)
-                    {
-                        if (iPointsLeftP > 0)
-                        {
-                            statsP[selectedIndex]++;
-                            audioController.upSource.Play();
-                            if (statsP[selectedIndex] > playerStats.aPlayerStatBounds[selectedIndex, 1])
-                            {
-                                audioController.errorSource.Play();
-                                statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 1];
-                            }
-
-                            switch (selectedIndex)
-                            {
-                                case 0:
-                                    gameManagerScript.StatChangePHealth();
-                                    break;
-                                case 1:
-                                    gameManagerScript.StatChangePSpeed();
-                                    break;
-                                case 2:
-                                    gameManagerScript.StatChangePJump();
-                                    break;
-                            }
-                        }
-                        else if (iPointsLeftP == 0)
-                        {
-                            audioController.errorSource.Play();
-                        }
-
-
-                    }
-                    else if (playerController.bInMenuE)
-                    {
-                        if (iPointsLeftE > 0)
-                        {
-
-
-                            if (selectedIndex == 2)
-                            {
-                                iPrevSize = statsE[2];
-                            }
-
-                            statsE[selectedIndex]++;
-                            audioController.upSource.Play();
-
-
-
-                            if (statsE[selectedIndex] > enemyStats.aEnemyStatBounds[selectedIndex, 1])
-                            {
-                                audioController.errorSource.Play();
-                                statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 1];
-                            }
-
-                            switch (selectedIndex)
-                            {
-                                case 0:
-                                    gameManagerScript.StatChangeEHealth();
-                                    break;
-                                case 1:
-                                    gameManagerScript.StatChangeESpeed();
-                                    break;
-                                case 2:
-                                    gameManagerScript.StatChangeESize();
-                                    break;
-                            }
-
-
-                        }
-                        else if (iPointsLeftE == 0)
-                        {
-                            audioController.errorSource.Play();
-                        }
-
-                        
-                    }
-                    UpdateUI();
-                }
-
-                if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-                {
-                    audioController.downSource.Play();
-                    if (playerController.bInMenuP)
-                    {
-                        statsP[selectedIndex]--;
-                        
-                        if (statsP[selectedIndex] < playerStats.aPlayerStatBounds[selectedIndex, 0])
-                        {
-                            audioController.errorSource.Play();
-                            statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 0];
-                        }
-                        
-                        switch (selectedIndex)
-                        {
-                            case 0:
-                                gameManagerScript.StatChangePHealth();
-                                break;
-                            case 1:
-                                gameManagerScript.StatChangePSpeed();
-                                break;
-                            case 2:
-                                gameManagerScript.StatChangePJump();
-                                break;
-                        }
-                    }
-                    else if (playerController.bInMenuE)
-                    {
-                        
-                        if (selectedIndex == 2)
-                        {
-                            iPrevSize = statsE[2];
-                        }
-
-                        statsE[selectedIndex]--;
-                        
-                        if (statsE[selectedIndex] < enemyStats.aEnemyStatBounds[selectedIndex, 0])
-                        {
-                            audioController.errorSource.Play();
-                            statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 0];
-                        }
-                        
-                        switch (selectedIndex)
-                        {
-                            case 0:
-                                gameManagerScript.StatChangeEHealth();
-                                break;
-                            case 1:
-                                gameManagerScript.StatChangeESpeed();
-                                break;
-                            case 2:
-                                gameManagerScript.StatChangeESize();
-                                break;
-                        }
-                        
-                    }
-
-                    UpdateUI();
-                }
-
-
-
-                
-            }
-        }
+       
     }
 
     public void UpdateUI()
@@ -331,7 +145,7 @@ public class StatBlockUI : MonoBehaviour
 
                 if (playerController.bInMenuP || playerController.bInMenuE)
                 {
-                    valueTexts[i].color = (i == selectedIndex) ? Color.green : Color.white;
+                    valueTexts[i].color = (i == statBlockInput.selectedIndex) ? Color.green : Color.white;
                 }
                 else if (!playerController.bInMenuP && !playerController.bInMenuE)
                 {

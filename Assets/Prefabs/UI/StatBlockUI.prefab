@@ -642,6 +642,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1677900830929588223}
   - component: {fileID: 6686633217548592756}
+  - component: {fileID: 5492014364087014244}
   - component: {fileID: 5752956506425552972}
   - component: {fileID: 1305399952890255388}
   - component: {fileID: 4189463090083641187}
@@ -708,6 +709,21 @@ MonoBehaviour:
   iPointsLeftE: 0
   sUser: 
   iPrevSize: 0
+--- !u!114 &5492014364087014244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5831489033091506738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db60791d73c90d47a611c14f9adebbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
+  enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
+  selectedIndex: 0
 --- !u!223 &5752956506425552972
 Canvas:
   m_ObjectHideFlags: 0
