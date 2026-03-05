@@ -5,6 +5,8 @@ using UnityEngine;
 public class TextFade : MonoBehaviour
 {
     private TMP_Text textTMP;
+    
+  
     void Start()
     {
         textTMP = GetComponent<TMP_Text>();
@@ -12,6 +14,12 @@ public class TextFade : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+
+        if (!enabled || !gameObject.activeInHierarchy)
+        {
+            return;
+        }
+
         if (other.gameObject.CompareTag("Player"))
         {
             StartCoroutine(FadeIn());
@@ -19,6 +27,12 @@ public class TextFade : MonoBehaviour
     }
     void OnTriggerExit2D(Collider2D other)
     {
+
+        if (!enabled || !gameObject.activeInHierarchy)
+        {
+            return;
+        }
+
         if (other.gameObject.CompareTag("Player"))
         {
             StartCoroutine(FadeOut());
@@ -26,18 +40,21 @@ public class TextFade : MonoBehaviour
     }
 
     
+    void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     IEnumerator FadeIn()
     {
         Debug.Log("FadeIn called");
         yield return FadeText(textTMP, 0f, 1f);
-        StopCoroutine(FadeIn());
     }
 
     IEnumerator FadeOut()
     {
         Debug.Log("FadeOut called");
         yield return FadeText(textTMP, 1f, 0f);
-        StopCoroutine(FadeOut());
     }
 
     IEnumerator FadeText(TMP_Text text, float start, float end)
