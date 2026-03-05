@@ -11,8 +11,14 @@ public class EnemyStats : ScriptableObject
     
     public int[,] aEnemyStatBounds = { {1, 3}, {0, 3}, {1, 3} };
     
-    // fEnemyDir controls whether the enemy is moving left or right, but you've used a float even though it can only be -1 or 1, maybe another type would work better.
+    [SerializeField] public float enemySpeedLVL0 = 0f;
+    [SerializeField] public float enemySpeedLVL1 = 3f;
+    [SerializeField] public float enemySpeedLVL2 = 7f;
+    [SerializeField] public float enemySpeedLVL3 = 10f;
     
+    [SerializeField] public float enemySizeLVL1 = 1.5f;
+    [SerializeField] public float enemySizeLVL2 = 3f;
+    [SerializeField] public float enemySizeLVL3 = 4.5f;
     
     public int iDamage;
     public float fCosAngle = 0.70710678118f;
