@@ -5,11 +5,11 @@ public class EnemyCollisions : MonoBehaviour
 {
     private Rigidbody2D enemyRb;
     private EnemyController enemyController;
+    private EnemyDamage enemyDamage;
     [SerializeField] private EnemyStats enemyStats;
     
     [SerializeField] private PlayerStats playerStats;
     private Rigidbody2D playerRb;
-    private PlayerController playerController;
     private PlayerMovement playerMovement;
     private PlayerDamage playerDamage;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,10 +17,10 @@ public class EnemyCollisions : MonoBehaviour
     {
         enemyRb =  GetComponent<Rigidbody2D>();
         enemyController = GetComponent<EnemyController>();
+        enemyDamage = GetComponent<EnemyDamage>();
         
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerRb = player.GetComponent<Rigidbody2D>();
-        playerController = player.GetComponent<PlayerController>();
         playerMovement = player.GetComponent<PlayerMovement>();
         playerDamage = player.GetComponent<PlayerDamage>();
     }
@@ -59,7 +59,7 @@ public class EnemyCollisions : MonoBehaviour
             if (playerCosAngle > enemyStats.fCosAngle && bPlayerIsFalling)
             {
                 Debug.Log("Squash!");
-                enemyController.TakeDamage(1);
+                enemyDamage.TakeDamage(1);
                 playerMovement.bIsGrounded = true;
                 playerMovement.Jump();
                 if (enemyStats.iEnemyHealth <= 0)
@@ -77,13 +77,13 @@ public class EnemyCollisions : MonoBehaviour
 
         if (other.gameObject.CompareTag("Spike"))
         {
-            enemyController.TakeDamage(enemyStats.iDamage);
+            enemyDamage.TakeDamage(enemyStats.iDamage);
             
             enemyController.fEnemyDir *= -1;
                 
             if (enemyStats.iEnemyHealth > 0)
             {
-                StartCoroutine(enemyController.Invulnerability());
+                StartCoroutine(enemyDamage.Invulnerability());
             }
         }
     }
