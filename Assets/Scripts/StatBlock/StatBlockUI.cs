@@ -8,18 +8,14 @@ using UnityEngine.Serialization;
 public class StatBlockUI : MonoBehaviour
 {
     private StatBlockInput statBlockInput;
+    private StatBlockChanges statBlockChanges;
     
     public TextMeshProUGUI[] valueTexts;
 
     [SerializeField] private PlayerStats  playerStats;
     [SerializeField] private EnemyStats  enemyStats;
     
-    public int[] statsP = {1, 1, 1};
-    public int[] statsE = {1, 1, 1};
-    
     public PlayerController playerController;
-    public GameManager gameManagerScript;
-    public AudioController audioController;
 
     public GameObject holder;
     public GameObject background;
@@ -30,11 +26,6 @@ public class StatBlockUI : MonoBehaviour
     public ShowHide showHideJ;
     public ShowHide showHideS;
     
- 
-    public int iPointsTotalP;
-    public int iPointsLeftP;
-    public int iPointsTotalE;
-    public int iPointsLeftE;
     public string sUser;
     [FormerlySerializedAs("prevSize")] public int iPrevSize;
     
@@ -51,45 +42,25 @@ public class StatBlockUI : MonoBehaviour
     void Start()
     {
         statBlockInput = GetComponent<StatBlockInput>();
+        statBlockChanges = GetComponent<StatBlockChanges>();
         
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
-        
-        
-        
-        GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
-        gameManagerScript = gameManager.GetComponent<GameManager>();
         
         holder = GameObject.FindGameObjectWithTag("Holder");
         background = GameObject.Find("Background");
         holderRT = holder.GetComponent<RectTransform>();
         
-        
         GameObject size = GameObject.FindGameObjectWithTag("Size");
         GameObject jump = GameObject.FindGameObjectWithTag("Jump");
         showHideS = size.GetComponent<ShowHide>();
         showHideJ = jump.GetComponent<ShowHide>();
-        
-        GameObject audio = GameObject.FindGameObjectWithTag("Audio");
-        if (audio)
-        {
-            audioController = audio.GetComponent<AudioController>();
-        }
-        
-        
-        
-        
-        
 
         statBlockInput.selectedIndex = 0;
 
         holder.SetActive(false);
         
         UIPosition = holderRT.anchoredPosition;
-        
-        iPointsLeftP = iPointsTotalP - statsP.Sum();
-        iPointsLeftE = iPointsTotalE - statsE.Sum();
-        
     }
 
     void Update()
@@ -101,8 +72,8 @@ public class StatBlockUI : MonoBehaviour
     public void UpdateUI()
     {
         holder.SetActive(true);
-        iPointsLeftP = iPointsTotalP - statsP.Sum();
-        iPointsLeftE = iPointsTotalE - statsE.Sum();
+        statBlockChanges.iPointsLeftP = statBlockChanges.iPointsTotalP - statBlockChanges.statsP.Sum();
+        statBlockChanges.iPointsLeftE = statBlockChanges.iPointsTotalE - statBlockChanges.statsE.Sum();
         
         
         if (playerController.bInMenu)
@@ -130,8 +101,8 @@ public class StatBlockUI : MonoBehaviour
             {
                 if (playerController.bInMenuP)
                 {
-                    valueTexts[i].text = statsP[i].ToString();
-                    valueTexts[3].text = iPointsLeftP.ToString();
+                    valueTexts[i].text = statBlockChanges.statsP[i].ToString();
+                    valueTexts[3].text = statBlockChanges.iPointsLeftP.ToString();
                     showHideJ.Show();
                     showHideS.Hide();
                     sUser = "Player";
@@ -141,8 +112,8 @@ public class StatBlockUI : MonoBehaviour
 
                 else if (playerController.bInMenuE)
                 {
-                    valueTexts[i].text = statsE[i].ToString();
-                    valueTexts[3].text = iPointsLeftE.ToString();
+                    valueTexts[i].text = statBlockChanges.statsE[i].ToString();
+                    valueTexts[3].text = statBlockChanges.iPointsLeftE.ToString();
                     showHideJ.Hide();
                     showHideS.Show();
                     sUser = "Enemy";

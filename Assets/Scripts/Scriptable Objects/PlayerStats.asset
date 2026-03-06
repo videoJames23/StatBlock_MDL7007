@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 431981e2f508b2842b1a93e7e80b1f74, type: 3}
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
-  iPlayerHealth: 2
-  fPlayerSpeed: 7
+  iPlayerHealth: 1
+  fPlayerSpeed: 3
   fPlayerJump: 5
-  vPlayerVelocity: {x: 2.2799997, y: 0.0000002682209}
+  vPlayerVelocity: {x: -2.279681, y: -0.000000288936}
   playerSpeedLVL0: 0
   playerSpeedLVL1: 3
   playerSpeedLVL2: 7

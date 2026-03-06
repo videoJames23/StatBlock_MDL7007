@@ -8,12 +8,17 @@ public class PlayerDamage : MonoBehaviour
     private float fIFramesDuration = 1;
     private int iNumberOfFlashes = 5;
     private SpriteRenderer cSpriteRenderer;
+    
     private PlayerController playerController;
     private PlayerMovement playerMovement;
     private Rigidbody2D playerRb;
+    
     private AudioController audioController;
+    
     private GameManager gameManagerScript;
+    
     private StatBlockUI statBlockUI;
+    private StatBlockChanges statBlockChanges;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,6 +31,7 @@ public class PlayerDamage : MonoBehaviour
         
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
+        statBlockChanges = statBlockUI.GetComponent<StatBlockChanges>();
         
         
         GameObject audio =  GameObject.FindGameObjectWithTag("Audio");
@@ -48,10 +54,10 @@ public class PlayerDamage : MonoBehaviour
         
         audioController.damageSource.Play();
         
-        statBlockUI.statsP[0] -= iDamage;
-        statBlockUI.iPointsTotalP--;
+        statBlockChanges.statsP[0] -= iDamage;
+        statBlockChanges.iPointsTotalP--;
             
-        gameManagerScript.StatChangePHealth();
+        statBlockChanges.StatChangePHealth();
         playerController.bInMenuP = true;
         statBlockUI.UpdateUI();
         playerController.bInMenuP = false;

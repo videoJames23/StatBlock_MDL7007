@@ -12,12 +12,14 @@ public class StatBlockInput : MonoBehaviour
     private AudioController audioController;
     
     private StatBlockUI statBlockUI;
+    private StatBlockChanges statBlockChanges;
     
     public int selectedIndex;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         statBlockUI = GetComponent<StatBlockUI>();
+        statBlockChanges = statBlockUI.GetComponent<StatBlockChanges>();
         
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
@@ -77,26 +79,26 @@ public class StatBlockInput : MonoBehaviour
                     
                     if (playerController.bInMenuP)
                     {
-                        if (statBlockUI.iPointsLeftP > 0)
+                        if (statBlockChanges.iPointsLeftP > 0)
                         {
-                            statBlockUI.statsP[selectedIndex]++;
+                            statBlockChanges.statsP[selectedIndex]++;
                             audioController.upSource.Play();
-                            if (statBlockUI.statsP[selectedIndex] > playerStats.aPlayerStatBounds[selectedIndex, 1])
+                            if (statBlockChanges.statsP[selectedIndex] > playerStats.aPlayerStatBounds[selectedIndex, 1])
                             {
                                 audioController.errorSource.Play();
-                                statBlockUI.statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 1];
+                                statBlockChanges.statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 1];
                             }
 
                             switch (selectedIndex)
                             {
                                 case 0:
-                                    gameManagerScript.StatChangePHealth();
+                                    statBlockChanges.StatChangePHealth();
                                     break;
                                 case 1:
-                                    gameManagerScript.StatChangePSpeed();
+                                    statBlockChanges.StatChangePSpeed();
                                     break;
                                 case 2:
-                                    gameManagerScript.StatChangePJump();
+                                    statBlockChanges.StatChangePJump();
                                     break;
                             }
                         }
@@ -109,35 +111,35 @@ public class StatBlockInput : MonoBehaviour
                     }
                     else if (playerController.bInMenuE)
                     {
-                        if (statBlockUI.iPointsLeftE > 0)
+                        if (statBlockChanges.iPointsLeftE > 0)
                         {
                             
                             if (selectedIndex == 2)
                             {
-                                statBlockUI.iPrevSize = statBlockUI.statsE[2];
+                                statBlockUI.iPrevSize = statBlockChanges.statsE[2];
                             }
 
-                            statBlockUI.statsE[selectedIndex]++;
+                            statBlockChanges.statsE[selectedIndex]++;
                             audioController.upSource.Play();
 
 
 
-                            if (statBlockUI.statsE[selectedIndex] > enemyStats.aEnemyStatBounds[selectedIndex, 1])
+                            if (statBlockChanges.statsE[selectedIndex] > enemyStats.aEnemyStatBounds[selectedIndex, 1])
                             {
                                 audioController.errorSource.Play();
-                                statBlockUI.statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 1];
+                                statBlockChanges.statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 1];
                             }
 
                             switch (selectedIndex)
                             {
                                 case 0:
-                                    gameManagerScript.StatChangeEHealth();
+                                    statBlockChanges.StatChangeEHealth();
                                     break;
                                 case 1:
-                                    gameManagerScript.StatChangeESpeed();
+                                    statBlockChanges.StatChangeESpeed();
                                     break;
                                 case 2:
-                                    gameManagerScript.StatChangeESize();
+                                    statBlockChanges.StatChangeESize();
                                     break;
                             }
 
@@ -158,24 +160,24 @@ public class StatBlockInput : MonoBehaviour
                     audioController.downSource.Play();
                     if (playerController.bInMenuP)
                     {
-                        statBlockUI.statsP[selectedIndex]--;
+                        statBlockChanges.statsP[selectedIndex]--;
                         
-                        if (statBlockUI.statsP[selectedIndex] < playerStats.aPlayerStatBounds[selectedIndex, 0])
+                        if (statBlockChanges.statsP[selectedIndex] < playerStats.aPlayerStatBounds[selectedIndex, 0])
                         {
                             audioController.errorSource.Play();
-                            statBlockUI.statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 0];
+                            statBlockChanges.statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 0];
                         }
                         
                         switch (selectedIndex)
                         {
                             case 0:
-                                gameManagerScript.StatChangePHealth();
+                                statBlockChanges.StatChangePHealth();
                                 break;
                             case 1:
-                                gameManagerScript.StatChangePSpeed();
+                                statBlockChanges.StatChangePSpeed();
                                 break;
                             case 2:
-                                gameManagerScript.StatChangePJump();
+                                statBlockChanges.StatChangePJump();
                                 break;
                         }
                     }
@@ -184,27 +186,27 @@ public class StatBlockInput : MonoBehaviour
                         
                         if (selectedIndex == 2)
                         {
-                            statBlockUI.iPrevSize = statBlockUI.statsE[2];
+                            statBlockUI.iPrevSize = statBlockChanges.statsE[2];
                         }
 
-                        statBlockUI.statsE[selectedIndex]--;
+                        statBlockChanges.statsE[selectedIndex]--;
                         
-                        if (statBlockUI.statsE[selectedIndex] < enemyStats.aEnemyStatBounds[selectedIndex, 0])
+                        if (statBlockChanges.statsE[selectedIndex] < enemyStats.aEnemyStatBounds[selectedIndex, 0])
                         {
                             audioController.errorSource.Play();
-                            statBlockUI.statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 0];
+                            statBlockChanges.statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 0];
                         }
                         
                         switch (selectedIndex)
                         {
                             case 0:
-                                gameManagerScript.StatChangeEHealth();
+                                statBlockChanges.StatChangeEHealth();
                                 break;
                             case 1:
-                                gameManagerScript.StatChangeESpeed();
+                                statBlockChanges.StatChangeESpeed();
                                 break;
                             case 2:
-                                gameManagerScript.StatChangeESize();
+                                statBlockChanges.StatChangeESize();
                                 break;
                         }
                         

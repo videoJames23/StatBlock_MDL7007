@@ -6,11 +6,17 @@ public class GameManager : MonoBehaviour
     //serializedfield stuff here again -F
     private Rigidbody2D playerRb;
     private PlayerController playerController;
+    private PlayerCollisions  playerCollisions;
+    
     private Rigidbody2D enemyRb;
     private EnemyController enemyController;
+    
     private StatBlockUI statBlockUI;
+    private StatBlockChanges statBlockChanges;
+    
     private AudioController audioController;
-    private PlayerCollisions  playerCollisions;
+    
+    
     public int iBuildIndex;
     
     [SerializeField] private PlayerStats  playerStats;
@@ -37,6 +43,8 @@ public class GameManager : MonoBehaviour
         
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
+        statBlockChanges = statBlockUI.GetComponent<StatBlockChanges>();
+        
         
         iBuildIndex = SceneManager.GetActiveScene().buildIndex;
         GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
@@ -50,16 +58,6 @@ public class GameManager : MonoBehaviour
         {
             audioController =  audio.GetComponent<AudioController>();
         }
-        
-       
-        
-
-        StatChangePHealth();
-        StatChangePSpeed();
-        StatChangePJump();
-        StatChangeEHealth();
-        StatChangeESpeed();
-        StatChangeESize();
     }
 
     // Update is called once per frame
@@ -98,14 +96,14 @@ public class GameManager : MonoBehaviour
             }
             else if (playerController.bInMenuE)
             {
-                if (statBlockUI.iPointsLeftE == 0)
+                if (statBlockChanges.iPointsLeftE == 0)
                 {
                     playerController.bInMenuE = false;
                     audioController.closeSource.Play();
                     enemyController.fEnemyDir = enemyController.fPrevDir;
                     MenuChecks();
                 }
-                else if (statBlockUI.iPointsLeftE > 0)
+                else if (statBlockChanges.iPointsLeftE > 0)
                 {
 
                 }
@@ -163,107 +161,7 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    public void StatChangePHealth()
-    {
-        playerStats.iPlayerHealth = statBlockUI.statsP[0];
-    }
-    public void StatChangePSpeed()
-    {
-        if (playerController)
-        {
-            switch (statBlockUI.statsP[1]) // player speeds
-            {
-                
-                case 0: playerStats.fPlayerSpeed = playerStats.playerSpeedLVL0; break;
-                case 1: playerStats.fPlayerSpeed = playerStats.playerSpeedLVL1; break;
-                case 2: playerStats.fPlayerSpeed = playerStats.playerSpeedLVL2; break;
-                case 3: playerStats.fPlayerSpeed = playerStats.playerSpeedLVL3; break;
-            }
-        }
-    }
-    public void StatChangePJump()
-    {
-        if (playerController)
-        {
-            switch (statBlockUI.statsP[2]) //player jump heights
-            {
-                
-                case 0: playerStats.fPlayerJump = playerStats.playerJumpLVL0; break;
-                case 1: playerStats.fPlayerJump = playerStats.playerJumpLVL1; break;
-                case 2: playerStats.fPlayerJump = playerStats.playerJumpLVL2; break;
-                case 3: playerStats.fPlayerJump = playerStats.playerJumpLVL3; break;
-            }
-        }
-    }
     
-    
-    public void StatChangeEHealth()
-    {
-        if (enemyController)
-        {
-            enemyStats.iEnemyHealth = statBlockUI.statsE[0];
-        }
-    }
-    public void StatChangeESpeed()
-    {
-        if (enemyController)
-        {
-            switch (statBlockUI.statsE[1]) // enemy speeds
-            {
-                case 0: enemyStats.fEnemySpeed = enemyStats.enemySpeedLVL0; break;
-                case 1: enemyStats.fEnemySpeed = enemyStats.enemySpeedLVL1; break;
-                case 2: enemyStats.fEnemySpeed = enemyStats.enemySpeedLVL2; break;
-                case 3: enemyStats.fEnemySpeed = enemyStats.enemySpeedLVL3; break;
-            }
-        }
-    }
-    public void StatChangeESize()
-    {
-        if (enemyController)
-        {
-            switch (statBlockUI.statsE[2]) //enemy sizes
-            {
-
-                // If enemy grows into wall, movement stops
-                
-                //I'm assuming it's dependent on the differences between sizes, but the Y offset floats are more magic numbers,
-                //which could be replaced with a calculation which works regardless of what you set the sizes to -F
-
-                case 1:
-                    enemyStats.fEnemySize = enemyStats.enemySizeLVL1;
-                    if (statBlockUI.iPrevSize != 1)
-                    {
-                        enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y - 0.81f);
-                    }
-
-                    break;
-                case 2:
-                    
-                    switch (statBlockUI.iPrevSize)
-                    {
-                        case 1:
-                            enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y + 0.81f);
-                            enemyStats.fEnemySize = enemyStats.enemySizeLVL2;
-                            break;
-                        case 3:
-                            enemyStats.fEnemySize = enemyStats.enemySizeLVL2;
-                            enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y - 0.726443f);
-                            break;
-                    }
-
-                    break;
-                case 3:
-                    if (statBlockUI.iPrevSize != 3)
-                    {
-                        enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y + 0.726443f);
-                        enemyStats.fEnemySize = enemyStats.enemySizeLVL3;
-                    }
-
-                    break;
-            }
-            enemyRb.transform.localScale = new Vector2(enemyStats.fEnemySize, enemyStats.fEnemySize);
-        }
-    }
 
     public void LoadScene()
     {

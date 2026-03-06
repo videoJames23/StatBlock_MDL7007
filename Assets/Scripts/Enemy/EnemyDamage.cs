@@ -4,19 +4,17 @@ using UnityEngine;
 public class EnemyDamage : MonoBehaviour
 {
     private GameManager gameManagerScript;
+    
     public PlayerController playerController;
+    
     public AudioController audioController;
     
- 
+    private StatBlockChanges statBlockChanges;
+    private StatBlockUI statBlockUI;
+    
     private SpriteRenderer cSpriteRenderer;
 
     [SerializeField] private EnemyStats enemyStats;
-    
-    
-
-    
-    
-    private StatBlockUI statBlockUI;
     
     private float fIFramesDuration = 1;
     private int iNumberOfFlashes = 5;
@@ -36,6 +34,7 @@ public class EnemyDamage : MonoBehaviour
         
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
+        statBlockChanges = statBlockUI.GetComponent<StatBlockChanges>();
 
         GameObject audio = GameObject.FindGameObjectWithTag("Audio");
         if (audio)
@@ -57,16 +56,16 @@ public class EnemyDamage : MonoBehaviour
     {
         audioController.damageSource.Play();
         
-        statBlockUI.statsE[0] -= damage;
+        statBlockChanges.statsE[0] -= damage;
         
-        if (statBlockUI.iPointsLeftE > 0)
+        if (statBlockChanges.iPointsLeftE > 0)
         {
-            statBlockUI.iPointsLeftE--;
+            statBlockChanges.iPointsLeftE--;
         }
         
-        statBlockUI.iPointsTotalE--;
+        statBlockChanges.iPointsTotalE--;
         
-        gameManagerScript.StatChangeEHealth();
+        statBlockChanges.StatChangeEHealth();
 
         
         playerController.bInMenuE = true;

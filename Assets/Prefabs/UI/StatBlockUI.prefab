@@ -647,6 +647,7 @@ GameObject:
   - component: {fileID: 1305399952890255388}
   - component: {fileID: 4189463090083641187}
   - component: {fileID: 3124104767108883700}
+  - component: {fileID: 63270712316841398}
   m_Layer: 5
   m_Name: StatBlockUI
   m_TagString: StatBlockUI
@@ -694,21 +695,18 @@ MonoBehaviour:
   - {fileID: 750530754885650575}
   playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
   enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
-  statsP: 010000000100000001000000
-  statsE: 010000000200000003000000
   playerController: {fileID: 0}
-  gameManagerScript: {fileID: 0}
-  audioController: {fileID: 0}
   holder: {fileID: 7031388086280753611}
   background: {fileID: 1399443520318355992}
   showHideJ: {fileID: 5247032621137200694}
   showHideS: {fileID: 2569729562222940473}
-  iPointsTotalP: 5
-  iPointsLeftP: 2
-  iPointsTotalE: 6
-  iPointsLeftE: 0
   sUser: 
   iPrevSize: 0
+  vFocusScale: {x: 3, y: 3, z: 3}
+  vFocusPosition: {x: -87.6, y: -74.2}
+  vBackgroundFocusScale: {x: 10, y: 10, z: 10}
+  vOutFocusScale: {x: 1, y: 1, z: 1}
+  vBackgroundOutFocusScale: {x: 2.83, y: 2.308658, z: 1}
 --- !u!114 &5492014364087014244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -799,6 +797,26 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &63270712316841398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5831489033091506738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51b16a5bb7903ff4aa88919de7654636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
+  enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
+  statsP: 010000000100000001000000
+  statsE: 010000000100000001000000
+  iPointsTotalP: 5
+  iPointsLeftP: 0
+  iPointsTotalE: 0
+  iPointsLeftE: 0
 --- !u!1 &6164279559898771015
 GameObject:
   m_ObjectHideFlags: 0
