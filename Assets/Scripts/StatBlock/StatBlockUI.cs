@@ -37,6 +37,12 @@ public class StatBlockUI : MonoBehaviour
     public int iPointsLeftE;
     public string sUser;
     [FormerlySerializedAs("prevSize")] public int iPrevSize;
+    
+    public Vector3 vFocusScale = new Vector3(3f, 3f, 3f);
+    public Vector2 vFocusPosition = new Vector2(-87.6f, -74.2f);
+    public Vector3 vBackgroundFocusScale = new Vector3(10, 10, 10);
+    public Vector3 vOutFocusScale = new Vector3(1f, 1f, 1f);
+    public Vector3 vBackgroundOutFocusScale = new Vector3(2.82999992f,2.30865788f,1f);
 
     
     
@@ -101,16 +107,16 @@ public class StatBlockUI : MonoBehaviour
         
         if (playerController.bInMenu)
         {
-                holderRT.anchoredPosition = new Vector2(-87.6f, -74.2f);
-                holderRT.localScale = new Vector3(3f, 3f, 3f);
-                background.GetComponent<RectTransform>().localScale = new Vector3(10, 10, 10);
-            
+                holderRT.anchoredPosition = vFocusPosition;
+                holderRT.localScale = vFocusScale;
+                background.GetComponent<RectTransform>().localScale = vBackgroundFocusScale;
+
         }
         else if (!playerController.bInMenu)
         {
             holderRT.anchoredPosition = UIPosition;
-            holderRT.localScale = new Vector3(1f, 1f, 1f);
-            background.GetComponent<RectTransform>().localScale = new Vector3(2.82999992f,2.30865788f,1f);
+            holderRT.localScale = vOutFocusScale;
+            background.GetComponent<RectTransform>().localScale = vBackgroundOutFocusScale;
         }
 
         for (int i = 0; i < valueTexts.Length - 2; i++)
