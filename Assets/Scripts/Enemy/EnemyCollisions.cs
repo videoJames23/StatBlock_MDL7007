@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyCollisions : MonoBehaviour
 {
-    private Rigidbody2D enemyRb;
+    [SerializeField]private Rigidbody2D enemyRb;
     private EnemyController enemyController;
     private EnemyDamage enemyDamage;
     [SerializeField] private EnemyStats enemyStats;
@@ -15,7 +15,6 @@ public class EnemyCollisions : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        enemyRb =  GetComponent<Rigidbody2D>();
         enemyController = GetComponent<EnemyController>();
         enemyDamage = GetComponent<EnemyDamage>();
         

@@ -13,7 +13,14 @@ MonoBehaviour:
   m_Name: EnemyStats
   m_EditorClassIdentifier: 
   iEnemyHealth: 1
-  fEnemySpeed: 3
+  fEnemySpeed: 10
   fEnemySize: 4.5
+  enemySpeedLVL0: 0
+  enemySpeedLVL1: 3
+  enemySpeedLVL2: 7
+  enemySpeedLVL3: 10
+  enemySizeLVL1: 1.5
+  enemySizeLVL2: 3
+  enemySizeLVL3: 4.5
   iDamage: 1
   fCosAngle: 0.70710677

@@ -811,11 +811,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
   enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
+  enemyRb: {fileID: 0}
+  enemyVisual: {fileID: 0}
+  enemyRenderer: {fileID: 0}
   statsP: 010000000100000001000000
-  statsE: 010000000100000001000000
+  statsE: 010000000300000003000000
   iPointsTotalP: 5
   iPointsLeftP: 0
-  iPointsTotalE: 0
+  iPointsTotalE: 7
   iPointsLeftE: 0
 --- !u!1 &6164279559898771015
 GameObject:

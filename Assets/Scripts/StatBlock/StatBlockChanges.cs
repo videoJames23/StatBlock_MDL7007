@@ -6,6 +6,12 @@ public class StatBlockChanges : MonoBehaviour
     [SerializeField] private PlayerStats  playerStats;
     [SerializeField] private EnemyStats  enemyStats;
     
+    
+    [SerializeField] private Rigidbody2D enemyRb;       // on EnemyRoot
+    [SerializeField] private Transform enemyVisual;      // the child object
+    [SerializeField] private SpriteRenderer enemyRenderer; // on EnemyVisual
+
+    
     public int[] statsP = {1, 1, 1};
     public int[] statsE = {1, 1, 1};
     
@@ -14,7 +20,7 @@ public class StatBlockChanges : MonoBehaviour
     
     private PlayerController playerController;
     private EnemyController enemyController;
-    private Rigidbody2D enemyRb;
+    private Transform enemyTransform;
     
     public int iPointsTotalP;
     public int iPointsLeftP;
@@ -30,11 +36,12 @@ public class StatBlockChanges : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
         
-        GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
-        if (enemy)
+        GameObject enemyVisual = GameObject.FindGameObjectWithTag("Enemy");
+        if (enemyVisual)
         {
-            enemyController = enemy.GetComponent<EnemyController>();
-            enemyRb = enemy.GetComponent<Rigidbody2D>();
+            enemyController = enemyVisual.GetComponent<EnemyController>();
+            enemyRb = enemyVisual.GetComponent<Rigidbody2D>();
+            enemyTransform = enemyVisual.GetComponent<Transform>();
         }
         
         
@@ -49,6 +56,15 @@ public class StatBlockChanges : MonoBehaviour
         StatChangeESize();
         
     }
+    
+    private float GetSpriteHeightUnits(SpriteRenderer sr)
+    {
+        if (!sr || sr.sprite == null) return 1f;
+        // This is in sprite local units (pixelsPerUnit), it does NOT depend on Transform scale.
+        return sr.sprite.bounds.size.y;
+    }
+
+    
     public void StatChangePHealth()
     {
         playerStats.iPlayerHealth = statsP[0];
@@ -85,69 +101,58 @@ public class StatBlockChanges : MonoBehaviour
     
     public void StatChangeEHealth()
     {
-        if (enemyController)
-        {
+        if (!enemyRb || !enemyVisual || !enemyRenderer) return;
+        
             enemyStats.iEnemyHealth = statsE[0];
-        }
+        
     }
     public void StatChangeESpeed()
     {
-        if (enemyController)
-        {
-            switch (statsE[1]) // enemy speeds
+            if (!enemyRb || !enemyVisual || !enemyRenderer) return;
+
+            float newSpeed = statsE[1] switch
             {
-                case 0: enemyStats.fEnemySpeed = enemyStats.enemySpeedLVL0; break;
-                case 1: enemyStats.fEnemySpeed = enemyStats.enemySpeedLVL1; break;
-                case 2: enemyStats.fEnemySpeed = enemyStats.enemySpeedLVL2; break;
-                case 3: enemyStats.fEnemySpeed = enemyStats.enemySpeedLVL3; break;
-            }
-        }
+                0 => enemyStats.enemySpeedLVL0,
+                1 => enemyStats.enemySpeedLVL1,
+                2 => enemyStats.enemySpeedLVL2,
+                3 => enemyStats.enemySpeedLVL3,
+                _ => enemyRb.linearVelocity.x
+            };
+
+            enemyStats.fEnemySpeed = newSpeed;
     }
+    
     public void StatChangeESize()
     {
-        if (enemyController)
+        if (!enemyRb || !enemyVisual || !enemyRenderer) return;
+
+        float newScale = statsE[2] switch
         {
-            switch (statsE[2]) //enemy sizes
-            {
+            1 => enemyStats.enemySizeLVL1,
+            2 => enemyStats.enemySizeLVL2,
+            3 => enemyStats.enemySizeLVL3,
+            _ => enemyVisual.localScale.x
+        };
 
-                // If enemy grows into wall, movement stops
-                
-                //I'm assuming it's dependent on the differences between sizes, but the Y offset floats are more magic numbers,
-                //which could be replaced with a calculation which works regardless of what you set the sizes to -F
-
-                case 1:
-                    enemyStats.fEnemySize = enemyStats.enemySizeLVL1;
-                    if (statBlockUI.iPrevSize != 1)
-                    {
-                        enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y - 0.81f);
-                    }
-
-                    break;
-                case 2:
-                    
-                    switch (statBlockUI.iPrevSize)
-                    {
-                        case 1:
-                            enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y + 0.81f);
-                            enemyStats.fEnemySize = enemyStats.enemySizeLVL2;
-                            break;
-                        case 3:
-                            enemyStats.fEnemySize = enemyStats.enemySizeLVL2;
-                            enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y - 0.726443f);
-                            break;
-                    }
-
-                    break;
-                case 3:
-                    if (statBlockUI.iPrevSize != 3)
-                    {
-                        enemyRb.position = new Vector2(enemyRb.position.x, enemyRb.position.y + 0.726443f);
-                        enemyStats.fEnemySize = enemyStats.enemySizeLVL3;
-                    }
-
-                    break;
-            }
-            enemyRb.transform.localScale = new Vector2(enemyStats.fEnemySize, enemyStats.fEnemySize);
-        }
+        enemyStats.fEnemySize = newScale;
+        ApplyEnemyScaleBottomAnchored(newScale);
     }
+
+    
+    private void ApplyEnemyScaleBottomAnchored(float scale)
+    {
+        Vector2 rootPosition = enemyRb.position;
+        
+        var localScale = enemyVisual.localScale;
+        enemyVisual.localScale = new Vector3(scale, scale, localScale.z);
+        
+        float spriteHeight = GetSpriteHeightUnits(enemyRenderer);
+        float childLocalY = (spriteHeight * scale) * 0.5f;
+        var localPosition = enemyVisual.localPosition;
+        enemyVisual.localPosition = new Vector3(localPosition.x, childLocalY, localPosition.z);
+        
+        enemyRb.position = rootPosition;
+        
+    }
+
 }

@@ -15,7 +15,7 @@ public class LeverController : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D other)
     {
         
-        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("EnemyVisual"))
         {
             gate.SetActive(false);
         }
