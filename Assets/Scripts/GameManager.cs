@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
     private PlayerController playerController;
     private PlayerCollisions  playerCollisions;
     
-    private Rigidbody2D enemyRb;
-    private EnemyController enemyController;
+    [SerializeField]private Rigidbody2D enemyRb;
+    [SerializeField]private EnemyController enemyController;
     
     private StatBlockUI statBlockUI;
     private StatBlockChanges statBlockChanges;
@@ -47,12 +47,7 @@ public class GameManager : MonoBehaviour
         
         
         iBuildIndex = SceneManager.GetActiveScene().buildIndex;
-        GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
-        if (enemy)
-        {
-            enemyRb = enemy.GetComponent<Rigidbody2D>();
-            enemyController = enemy.GetComponent<EnemyController>();
-        }
+        
     }
 
     // Update is called once per frame
@@ -61,6 +56,7 @@ public class GameManager : MonoBehaviour
         //there has to be a better way to do this that doesn't involve this many if/else statements -F
         if (Input.GetKeyDown(KeyCode.R))
         {
+            Time.timeScale = 1;
             SceneManager.LoadScene(iBuildIndex);
         }
         
@@ -118,32 +114,12 @@ public class GameManager : MonoBehaviour
     {
         if (playerController.bInMenu)
         {
-            if (enemyRb)
-            {
-                vEnemyVelocity = enemyRb.linearVelocity;
-                enemyRb.constraints = RigidbodyConstraints2D.FreezeAll;
-            }
-
-            if (playerRb)
-            {
-                playerStats.vPlayerVelocity = playerRb.linearVelocity;
-                playerRb.constraints = RigidbodyConstraints2D.FreezeAll;
-            }
+            Time.timeScale = 0;
 
         }
         else if (!playerController.bInMenu)
         {
-            if (enemyRb)
-            {
-                enemyRb.constraints = RigidbodyConstraints2D.FreezeRotation;
-                enemyRb.linearVelocity = vEnemyVelocity;
-            }
-
-            if (playerRb)
-            {
-                playerRb.constraints = RigidbodyConstraints2D.FreezeRotation;
-                playerRb.linearVelocity =  playerStats.vPlayerVelocity;
-            }
+            Time.timeScale = 1;
                 
         }
     }
@@ -152,6 +128,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadScene()
     {
+        
         SceneManager.LoadScene(iBuildIndex + 1);
     }
 
