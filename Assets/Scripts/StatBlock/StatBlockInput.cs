@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StatBlockInput : MonoBehaviour
@@ -9,10 +10,18 @@ public class StatBlockInput : MonoBehaviour
     
     private GameManager gameManagerScript;
     
-    private AudioController audioController;
-    
     private StatBlockUI statBlockUI;
     private StatBlockChanges statBlockChanges;
+    
+    public delegate void Error();
+    public static event Error OnError;
+
+    public delegate void Up();
+    public static event Up OnUp;
+    public delegate void Down();
+    public static event Down OnDown;
+    public delegate void Index();
+    public static event Index OnIndex;
     
     public int selectedIndex;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -26,9 +35,7 @@ public class StatBlockInput : MonoBehaviour
         
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
         gameManagerScript = gameManager.GetComponent<GameManager>();
-        
-        GameObject audio =  GameObject.FindGameObjectWithTag("Audio");
-        audioController = audio.GetComponent<AudioController>();
+      
     }
 
     // Update is called once per frame
@@ -44,7 +51,7 @@ public class StatBlockInput : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
                 {
                     selectedIndex--;
-                    audioController.indexSource.Play();
+                    OnIndex?.Invoke();
 
                     switch (selectedIndex)
                     {
@@ -53,6 +60,8 @@ public class StatBlockInput : MonoBehaviour
                         case 1: break;
                         case 2: break;
                     }
+                    
+                    
                     statBlockUI.UpdateUI();
                 }
 
@@ -60,7 +69,7 @@ public class StatBlockInput : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
                 {
                     selectedIndex++;
-                    audioController.indexSource.Play();
+                    OnIndex?.Invoke();
                     
                     switch (selectedIndex)
                     {
@@ -82,10 +91,10 @@ public class StatBlockInput : MonoBehaviour
                         if (statBlockChanges.iPointsLeftP > 0)
                         {
                             statBlockChanges.statsP[selectedIndex]++;
-                            audioController.upSource.Play();
+                            OnUp?.Invoke();
                             if (statBlockChanges.statsP[selectedIndex] > playerStats.aPlayerStatBounds[selectedIndex, 1])
                             {
-                                audioController.errorSource.Play();
+                                OnError?.Invoke();
                                 statBlockChanges.statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 1];
                             }
 
@@ -104,7 +113,7 @@ public class StatBlockInput : MonoBehaviour
                         }
                         else
                         {
-                            audioController.errorSource.Play();
+                            OnError?.Invoke();
                         }
 
 
@@ -120,13 +129,13 @@ public class StatBlockInput : MonoBehaviour
                             }
 
                             statBlockChanges.statsE[selectedIndex]++;
-                            audioController.upSource.Play();
+                            OnUp?.Invoke();
 
 
 
                             if (statBlockChanges.statsE[selectedIndex] > enemyStats.aEnemyStatBounds[selectedIndex, 1])
                             {
-                                audioController.errorSource.Play();
+                                OnError?.Invoke();
                                 statBlockChanges.statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 1];
                             }
 
@@ -147,7 +156,7 @@ public class StatBlockInput : MonoBehaviour
                         }
                         else
                         {
-                            audioController.errorSource.Play();
+                            OnError?.Invoke();
                         }
 
                         
@@ -157,14 +166,14 @@ public class StatBlockInput : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
                 {
-                    audioController.downSource.Play();
+                    OnDown?.Invoke();
                     if (playerController.bInMenuP)
                     {
                         statBlockChanges.statsP[selectedIndex]--;
                         
                         if (statBlockChanges.statsP[selectedIndex] < playerStats.aPlayerStatBounds[selectedIndex, 0])
                         {
-                            audioController.errorSource.Play();
+                            OnError?.Invoke();
                             statBlockChanges.statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 0];
                         }
                         
@@ -193,7 +202,7 @@ public class StatBlockInput : MonoBehaviour
                         
                         if (statBlockChanges.statsE[selectedIndex] < enemyStats.aEnemyStatBounds[selectedIndex, 0])
                         {
-                            audioController.errorSource.Play();
+                            OnError?.Invoke();
                             statBlockChanges.statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 0];
                         }
                         

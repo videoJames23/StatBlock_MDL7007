@@ -30,8 +30,6 @@ public class PlayerController : MonoBehaviour
     private StatBlockUI statBlockUI;
     private GameManager gameManagerScript;
     
-    
-    public AudioController audioController;
     public PlayerMovement playerMovement;
     public PlayerDamage playerDamage;
 
@@ -51,12 +49,6 @@ public class PlayerController : MonoBehaviour
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
         
-        
-        GameObject audio =  GameObject.FindGameObjectWithTag("Audio");
-        if (audio)
-        {
-            audioController = audio.GetComponent<AudioController>();
-        }
         
         
         
@@ -82,17 +74,6 @@ public class PlayerController : MonoBehaviour
             fInput = Input.GetAxisRaw("Horizontal");
         }
     }
-
-    
-    
-
-    
-    
-    
-    // Damage/I-Frames
-    
-   
-    
 
 }
 

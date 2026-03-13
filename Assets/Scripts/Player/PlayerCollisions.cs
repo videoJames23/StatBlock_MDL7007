@@ -5,11 +5,14 @@ public class PlayerCollisions : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private PlayerDamage playerDamage;
-    private AudioController audioController;
+    
     private GameManager gameManagerScript;
     
     public bool bIsTouchingStatBlockP;
     public bool bIsTouchingStatBlockE;
+
+    public delegate void Completion();
+    public static  event Completion OnCompletion;
     void Start()
     {
         playerDamage = GetComponent<PlayerDamage>();
@@ -19,11 +22,7 @@ public class PlayerCollisions : MonoBehaviour
         gameManagerScript = gameManager.GetComponent<GameManager>();
         
         
-        GameObject audio = GameObject.FindGameObjectWithTag("Audio");
-        if (audio)
-        {
-            audioController = audio.GetComponent<AudioController>();
-        }
+      
     }
     
     void OnCollisionEnter2D(Collision2D other)
@@ -39,9 +38,8 @@ public class PlayerCollisions : MonoBehaviour
         switch (other.gameObject.tag)
         
         {  case "Finish":
-            //Why is the playercontroller responsible for ending the level? This should probably be in a different script. -F
             Debug.Log("Level Complete!");
-            audioController.completionSource.Play();
+            OnCompletion?.Invoke();
             yield return new WaitForSeconds(1.8f);
             gameManagerScript.LoadScene();
             break;

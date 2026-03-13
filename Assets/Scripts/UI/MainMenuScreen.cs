@@ -8,10 +8,9 @@ namespace UI
     {
         public GameObject levelSelectUI;
         public GameObject creditsUI;
-        
-        public AudioController audioController;
-        
-        
+
+        public delegate void ButtonClicked();
+        public static event ButtonClicked OnButtonClicked;
         private void OnEnable()
         {
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
@@ -20,23 +19,22 @@ namespace UI
             Button buttonLevelSelect = root.Q<Button>("level__select__button");
             Button buttonCredits = root.Q<Button>("credits__button");
             
-            GameObject audio = GameObject.FindGameObjectWithTag("Audio");
-            if (audio)
-            {
-                audioController = audio.GetComponent<AudioController>();
-            }
-            
            
             
             buttonStart.clicked += () => SceneManager.LoadScene(1);
             
             buttonLevelSelect.clicked += () => Destroy(gameObject);
             buttonLevelSelect.clicked += () => Instantiate(levelSelectUI);
-            buttonLevelSelect.clicked += () => audioController.upSource.Play();
+            buttonLevelSelect.clicked += () => OnButtonClicked?.Invoke();
             
             buttonCredits.clicked += () => Destroy(gameObject);
             buttonCredits.clicked += () => Instantiate(creditsUI);
-            buttonCredits.clicked += () => audioController.upSource.Play();
+            buttonCredits.clicked += () => OnButtonClicked?.Invoke();
+        }
+
+        private void OnDisable()
+        {
+            
         }
 
     }

@@ -6,9 +6,7 @@ public class EnemyDamage : MonoBehaviour
     private GameManager gameManagerScript;
     
     public PlayerController playerController;
-    
-    public AudioController audioController;
-    
+   
     private StatBlockChanges statBlockChanges;
     private StatBlockUI statBlockUI;
     
@@ -18,8 +16,9 @@ public class EnemyDamage : MonoBehaviour
     
     private float fIFramesDuration = 1;
     private int iNumberOfFlashes = 5;
-    
 
+    public delegate void Damage();
+    public static event Damage OnDamage;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,12 +35,6 @@ public class EnemyDamage : MonoBehaviour
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
         statBlockChanges = statBlockUI.GetComponent<StatBlockChanges>();
 
-        GameObject audio = GameObject.FindGameObjectWithTag("Audio");
-        if (audio)
-        {
-            audioController = audio.GetComponent<AudioController>();
-        }
-
         enemyStats.iDamage = 1;
 
 
@@ -54,7 +47,7 @@ public class EnemyDamage : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        audioController.damageSource.Play();
+        OnDamage?.Invoke();
         
         statBlockChanges.statsE[0] -= damage;
         

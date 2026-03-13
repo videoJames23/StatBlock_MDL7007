@@ -6,8 +6,9 @@ public class LevelSelectScreen : MonoBehaviour
 {
 
     public GameObject mainMenuUI;
+    public delegate void Back();
 
-    private AudioSource downSource;
+    public static event Back OnBack;
     
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,15 +24,10 @@ public class LevelSelectScreen : MonoBehaviour
         Button buttonLevel3 = root.Q<Button>("level__3__button");
         Button buttonLevel4 = root.Q<Button>("level__4__button");
         
-        GameObject downAudio = GameObject.Find("Down");
-        if (downAudio != null)
-        {
-            downSource = downAudio.GetComponent<AudioSource>();
-        }
 
         buttonBack.clicked += () => Destroy(gameObject);
         buttonBack.clicked += () => Instantiate(mainMenuUI);
-        buttonBack.clicked += () => downSource.Play();
+        buttonBack.clicked += () => OnBack?.Invoke();
         
         buttonLevelT1.clicked += () => SceneManager.LoadScene(1);
         

@@ -14,25 +14,25 @@ public class GameManager : MonoBehaviour
     private StatBlockUI statBlockUI;
     private StatBlockChanges statBlockChanges;
     
-    private AudioController audioController;
     
     
     public int iBuildIndex;
     
     [SerializeField] private PlayerStats  playerStats;
     [SerializeField] private EnemyStats enemyStats;
-    
-    private AudioSource completionSource;
-    private AudioSource jumpSource;
-    private AudioSource openSource;
-    private AudioSource closeSource;
 
     
     private Vector2 vEnemyVelocity;
 
-    
-   
 
+    public delegate void MenuOpen();
+    public static event MenuOpen OnMenuOpen;
+
+    public delegate void MenuClose();
+    public static event MenuClose OnMenuClose;
+
+    public delegate void Error();
+    public static event Error OnError;
     
     void Start()
     {
@@ -53,11 +53,6 @@ public class GameManager : MonoBehaviour
             enemyRb = enemy.GetComponent<Rigidbody2D>();
             enemyController = enemy.GetComponent<EnemyController>();
         }
-        GameObject audio =  GameObject.FindGameObjectWithTag("Audio");
-        if (audio)
-        {
-            audioController =  audio.GetComponent<AudioController>();
-        }
     }
 
     // Update is called once per frame
@@ -73,14 +68,6 @@ public class GameManager : MonoBehaviour
         {
             playerController.bInMenuP = !playerController.bInMenuP;
             
-            if (playerController.bInMenuP)
-            {
-                audioController.openSource.Play();
-            }
-            else if (!playerController.bInMenuP)
-            {
-                audioController.closeSource.Play();
-            }
             MenuChecks();
             MenuFreezeToggle();
         }
@@ -90,7 +77,6 @@ public class GameManager : MonoBehaviour
             if (!playerController.bInMenuE)
             {
                 playerController.bInMenuE = true;
-                audioController.openSource.Play();
                 enemyController.fPrevDir = enemyController.fEnemyDir;
                 MenuChecks();
             }
@@ -99,13 +85,12 @@ public class GameManager : MonoBehaviour
                 if (statBlockChanges.iPointsLeftE == 0)
                 {
                     playerController.bInMenuE = false;
-                    audioController.closeSource.Play();
                     enemyController.fEnemyDir = enemyController.fPrevDir;
                     MenuChecks();
                 }
                 else if (statBlockChanges.iPointsLeftE > 0)
                 {
-
+                    OnError?.Invoke();
                 }
             }
             MenuFreezeToggle();
@@ -117,11 +102,13 @@ public class GameManager : MonoBehaviour
         if (playerController.bInMenuP || playerController.bInMenuE)
         {
             playerController.bInMenu = true;
+            OnMenuOpen?.Invoke();
         }
         
         else
         {
             playerController.bInMenu = false;
+            OnMenuClose?.Invoke();
         }
         statBlockUI.UpdateUI();
     }

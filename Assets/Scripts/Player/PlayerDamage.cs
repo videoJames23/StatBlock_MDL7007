@@ -12,13 +12,19 @@ public class PlayerDamage : MonoBehaviour
     private PlayerController playerController;
     private PlayerMovement playerMovement;
     private Rigidbody2D playerRb;
-    
-    private AudioController audioController;
-    
+   
     private GameManager gameManagerScript;
     
     private StatBlockUI statBlockUI;
     private StatBlockChanges statBlockChanges;
+    
+    public delegate void Damage();
+    public static event  Damage OnDamage;
+    
+    
+    
+        
+        
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,13 +39,6 @@ public class PlayerDamage : MonoBehaviour
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
         statBlockChanges = statBlockUI.GetComponent<StatBlockChanges>();
         
-        
-        GameObject audio =  GameObject.FindGameObjectWithTag("Audio");
-        if (audio)
-        {
-            audioController = audio.GetComponent<AudioController>();
-        }
-        
         Physics2D.IgnoreLayerCollision(10, 11, false);
     }
     
@@ -52,7 +51,7 @@ public class PlayerDamage : MonoBehaviour
         
         bCanTakeDamage = false;
         
-        audioController.damageSource.Play();
+        OnDamage?.Invoke();
         
         statBlockChanges.statsP[0] -= iDamage;
         statBlockChanges.iPointsTotalP--;

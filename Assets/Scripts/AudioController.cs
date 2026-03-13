@@ -1,3 +1,4 @@
+using UI;
 using UnityEngine;
 
 public class AudioController : MonoBehaviour
@@ -11,8 +12,50 @@ public class AudioController : MonoBehaviour
     public AudioSource downSource;
     public AudioSource indexSource;
     public AudioSource errorSource;
-    
-    
+
+    private void OnEnable()
+
+    {
+        GameManager.OnMenuOpen += PlayOpen;
+        GameManager.OnMenuClose += PlayClose;
+        GameManager.OnError += PlayError;
+        StatBlockInput.OnError += PlayError;
+        StatBlockInput.OnUp += PlayUp;
+        StatBlockInput.OnDown += PlayDown;
+        StatBlockInput.OnIndex += PlayIndex;
+        
+        MainMenuScreen.OnButtonClicked += PlayUp;
+        LevelSelectScreen.OnBack += PlayDown;
+        CreditsScreen.OnBack += PlayDown;
+        
+        
+        PlayerMovement.OnJumpEvent += PlayJump;
+        PlayerDamage.OnDamage += PlayDamage;
+        PlayerCollisions.OnCompletion += PlayCompletion;
+        
+        EnemyDamage.OnDamage += PlayDamage;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnMenuOpen -= PlayOpen;
+        GameManager.OnMenuClose -= PlayClose;
+        GameManager.OnError -= PlayError;
+        StatBlockInput.OnError -= PlayError;
+        StatBlockInput.OnUp -= PlayUp;
+        StatBlockInput.OnDown -= PlayDown;
+        StatBlockInput.OnIndex -= PlayIndex;
+        
+        MainMenuScreen.OnButtonClicked -= PlayUp;
+        LevelSelectScreen.OnBack -= PlayDown;
+        CreditsScreen.OnBack -= PlayDown;
+        
+        PlayerMovement.OnJumpEvent -= PlayJump;
+        PlayerDamage.OnDamage -= PlayDamage;
+        PlayerCollisions.OnCompletion -= PlayCompletion;
+        
+        EnemyDamage.OnDamage -= PlayDamage;
+    }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -73,6 +116,50 @@ public class AudioController : MonoBehaviour
         }
     }
 
+    public void PlayOpen()
+    {
+        openSource.Play();
+    }
+
+    public void PlayClose()
+    {
+        closeSource.Play();
+    }
+
+    public void PlayDamage()
+    {
+        damageSource.Play();
+    }
+
+    public void PlayUp()
+    {
+        upSource.Play();
+    }
+
+    public void PlayDown()
+    {
+        downSource.Play();
+    }
+
+    public void PlayIndex()
+    {
+        indexSource.Play();
+    }
+
+    public void PlayError()
+    {
+        errorSource.Play();
+    }
+
+    public void PlayJump()
+    {
+        jumpSource.Play();
+    }
+
+    public void PlayCompletion()
+    {
+        completionSource.Play();
+    }
     // Update is called once per frame
     void Update()
     {

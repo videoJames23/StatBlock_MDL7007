@@ -12,26 +12,23 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] PlayerStats playerStats;
     
     public bool bIsGrounded;
-    
-    private AudioController audioController;
+
+    public delegate void JumpEvent();
+    public static event JumpEvent OnJumpEvent;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
         playerController = GetComponent<PlayerController>();
-        GameObject audio =  GameObject.FindGameObjectWithTag("Audio");
-        if (audio)
-        {
-            audioController = audio.GetComponent<AudioController>();
-        }
+       
     }
     
     public void Jump()
     {
         if (bIsGrounded)
         {
-            audioController.jumpSource.Play();
+            OnJumpEvent?.Invoke();
             playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, playerStats.fPlayerJump);
             bIsGrounded = false;
         }
