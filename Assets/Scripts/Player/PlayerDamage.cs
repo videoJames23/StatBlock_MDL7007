@@ -10,6 +10,7 @@ public class PlayerDamage : MonoBehaviour
     private SpriteRenderer cSpriteRenderer;
     
     private PlayerController playerController;
+    private PlayerStatsHandler playerStatsHandler;
     private PlayerMovement playerMovement;
     private Rigidbody2D playerRb;
    
@@ -31,6 +32,8 @@ public class PlayerDamage : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
         playerController = GetComponent<PlayerController>();
         playerMovement = GetComponent<PlayerMovement>();
+        playerStatsHandler = GetComponent<PlayerStatsHandler>();
+        
         cSpriteRenderer = GetComponent<SpriteRenderer>(); 
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
         gameManagerScript = gameManager.GetComponent<GameManager>();
@@ -64,12 +67,12 @@ public class PlayerDamage : MonoBehaviour
             
             
         // I-frames
-        if (playerStats.iPlayerHealth > 0)
+        if (playerStatsHandler.runtimeStats.iPlayerHealth > 0)
         {
             StartCoroutine(Invulnerability());
         }
             
-        else if (playerStats.iPlayerHealth <= 0)
+        else if (playerStatsHandler.runtimeStats.iPlayerHealth <= 0)
         {
             Destroy(gameObject);
         }

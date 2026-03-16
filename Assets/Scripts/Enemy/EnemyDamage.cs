@@ -6,6 +6,8 @@ public class EnemyDamage : MonoBehaviour
     private GameManager gameManagerScript;
     
     public PlayerController playerController;
+
+    private EnemyStatsHandler enemyStatsHandler;
    
     private StatBlockChanges statBlockChanges;
     private StatBlockUI statBlockUI;
@@ -24,6 +26,8 @@ public class EnemyDamage : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        enemyStatsHandler = GetComponent<EnemyStatsHandler>();
+        
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
         gameManagerScript = gameManager.GetComponent<GameManager>();
         cSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -66,7 +70,7 @@ public class EnemyDamage : MonoBehaviour
         playerController.bInMenuE = false;
         statBlockUI.UpdateUI();
         
-        if (enemyStats.iEnemyHealth <= 0)
+        if (enemyStatsHandler.runtimeStats.iEnemyHealth <= 0)
         {
             Destroy(gameObject);
         }

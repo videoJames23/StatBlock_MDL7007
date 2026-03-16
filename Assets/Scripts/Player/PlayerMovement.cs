@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D playerRb;
     
     private PlayerController playerController;
+    private PlayerStatsHandler playerStatsHandler;
     
     [SerializeField] PlayerStats playerStats;
     
@@ -21,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody2D>();
         playerController = GetComponent<PlayerController>();
+        playerStatsHandler = GetComponent<PlayerStatsHandler>();
        
     }
     
@@ -29,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
         if (bIsGrounded)
         {
             OnJumpEvent?.Invoke();
-            playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, playerStats.fPlayerJump);
+            playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, playerStatsHandler.runtimeStats.fPlayerJump);
             bIsGrounded = false;
         }
     }
@@ -37,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector2 vTargetVelocity = new Vector2(playerController.fInput * playerStats.fPlayerSpeed, playerRb.linearVelocity.y);
+        Vector2 vTargetVelocity = new Vector2(playerController.fInput * playerStatsHandler.runtimeStats.fPlayerSpeed, playerRb.linearVelocity.y);
 
         float fControl = bIsGrounded ? 1f : airControlMultiplier;
 

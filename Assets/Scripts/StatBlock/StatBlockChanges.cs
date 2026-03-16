@@ -7,9 +7,9 @@ public class StatBlockChanges : MonoBehaviour
     [SerializeField] private EnemyStats  enemyStats;
     
     
-    [SerializeField] private Rigidbody2D enemyRb;       // on EnemyRoot
-    [SerializeField] private Transform enemyVisual;      // the child object
-    [SerializeField] private SpriteRenderer enemyRenderer; // on EnemyVisual
+    [SerializeField] private Rigidbody2D enemyRb;       
+    [SerializeField] private Transform enemyVisual; 
+    [SerializeField] private SpriteRenderer enemyRenderer; 
 
     
     public int[] statsP = {1, 1, 1};
@@ -19,8 +19,11 @@ public class StatBlockChanges : MonoBehaviour
     private StatBlockUI statBlockUI;
     
     private PlayerController playerController;
+    private PlayerStatsHandler playerStatsHandler;
+    
     private EnemyController enemyController;
     private Transform enemyTransform;
+    private EnemyStatsHandler enemyStatsHandler;
     
     public int iPointsTotalP;
     public int iPointsLeftP;
@@ -35,13 +38,19 @@ public class StatBlockChanges : MonoBehaviour
         
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
+        playerStatsHandler = player.GetComponent<PlayerStatsHandler>();
         
-        GameObject enemyVisual = GameObject.FindGameObjectWithTag("Enemy");
+        GameObject enemyVisual = GameObject.FindGameObjectWithTag("EnemyVisual");
         if (enemyVisual)
         {
             enemyController = enemyVisual.GetComponent<EnemyController>();
-            enemyRb = enemyVisual.GetComponent<Rigidbody2D>();
             enemyTransform = enemyVisual.GetComponent<Transform>();
+            enemyStatsHandler = enemyVisual.GetComponent<EnemyStatsHandler>();
+        }
+        GameObject enemyRoot = GameObject.FindGameObjectWithTag("EnemyRoot");
+        if (enemyRoot)
+        {
+            enemyRb = enemyRoot.GetComponent<Rigidbody2D>();
         }
         
         
@@ -67,7 +76,7 @@ public class StatBlockChanges : MonoBehaviour
     
     public void StatChangePHealth()
     {
-        playerStats.iPlayerHealth = statsP[0];
+        playerStatsHandler.runtimeStats.iPlayerHealth = statsP[0];
     }
     public void StatChangePSpeed()
     {
@@ -76,10 +85,10 @@ public class StatBlockChanges : MonoBehaviour
             switch (statsP[1]) // player speeds
             {
                 
-                case 0: playerStats.fPlayerSpeed = playerStats.playerSpeedLVL0; break;
-                case 1: playerStats.fPlayerSpeed = playerStats.playerSpeedLVL1; break;
-                case 2: playerStats.fPlayerSpeed = playerStats.playerSpeedLVL2; break;
-                case 3: playerStats.fPlayerSpeed = playerStats.playerSpeedLVL3; break;
+                case 0: playerStatsHandler.runtimeStats.fPlayerSpeed = playerStats.playerSpeedLVL0; break;
+                case 1: playerStatsHandler.runtimeStats.fPlayerSpeed = playerStats.playerSpeedLVL1; break;
+                case 2: playerStatsHandler.runtimeStats.fPlayerSpeed = playerStats.playerSpeedLVL2; break;
+                case 3: playerStatsHandler.runtimeStats.fPlayerSpeed = playerStats.playerSpeedLVL3; break;
             }
         }
     }
@@ -90,10 +99,10 @@ public class StatBlockChanges : MonoBehaviour
             switch (statsP[2]) //player jump heights
             {
                 
-                case 0: playerStats.fPlayerJump = playerStats.playerJumpLVL0; break;
-                case 1: playerStats.fPlayerJump = playerStats.playerJumpLVL1; break;
-                case 2: playerStats.fPlayerJump = playerStats.playerJumpLVL2; break;
-                case 3: playerStats.fPlayerJump = playerStats.playerJumpLVL3; break;
+                case 0: playerStatsHandler.runtimeStats.fPlayerJump = playerStats.playerJumpLVL0; break;
+                case 1: playerStatsHandler.runtimeStats.fPlayerJump = playerStats.playerJumpLVL1; break;
+                case 2: playerStatsHandler.runtimeStats.fPlayerJump = playerStats.playerJumpLVL2; break;
+                case 3: playerStatsHandler.runtimeStats.fPlayerJump = playerStats.playerJumpLVL3; break;
             }
         }
     }
@@ -101,14 +110,14 @@ public class StatBlockChanges : MonoBehaviour
     
     public void StatChangeEHealth()
     {
-        if (!enemyRb || !enemyVisual || !enemyRenderer) return;
+        if (!enemyRb || !enemyVisual) return;
         
-            enemyStats.iEnemyHealth = statsE[0];
+        enemyStatsHandler.runtimeStats.iEnemyHealth = statsE[0];
         
     }
     public void StatChangeESpeed()
     {
-            if (!enemyRb || !enemyVisual || !enemyRenderer) return;
+            if (!enemyRb || !enemyVisual) return;
 
             float newSpeed = statsE[1] switch
             {
@@ -119,12 +128,12 @@ public class StatBlockChanges : MonoBehaviour
                 _ => enemyRb.linearVelocity.x
             };
 
-            enemyStats.fEnemySpeed = newSpeed;
+            enemyStatsHandler.runtimeStats.fEnemySpeed = newSpeed;
     }
     
     public void StatChangeESize()
     {
-        if (!enemyRb || !enemyVisual || !enemyRenderer) return;
+        if (!enemyRb || !enemyVisual) return;
 
         float newScale = statsE[2] switch
         {
@@ -134,7 +143,7 @@ public class StatBlockChanges : MonoBehaviour
             _ => enemyVisual.localScale.x
         };
 
-        enemyStats.fEnemySize = newScale;
+        enemyStatsHandler.runtimeStats.fEnemySize = newScale;
         ApplyEnemyScaleBottomAnchored(newScale);
     }
 

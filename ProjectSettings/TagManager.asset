@@ -36,6 +36,7 @@ TagManager:
   - Audio
   - InstructionManager
   - EnemyVisual
+  - EnemyRoot
   layers:
   - Default
   - TransparentFX

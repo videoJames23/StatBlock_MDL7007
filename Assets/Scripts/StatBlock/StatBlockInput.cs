@@ -13,6 +13,8 @@ public class StatBlockInput : MonoBehaviour
     private StatBlockUI statBlockUI;
     private StatBlockChanges statBlockChanges;
     
+    [SerializeField] private PlayerStatsHandler playerStatsHandler;
+    
     public delegate void Error();
     public static event Error OnError;
 
@@ -32,6 +34,7 @@ public class StatBlockInput : MonoBehaviour
         
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
+        playerStatsHandler = player.GetComponent<PlayerStatsHandler>();
         
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
         gameManagerScript = gameManager.GetComponent<GameManager>();

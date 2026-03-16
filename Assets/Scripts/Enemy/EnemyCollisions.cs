@@ -7,6 +7,7 @@ public class EnemyCollisions : MonoBehaviour
     private EnemyController enemyController;
     private EnemyDamage enemyDamage;
     [SerializeField] private EnemyStats enemyStats;
+    private EnemyStatsHandler enemyStatsHandler;
     
     [SerializeField] private PlayerStats playerStats;
     private Rigidbody2D playerRb;
@@ -17,6 +18,7 @@ public class EnemyCollisions : MonoBehaviour
     {
         enemyController = GetComponent<EnemyController>();
         enemyDamage = GetComponent<EnemyDamage>();
+        enemyStatsHandler = GetComponent<EnemyStatsHandler>();
         
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerRb = player.GetComponent<Rigidbody2D>();
@@ -61,7 +63,7 @@ public class EnemyCollisions : MonoBehaviour
                 enemyDamage.TakeDamage(1);
                 playerMovement.bIsGrounded = true;
                 playerMovement.Jump();
-                if (enemyStats.iEnemyHealth <= 0)
+                if (enemyStatsHandler.runtimeStats.iEnemyHealth <= 0)
                 {
                     Destroy(gameObject);
                 }
@@ -80,7 +82,7 @@ public class EnemyCollisions : MonoBehaviour
             
             enemyController.fEnemyDir *= -1;
                 
-            if (enemyStats.iEnemyHealth > 0)
+            if (enemyStatsHandler.runtimeStats.iEnemyHealth > 0)
             {
                 StartCoroutine(enemyDamage.Invulnerability());
             }
