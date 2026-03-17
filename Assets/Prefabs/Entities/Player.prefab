@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3131354415799336966}
   - component: {fileID: 6817162125007557499}
   - component: {fileID: 766932768989670642}
+  - component: {fileID: 8980058498945247471}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -231,7 +232,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8ae1708a015a0343ac2dcc080430a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
+  defaultPreset: {fileID: 11400000, guid: 33007a3145368dc41b6cf0c5f0f2f94b, type: 2}
+  runtimeStats:
+    iPlayerHealth: 0
+    fPlayerSpeed: 0
+    fPlayerJump: 0
+--- !u!114 &8980058498945247471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5744648186350750262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ae1708a015a0343ac2dcc080430a3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultPreset: {fileID: 11400000, guid: 33007a3145368dc41b6cf0c5f0f2f94b, type: 2}
   runtimeStats:
     iPlayerHealth: 0
     fPlayerSpeed: 0

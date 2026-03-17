@@ -57,12 +57,6 @@ public class StatBlockChanges : MonoBehaviour
         iPointsLeftP = iPointsTotalP - statsP.Sum();
         iPointsLeftE = iPointsTotalE - statsE.Sum();
         
-        StatChangePHealth();
-        StatChangePSpeed();
-        StatChangePJump();
-        StatChangeEHealth();
-        StatChangeESpeed();
-        StatChangeESize();
         
     }
     

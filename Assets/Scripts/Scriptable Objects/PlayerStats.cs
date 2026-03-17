@@ -3,12 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerStats", menuName = "Scriptable Objects/PlayerStats")]
 public class PlayerStats : ScriptableObject
 {
-   public int iPlayerHealth = 1;
-   
-   public float fPlayerSpeed = 1;
-   
-   public float fPlayerJump = 1;
-
    public int[,] aPlayerStatBounds = { {1, 3}, {0, 3}, {0, 3} };
    
    public Vector2 vPlayerVelocity;

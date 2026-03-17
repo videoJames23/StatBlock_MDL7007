@@ -2,18 +2,27 @@ using UnityEngine;
 
 public class PlayerStatsHandler : MonoBehaviour
 {
-    public PlayerStats baseStats;
+    public PlayerStatsPresetSO defaultPreset;
     public PlayerRuntimeStats runtimeStats;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
     void Start()
     {
-        CloneStats();
+        
+    }
+    
+    public void ApplyPreset(PlayerStatsPresetSO preset)
+    {
+        var source = preset != null ? preset : defaultPreset;
+        if (source == null)
+        {
+            Debug.LogWarning("[PlayerStatsHandler] No preset provided and no default preset set.");
+            runtimeStats = new PlayerRuntimeStats();
+            return;
+        }
+
+        runtimeStats = source.CreateRuntimeCopy();
     }
 
-    // Update is called once per frame
-    public void CloneStats()
-    {
-        runtimeStats = new PlayerRuntimeStats(baseStats);
-    }
+    public void ResetToDefault() => ApplyPreset(defaultPreset);
 }
