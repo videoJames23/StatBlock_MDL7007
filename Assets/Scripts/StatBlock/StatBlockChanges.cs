@@ -10,6 +10,8 @@ public class StatBlockChanges : MonoBehaviour
     [SerializeField] private Rigidbody2D enemyRb;       
     [SerializeField] private Transform enemyVisual; 
     [SerializeField] private SpriteRenderer enemyRenderer; 
+    
+    [SerializeField] private LevelConfigSO levelConfig;
 
     
     public int[] statsP = {1, 1, 1};
@@ -53,9 +55,19 @@ public class StatBlockChanges : MonoBehaviour
             enemyRb = enemyRoot.GetComponent<Rigidbody2D>();
         }
         
+        InitializeStatsFromLevelConfig();
         
-        iPointsLeftP = iPointsTotalP - statsP.Sum();
-        iPointsLeftE = iPointsTotalE - statsE.Sum();
+        RecomputePoints();
+        
+        StatChangePHealth();
+        StatChangePSpeed();
+        StatChangePJump();
+        StatChangeEHealth();
+        StatChangeESpeed();
+        StatChangeESize();
+
+        
+        
         
         
     }
@@ -63,10 +75,90 @@ public class StatBlockChanges : MonoBehaviour
     private float GetSpriteHeightUnits(SpriteRenderer sr)
     {
         if (!sr || sr.sprite == null) return 1f;
-        // This is in sprite local units (pixelsPerUnit), it does NOT depend on Transform scale.
         return sr.sprite.bounds.size.y;
     }
 
+
+    private void InitializeStatsFromLevelConfig()
+    {
+        if (levelConfig == null)
+        {
+            var bootstrap = FindFirstObjectByType<LevelBootstrap>();
+            if (bootstrap)
+            {
+                levelConfig = bootstrap.levelConfig;
+            }
+        }
+
+        if (levelConfig == null || levelConfig.playerStartingPreset == null)
+        {
+            Debug.Log("[StatBlockChanges] No LevelConfig or no playerStartingPreset; keeping default statsP.");
+            return;
+        }
+        
+        var presetP = levelConfig.playerStartingPreset;
+
+        statsP[0] = Mathf.Max(0, presetP.iPlayerHealth);
+        
+        
+        
+        if      (Mathf.Approximately(presetP.fPlayerSpeed, playerStats.playerSpeedLVL0)) statsP[1] = 0;
+        else if (Mathf.Approximately(presetP.fPlayerSpeed, playerStats.playerSpeedLVL1)) statsP[1] = 1;
+        else if (Mathf.Approximately(presetP.fPlayerSpeed, playerStats.playerSpeedLVL2)) statsP[1] = 2;
+        else if (Mathf.Approximately(presetP.fPlayerSpeed, playerStats.playerSpeedLVL3)) statsP[1] = 3;
+        else
+        {
+            Debug.LogWarning($"[StatBlockChanges] Preset speed {presetP.fPlayerSpeed} does not match any level value; defaulting to level 1.");
+            statsP[1] = 1;
+        }
+        
+        
+        if      (Mathf.Approximately(presetP.fPlayerJump, playerStats.playerJumpLVL0)) statsP[2] = 0;
+        else if (Mathf.Approximately(presetP.fPlayerJump, playerStats.playerJumpLVL1)) statsP[2] = 1;
+        else if (Mathf.Approximately(presetP.fPlayerJump, playerStats.playerJumpLVL2)) statsP[2] = 2;
+        else if (Mathf.Approximately(presetP.fPlayerJump, playerStats.playerJumpLVL3)) statsP[2] = 3;
+        else
+        {
+            Debug.LogWarning($"[StatBlockChanges] Preset jump {presetP.fPlayerJump} does not match any level value; defaulting to level 1.");
+            statsP[2] = 1;
+        }
+
+        Debug.Log($"[StatBlockChanges] statsP <- preset | Health:{statsP[0]} Speed Index:{statsP[1]} Jump Index:{statsP[2]}");
+
+        if (enemyVisual)
+        {
+            var presetE = levelConfig.enemyStartingPreset;
+            
+            statsE[0] = Mathf.Max(0, presetE.iEnemyHealth);
+            
+            if      (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL0)) statsE[1] = 0;
+            else if (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL1)) statsE[1] = 1;
+            else if (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL2)) statsE[1] = 2;
+            else if (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL3)) statsE[1] = 3;
+            else
+            {
+                Debug.LogWarning($"[StatBlockChanges] Preset speed {presetE.fEnemySpeed} does not match any level value; defaulting to level 1.");
+                statsE[1] = 1;
+            }
+            
+            if (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL1)) statsE[1] = 1;
+            else if (Mathf.Approximately(presetE.fEnemySize, enemyStats.enemySizeLVL2)) statsE[1] = 2;
+            else if (Mathf.Approximately(presetE.fEnemySize, enemyStats.enemySizeLVL3)) statsE[1] = 3;
+            else
+            {
+                Debug.LogWarning($"[StatBlockChanges] Preset speed {presetE.fEnemySize} does not match any level value; defaulting to level 1.");
+                statsE[2] = 1;
+            }
+        }
+
+    }
+
+
+    private void RecomputePoints()
+    {
+        iPointsLeftP = iPointsTotalP - statsP.Sum();
+        iPointsLeftE = iPointsTotalE - statsE.Sum();
+    }
     
     public void StatChangePHealth()
     {

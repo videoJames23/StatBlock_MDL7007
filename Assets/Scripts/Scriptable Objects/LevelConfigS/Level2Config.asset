@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Level2Config
   m_EditorClassIdentifier: 
   playerStartingPreset: {fileID: 11400000, guid: cb95e714f61a41446b32e914bd34f3f5, type: 2}
+  enemyStartingPreset: {fileID: 11400000, guid: be4b608b8e2ce0143aa4d583c14f0c0b, type: 2}

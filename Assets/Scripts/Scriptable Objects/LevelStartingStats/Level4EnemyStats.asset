@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3711fe64f39ca5b4994d1edb338ec0e1, type: 3}
-  m_Name: DefaultEnemyStats
+  m_Name: Level4EnemyStats
   m_EditorClassIdentifier: 
   iEnemyHealth: 1
-  fEnemySpeed: 3
-  fEnemySize: 5
+  fEnemySpeed: 10
+  fEnemySize: 4.5

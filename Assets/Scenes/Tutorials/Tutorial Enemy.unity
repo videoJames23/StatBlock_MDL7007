@@ -300,6 +300,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1839248067}
     - target: {fileID: 63270712316841398, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
+      propertyPath: levelConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: a9bcb53891cf83c45ae2f7ab1fab90df, type: 2}
+    - target: {fileID: 63270712316841398, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
       propertyPath: enemyRenderer
       value: 
       objectReference: {fileID: 1839248066}
@@ -1565,6 +1569,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5755295746090034552, guid: c915e9bc40b27c84a8cb2adf38be9d6e, type: 3}
   m_PrefabInstance: {fileID: 2023609820}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1839248068 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1998484001756151778, guid: c915e9bc40b27c84a8cb2adf38be9d6e, type: 3}
+  m_PrefabInstance: {fileID: 2023609820}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c63c8989ca801a449533755dcfd0cc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1875669535
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2127,6 +2142,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelBootstrap
       objectReference: {fileID: 0}
+    - target: {fileID: 5230060238328239297, guid: 6bfa3b3c0b4d3fc42b04de3022813fd2, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1839248068}
     - target: {fileID: 5230060238328239297, guid: 6bfa3b3c0b4d3fc42b04de3022813fd2, type: 3}
       propertyPath: player
       value: 
