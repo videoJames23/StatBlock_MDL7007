@@ -3,12 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyStats", menuName = "Scriptable Objects/EnemyStats")]
 public class EnemyStats : ScriptableObject
 {
-    public int iEnemyHealth;
-    
-    public float fEnemySpeed;
-    
-    public float fEnemySize;
-    
+   
     public int[,] aEnemyStatBounds = { {1, 3}, {0, 3}, {1, 3} };
     
     [SerializeField] public float enemySpeedLVL0 = 0f;

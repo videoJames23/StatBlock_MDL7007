@@ -6,4 +6,7 @@ public class LevelConfigSO : ScriptableObject
 {
     [Header("Player")]
     public PlayerStatsPresetSO playerStartingPreset;
+
+    [Header("Enemy")] 
+    public EnemyStatsPresetSO enemyStartingPreset;
 }
