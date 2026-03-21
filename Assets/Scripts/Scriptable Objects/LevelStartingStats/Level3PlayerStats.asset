@@ -15,4 +15,4 @@ MonoBehaviour:
   iPlayerHealth: 1
   fPlayerSpeed: 3
   fPlayerJump: 5
-  iPointsTotalP: 6
+  iPointsTotalP: 5
