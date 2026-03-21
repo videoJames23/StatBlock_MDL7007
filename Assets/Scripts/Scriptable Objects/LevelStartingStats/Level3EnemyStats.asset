@@ -15,3 +15,4 @@ MonoBehaviour:
   iEnemyHealth: 1
   fEnemySpeed: 10
   fEnemySize: 4.5
+  iPointsTotalE: 7

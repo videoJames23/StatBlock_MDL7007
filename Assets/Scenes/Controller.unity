@@ -2225,6 +2225,17 @@ Transform:
   - {fileID: 33551216}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1556380531 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1577906054474554449, guid: db45c8cafaaf5a9478674e49501d25ed, type: 3}
+  m_PrefabInstance: {fileID: 1053140018}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c63c8989ca801a449533755dcfd0cc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1612726447 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2852572768228270822, guid: 3ad02028bc040fc42a392cc603398a64, type: 3}
@@ -2243,9 +2254,17 @@ PrefabInstance:
       value: LevelBootstrap
       objectReference: {fileID: 0}
     - target: {fileID: 5230060238328239297, guid: 6bfa3b3c0b4d3fc42b04de3022813fd2, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1556380531}
+    - target: {fileID: 5230060238328239297, guid: 6bfa3b3c0b4d3fc42b04de3022813fd2, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1417268603}
+    - target: {fileID: 5230060238328239297, guid: 6bfa3b3c0b4d3fc42b04de3022813fd2, type: 3}
+      propertyPath: levelConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 9c44d6775e5703f44a94fad7902abf29, type: 2}
     - target: {fileID: 8257309681915820930, guid: 6bfa3b3c0b4d3fc42b04de3022813fd2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.51756
@@ -2382,6 +2401,10 @@ PrefabInstance:
       propertyPath: enemyVisual
       value: 
       objectReference: {fileID: 1424190841}
+    - target: {fileID: 63270712316841398, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
+      propertyPath: levelConfig
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 63270712316841398, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
       propertyPath: enemyRenderer
       value: 

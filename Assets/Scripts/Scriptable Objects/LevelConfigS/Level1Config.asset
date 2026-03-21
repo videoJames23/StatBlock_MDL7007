@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5f320ed9db950d4cb5488b3511446c8, type: 3}
   m_Name: Level1Config
   m_EditorClassIdentifier: 
-  playerStartingPreset: {fileID: 11400000, guid: 33007a3145368dc41b6cf0c5f0f2f94b, type: 2}
+  playerStartingPreset: {fileID: 11400000, guid: a81283874862748478d097a5059a353a, type: 2}
   enemyStartingPreset: {fileID: 11400000, guid: be4b608b8e2ce0143aa4d583c14f0c0b, type: 2}

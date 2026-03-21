@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5f320ed9db950d4cb5488b3511446c8, type: 3}
-  m_Name: Level2Config
+  m_Script: {fileID: 11500000, guid: 0962a7c3838754e469ca0ce554e9f2ce, type: 3}
+  m_Name: Level4PlayerStats
   m_EditorClassIdentifier: 
-  playerStartingPreset: {fileID: 11400000, guid: cb95e714f61a41446b32e914bd34f3f5, type: 2}
-  enemyStartingPreset: {fileID: 11400000, guid: 4e6f9ab54b20ee742957d4fcd4117a31, type: 2}
+  iPlayerHealth: 1
+  fPlayerSpeed: 3
+  fPlayerJump: 5
+  iPointsTotalP: 5

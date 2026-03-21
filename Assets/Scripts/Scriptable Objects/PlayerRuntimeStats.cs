@@ -4,6 +4,6 @@ public class PlayerRuntimeStats
     public int iPlayerHealth;
     public float fPlayerSpeed;
     public float fPlayerJump;
-
-    public PlayerRuntimeStats() {}
+    public int iPointsTotalP;
+    
 }

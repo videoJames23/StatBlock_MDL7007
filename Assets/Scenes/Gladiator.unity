@@ -459,6 +459,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &653549964 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1577906054474554449, guid: db45c8cafaaf5a9478674e49501d25ed, type: 3}
+  m_PrefabInstance: {fileID: 1945133276}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c63c8989ca801a449533755dcfd0cc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &740399391
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -603,7 +614,7 @@ PrefabInstance:
       objectReference: {fileID: 408591777}
     - target: {fileID: 63270712316841398, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
       propertyPath: iPointsTotalE
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 63270712316841398, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
       propertyPath: 'statsE.Array.data[1]'
@@ -860,9 +871,17 @@ PrefabInstance:
       value: LevelBootstrap
       objectReference: {fileID: 0}
     - target: {fileID: 5230060238328239297, guid: 6bfa3b3c0b4d3fc42b04de3022813fd2, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 653549964}
+    - target: {fileID: 5230060238328239297, guid: 6bfa3b3c0b4d3fc42b04de3022813fd2, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1731831760}
+    - target: {fileID: 5230060238328239297, guid: 6bfa3b3c0b4d3fc42b04de3022813fd2, type: 3}
+      propertyPath: levelConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 61b76f3510a19394584f344c273d3e6b, type: 2}
     - target: {fileID: 8257309681915820930, guid: 6bfa3b3c0b4d3fc42b04de3022813fd2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.51756

@@ -97,6 +97,8 @@ public class StatBlockChanges : MonoBehaviour
         }
         
         var presetP = levelConfig.playerStartingPreset;
+        
+        iPointsTotalP = presetP.iPointsTotalP;
 
         statsP[0] = Mathf.Max(0, presetP.iPlayerHealth);
         
@@ -129,6 +131,8 @@ public class StatBlockChanges : MonoBehaviour
         {
             var presetE = levelConfig.enemyStartingPreset;
             
+            iPointsTotalE = presetE.iPointsTotalE;
+            
             statsE[0] = Mathf.Max(0, presetE.iEnemyHealth);
             
             if      (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL0)) statsE[1] = 0;
@@ -149,6 +153,7 @@ public class StatBlockChanges : MonoBehaviour
                 Debug.LogWarning($"[StatBlockChanges] Preset speed {presetE.fEnemySize} does not match any level value; defaulting to level 1.");
                 statsE[2] = 1;
             }
+            Debug.Log($"[StatBlockChanges] statsE <- preset | Health:{statsE[0]} Speed Index:{statsE[1]} Size Index:{statsE[2]}");
         }
 
     }
