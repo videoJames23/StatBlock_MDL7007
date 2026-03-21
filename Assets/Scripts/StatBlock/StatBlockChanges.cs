@@ -145,12 +145,12 @@ public class StatBlockChanges : MonoBehaviour
                 statsE[1] = 1;
             }
             
-            if (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL1)) statsE[1] = 1;
-            else if (Mathf.Approximately(presetE.fEnemySize, enemyStats.enemySizeLVL2)) statsE[1] = 2;
-            else if (Mathf.Approximately(presetE.fEnemySize, enemyStats.enemySizeLVL3)) statsE[1] = 3;
+            if (Mathf.Approximately(presetE.fEnemySize, enemyStats.enemySizeLVL1)) statsE[2] = 1;
+            else if (Mathf.Approximately(presetE.fEnemySize, enemyStats.enemySizeLVL2)) statsE[2] = 2;
+            else if (Mathf.Approximately(presetE.fEnemySize, enemyStats.enemySizeLVL3)) statsE[2] = 3;
             else
             {
-                Debug.LogWarning($"[StatBlockChanges] Preset speed {presetE.fEnemySize} does not match any level value; defaulting to level 1.");
+                Debug.LogWarning($"[StatBlockChanges] Preset size {presetE.fEnemySize} does not match any level value; defaulting to level 1.");
                 statsE[2] = 1;
             }
             Debug.Log($"[StatBlockChanges] statsE <- preset | Health:{statsE[0]} Speed Index:{statsE[1]} Size Index:{statsE[2]}");
