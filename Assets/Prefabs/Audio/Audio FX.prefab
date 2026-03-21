@@ -929,7 +929,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5013173758531391658}
   - component: {fileID: 5988757548258676963}
-  - component: {fileID: 3542811851978212326}
   m_Layer: 10
   m_Name: Audio FX
   m_TagString: Audio
@@ -962,27 +961,6 @@ Transform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5988757548258676963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6335027161824845103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eb2768a7054e7341ae87187d860c60d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  completionSource: {fileID: 4902999310824249145}
-  jumpSource: {fileID: 3033374036785285606}
-  openSource: {fileID: 8793093029153631993}
-  closeSource: {fileID: 6769829448411015747}
-  damageSource: {fileID: 402662363279050664}
-  upSource: {fileID: 657693548816973457}
-  downSource: {fileID: 8736929027066331808}
-  indexSource: {fileID: 1392117121973928265}
-  errorSource: {fileID: 4376832218732338760}
---- !u!114 &3542811851978212326
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class AudioController : MonoBehaviour
 {
-    public AudioSource completionSource;
-    public AudioSource jumpSource;
-    public AudioSource openSource;
-    public AudioSource closeSource;
-    public AudioSource damageSource;
-    public AudioSource upSource;
-    public AudioSource downSource;
-    public AudioSource indexSource;
-    public AudioSource errorSource;
+    [SerializeField] private AudioSource completionSource;
+    [SerializeField] private AudioSource jumpSource;
+    [SerializeField] private AudioSource openSource;
+    [SerializeField] private AudioSource closeSource;
+    [SerializeField] private AudioSource damageSource;
+    [SerializeField] private AudioSource upSource;
+    [SerializeField] private AudioSource downSource;
+    [SerializeField] private AudioSource indexSource;
+    [SerializeField] private AudioSource errorSource;
 
     private void OnEnable()
 
