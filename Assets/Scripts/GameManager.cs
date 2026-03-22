@@ -12,9 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]private EnemyController enemyController;
     
     private StatBlockUI statBlockUI;
-    private StatBlockChanges statBlockChanges;
-    
-    
+    private StatBlockChangesP statBlockChangesP;
+    private StatBlockChangesE statBlockChangesE;
     
     public int iBuildIndex;
     
@@ -43,7 +42,8 @@ public class GameManager : MonoBehaviour
         
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
-        statBlockChanges = statBlockUI.GetComponent<StatBlockChanges>();
+        statBlockChangesP = statBlockUI.GetComponent<StatBlockChangesP>();
+        statBlockChangesE = statBlockUI.GetComponent<StatBlockChangesE>();
         
         
         iBuildIndex = SceneManager.GetActiveScene().buildIndex;
@@ -78,13 +78,13 @@ public class GameManager : MonoBehaviour
             }
             else if (playerController.bInMenuE)
             {
-                if (statBlockChanges.iPointsLeftE == 0)
+                if (statBlockChangesE.iPointsLeftE == 0)
                 {
                     playerController.bInMenuE = false;
                     enemyController.fEnemyDir = enemyController.fPrevDir;
                     MenuChecks();
                 }
-                else if (statBlockChanges.iPointsLeftE > 0)
+                else if (statBlockChangesE.iPointsLeftE > 0)
                 {
                     OnError?.Invoke();
                 }

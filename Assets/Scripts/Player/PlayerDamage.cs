@@ -17,7 +17,7 @@ public class PlayerDamage : MonoBehaviour
     private GameManager gameManagerScript;
     
     private StatBlockUI statBlockUI;
-    private StatBlockChanges statBlockChanges;
+    private StatBlockChangesP statBlockChangesP;
     
     public delegate void Damage();
     public static event  Damage OnDamage;
@@ -40,7 +40,7 @@ public class PlayerDamage : MonoBehaviour
         
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
-        statBlockChanges = statBlockUI.GetComponent<StatBlockChanges>();
+        statBlockChangesP = statBlockUI.GetComponent<StatBlockChangesP>();
         
         Physics2D.IgnoreLayerCollision(10, 11, false);
     }
@@ -56,10 +56,10 @@ public class PlayerDamage : MonoBehaviour
         
         OnDamage?.Invoke();
         
-        statBlockChanges.statsP[0] -= iDamage;
-        statBlockChanges.iPointsTotalP--;
+        statBlockChangesP.statsP[0] -= iDamage;
+        statBlockChangesP.iPointsTotalP--;
             
-        statBlockChanges.StatChangePHealth();
+        statBlockChangesP.StatChangePHealth();
         playerController.bInMenuP = true;
         statBlockUI.UpdateUI();
         playerController.bInMenuP = false;

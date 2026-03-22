@@ -8,7 +8,8 @@ using UnityEngine.Serialization;
 public class StatBlockUI : MonoBehaviour
 {
     private StatBlockInput statBlockInput;
-    private StatBlockChanges statBlockChanges;
+    private StatBlockChangesP statBlockChangesP;
+    private StatBlockChangesE  statBlockChangesE;
     
     public TextMeshProUGUI[] valueTexts;
 
@@ -42,7 +43,8 @@ public class StatBlockUI : MonoBehaviour
     void Start()
     {
         statBlockInput = GetComponent<StatBlockInput>();
-        statBlockChanges = GetComponent<StatBlockChanges>();
+        statBlockChangesP = GetComponent<StatBlockChangesP>();
+        statBlockChangesE = GetComponent<StatBlockChangesE>();
         
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
@@ -72,8 +74,8 @@ public class StatBlockUI : MonoBehaviour
     public void UpdateUI()
     {
         holder.SetActive(true);
-        statBlockChanges.iPointsLeftP = statBlockChanges.iPointsTotalP - statBlockChanges.statsP.Sum();
-        statBlockChanges.iPointsLeftE = statBlockChanges.iPointsTotalE - statBlockChanges.statsE.Sum();
+        statBlockChangesP.iPointsLeftP = statBlockChangesP.iPointsTotalP - statBlockChangesP.statsP.Sum();
+        statBlockChangesE.iPointsLeftE = statBlockChangesE.iPointsTotalE - statBlockChangesE.statsE.Sum();
         
         
         if (playerController.bInMenu)
@@ -101,8 +103,8 @@ public class StatBlockUI : MonoBehaviour
             {
                 if (playerController.bInMenuP)
                 {
-                    valueTexts[i].text = statBlockChanges.statsP[i].ToString();
-                    valueTexts[3].text = statBlockChanges.iPointsLeftP.ToString();
+                    valueTexts[i].text = statBlockChangesP.statsP[i].ToString();
+                    valueTexts[3].text = statBlockChangesP.iPointsLeftP.ToString();
                     showHideJ.Show();
                     showHideS.Hide();
                     sUser = "Player";
@@ -112,8 +114,8 @@ public class StatBlockUI : MonoBehaviour
 
                 else if (playerController.bInMenuE)
                 {
-                    valueTexts[i].text = statBlockChanges.statsE[i].ToString();
-                    valueTexts[3].text = statBlockChanges.iPointsLeftE.ToString();
+                    valueTexts[i].text = statBlockChangesE.statsE[i].ToString();
+                    valueTexts[3].text = statBlockChangesE.iPointsLeftE.ToString();
                     showHideJ.Hide();
                     showHideS.Show();
                     sUser = "Enemy";

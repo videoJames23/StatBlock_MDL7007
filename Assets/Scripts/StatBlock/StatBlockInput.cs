@@ -11,7 +11,8 @@ public class StatBlockInput : MonoBehaviour
     private GameManager gameManagerScript;
     
     private StatBlockUI statBlockUI;
-    private StatBlockChanges statBlockChanges;
+    private StatBlockChangesP statBlockChangesP;
+    private StatBlockChangesE statBlockChangesE;
     
     [SerializeField] private PlayerStatsHandler playerStatsHandler;
     
@@ -30,7 +31,8 @@ public class StatBlockInput : MonoBehaviour
     void Start()
     {
         statBlockUI = GetComponent<StatBlockUI>();
-        statBlockChanges = statBlockUI.GetComponent<StatBlockChanges>();
+        statBlockChangesP = statBlockUI.GetComponent<StatBlockChangesP>();
+        statBlockChangesE = statBlockUI.GetComponent<StatBlockChangesE>();
         
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
@@ -91,26 +93,26 @@ public class StatBlockInput : MonoBehaviour
                     
                     if (playerController.bInMenuP)
                     {
-                        if (statBlockChanges.iPointsLeftP > 0)
+                        if (statBlockChangesP.iPointsLeftP > 0)
                         {
-                            statBlockChanges.statsP[selectedIndex]++;
+                            statBlockChangesP.statsP[selectedIndex]++;
                             OnUp?.Invoke();
-                            if (statBlockChanges.statsP[selectedIndex] > playerStats.aPlayerStatBounds[selectedIndex, 1])
+                            if (statBlockChangesP.statsP[selectedIndex] > playerStats.aPlayerStatBounds[selectedIndex, 1])
                             {
                                 OnError?.Invoke();
-                                statBlockChanges.statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 1];
+                                statBlockChangesP.statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 1];
                             }
 
                             switch (selectedIndex)
                             {
                                 case 0:
-                                    statBlockChanges.StatChangePHealth();
+                                    statBlockChangesP.StatChangePHealth();
                                     break;
                                 case 1:
-                                    statBlockChanges.StatChangePSpeed();
+                                    statBlockChangesP.StatChangePSpeed();
                                     break;
                                 case 2:
-                                    statBlockChanges.StatChangePJump();
+                                    statBlockChangesP.StatChangePJump();
                                     break;
                             }
                         }
@@ -123,35 +125,35 @@ public class StatBlockInput : MonoBehaviour
                     }
                     else if (playerController.bInMenuE)
                     {
-                        if (statBlockChanges.iPointsLeftE > 0)
+                        if (statBlockChangesE.iPointsLeftE > 0)
                         {
                             
                             if (selectedIndex == 2)
                             {
-                                statBlockUI.iPrevSize = statBlockChanges.statsE[2];
+                                statBlockUI.iPrevSize = statBlockChangesE.statsE[2];
                             }
 
-                            statBlockChanges.statsE[selectedIndex]++;
+                            statBlockChangesE.statsE[selectedIndex]++;
                             OnUp?.Invoke();
 
 
 
-                            if (statBlockChanges.statsE[selectedIndex] > enemyStats.aEnemyStatBounds[selectedIndex, 1])
+                            if (statBlockChangesE.statsE[selectedIndex] > enemyStats.aEnemyStatBounds[selectedIndex, 1])
                             {
                                 OnError?.Invoke();
-                                statBlockChanges.statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 1];
+                                statBlockChangesE.statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 1];
                             }
 
                             switch (selectedIndex)
                             {
                                 case 0:
-                                    statBlockChanges.StatChangeEHealth();
+                                    statBlockChangesE.StatChangeEHealth();
                                     break;
                                 case 1:
-                                    statBlockChanges.StatChangeESpeed();
+                                    statBlockChangesE.StatChangeESpeed();
                                     break;
                                 case 2:
-                                    statBlockChanges.StatChangeESize();
+                                    statBlockChangesE.StatChangeESize();
                                     break;
                             }
 
@@ -172,24 +174,24 @@ public class StatBlockInput : MonoBehaviour
                     OnDown?.Invoke();
                     if (playerController.bInMenuP)
                     {
-                        statBlockChanges.statsP[selectedIndex]--;
+                        statBlockChangesP.statsP[selectedIndex]--;
                         
-                        if (statBlockChanges.statsP[selectedIndex] < playerStats.aPlayerStatBounds[selectedIndex, 0])
+                        if (statBlockChangesP.statsP[selectedIndex] < playerStats.aPlayerStatBounds[selectedIndex, 0])
                         {
                             OnError?.Invoke();
-                            statBlockChanges.statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 0];
+                            statBlockChangesP.statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 0];
                         }
                         
                         switch (selectedIndex)
                         {
                             case 0:
-                                statBlockChanges.StatChangePHealth();
+                                statBlockChangesP.StatChangePHealth();
                                 break;
                             case 1:
-                                statBlockChanges.StatChangePSpeed();
+                                statBlockChangesP.StatChangePSpeed();
                                 break;
                             case 2:
-                                statBlockChanges.StatChangePJump();
+                                statBlockChangesP.StatChangePJump();
                                 break;
                         }
                     }
@@ -198,27 +200,27 @@ public class StatBlockInput : MonoBehaviour
                         
                         if (selectedIndex == 2)
                         {
-                            statBlockUI.iPrevSize = statBlockChanges.statsE[2];
+                            statBlockUI.iPrevSize = statBlockChangesE.statsE[2];
                         }
 
-                        statBlockChanges.statsE[selectedIndex]--;
+                        statBlockChangesE.statsE[selectedIndex]--;
                         
-                        if (statBlockChanges.statsE[selectedIndex] < enemyStats.aEnemyStatBounds[selectedIndex, 0])
+                        if (statBlockChangesE.statsE[selectedIndex] < enemyStats.aEnemyStatBounds[selectedIndex, 0])
                         {
                             OnError?.Invoke();
-                            statBlockChanges.statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 0];
+                            statBlockChangesE.statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 0];
                         }
                         
                         switch (selectedIndex)
                         {
                             case 0:
-                                statBlockChanges.StatChangeEHealth();
+                                statBlockChangesE.StatChangeEHealth();
                                 break;
                             case 1:
-                                statBlockChanges.StatChangeESpeed();
+                                statBlockChangesE.StatChangeESpeed();
                                 break;
                             case 2:
-                                statBlockChanges.StatChangeESize();
+                                statBlockChangesE.StatChangeESize();
                                 break;
                         }
                         

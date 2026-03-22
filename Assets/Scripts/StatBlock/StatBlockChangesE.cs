@@ -1,0 +1,159 @@
+using System.Linq;
+using UnityEngine;
+
+public class StatBlockChangesE : MonoBehaviour
+{
+    [SerializeField] private LevelConfigSO levelConfig;
+    [SerializeField] private EnemyStats  enemyStats;
+    
+    [SerializeField] private Rigidbody2D enemyRb;       
+    [SerializeField] private Transform enemyVisual; 
+    [SerializeField] private SpriteRenderer enemyRenderer; 
+    
+    
+    private EnemyStatsHandler enemyStatsHandler;
+    public int[] statsE = {1, 1, 1};
+    
+    public int iPointsTotalE;
+    public int iPointsLeftE;
+    
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        GameObject enemyVisual = GameObject.FindGameObjectWithTag("EnemyVisual");
+        if (enemyVisual)
+        {
+            enemyStatsHandler = enemyVisual.GetComponent<EnemyStatsHandler>();
+        }
+        GameObject enemyRoot = GameObject.FindGameObjectWithTag("EnemyRoot");
+        if (enemyRoot)
+        {
+            enemyRb = enemyRoot.GetComponent<Rigidbody2D>();
+        }
+        
+        InitializeStatsFromLevelConfig();
+        
+        RecomputePoints();
+        
+        StatChangeEHealth();
+        StatChangeESpeed();
+        StatChangeESize();
+    }
+    
+    
+    private float GetSpriteHeightUnits(SpriteRenderer sr)
+    {
+        if (!sr || sr.sprite == null) return 1f;
+        return sr.sprite.bounds.size.y;
+    }
+    
+    private void InitializeStatsFromLevelConfig()
+    {
+        if (levelConfig == null)
+        {
+            var bootstrap = FindFirstObjectByType<LevelBootstrap>();
+            if (bootstrap)
+            {
+                levelConfig = bootstrap.levelConfig;
+            }
+        }
+        
+        if (enemyVisual)
+        {
+            if (levelConfig == null || levelConfig.enemyStartingPreset == null)
+            {
+                Debug.Log("[StatBlockChanges] No LevelConfig or no enemyStartingPreset; keeping default statsE.");
+                return;
+            }
+            
+            var presetE = levelConfig.enemyStartingPreset;
+            
+            iPointsTotalE = presetE.iPointsTotalE;
+            
+            statsE[0] = Mathf.Max(0, presetE.iEnemyHealth);
+            
+            if      (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL0)) statsE[1] = 0;
+            else if (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL1)) statsE[1] = 1;
+            else if (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL2)) statsE[1] = 2;
+            else if (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL3)) statsE[1] = 3;
+            else
+            {
+                Debug.LogWarning($"[StatBlockChanges] Preset speed {presetE.fEnemySpeed} does not match any level value; defaulting to level 1.");
+                statsE[1] = 1;
+            }
+            
+            if (Mathf.Approximately(presetE.fEnemySize, enemyStats.enemySizeLVL1)) statsE[2] = 1;
+            else if (Mathf.Approximately(presetE.fEnemySize, enemyStats.enemySizeLVL2)) statsE[2] = 2;
+            else if (Mathf.Approximately(presetE.fEnemySize, enemyStats.enemySizeLVL3)) statsE[2] = 3;
+            else
+            {
+                Debug.LogWarning($"[StatBlockChanges] Preset size {presetE.fEnemySize} does not match any level value; defaulting to level 1.");
+                statsE[2] = 1;
+            }
+            Debug.Log($"[StatBlockChanges] statsE <- preset | Health:{statsE[0]} Speed Index:{statsE[1]} Size Index:{statsE[2]}");
+        }
+
+    }
+    
+    private void RecomputePoints()
+    {
+        iPointsLeftE = iPointsTotalE - statsE.Sum();
+    }
+
+    public void StatChangeEHealth()
+    {
+        if (!enemyRb || !enemyVisual) return;
+        
+        enemyStatsHandler.runtimeStats.iEnemyHealth = statsE[0];
+        
+    }
+    public void StatChangeESpeed()
+    {
+        if (!enemyRb || !enemyVisual) return;
+
+        float newSpeed = statsE[1] switch
+        {
+            0 => enemyStats.enemySpeedLVL0,
+            1 => enemyStats.enemySpeedLVL1,
+            2 => enemyStats.enemySpeedLVL2,
+            3 => enemyStats.enemySpeedLVL3,
+            _ => enemyRb.linearVelocity.x
+        };
+
+        enemyStatsHandler.runtimeStats.fEnemySpeed = newSpeed;
+    }
+    
+    public void StatChangeESize()
+    {
+        if (!enemyRb || !enemyVisual) return;
+
+        float newScale = statsE[2] switch
+        {
+            1 => enemyStats.enemySizeLVL1,
+            2 => enemyStats.enemySizeLVL2,
+            3 => enemyStats.enemySizeLVL3,
+            _ => enemyVisual.localScale.x
+        };
+
+        enemyStatsHandler.runtimeStats.fEnemySize = newScale;
+        ApplyEnemyScaleBottomAnchored(newScale);
+    }
+
+    
+    private void ApplyEnemyScaleBottomAnchored(float scale)
+    {
+        Vector2 rootPosition = enemyRb.position;
+        
+        var localScale = enemyVisual.localScale;
+        enemyVisual.localScale = new Vector3(scale, scale, localScale.z);
+        
+        float spriteHeight = GetSpriteHeightUnits(enemyRenderer);
+        float childLocalY = (spriteHeight * scale) * 0.5f;
+        var localPosition = enemyVisual.localPosition;
+        enemyVisual.localPosition = new Vector3(localPosition.x, childLocalY, localPosition.z);
+        
+        enemyRb.position = rootPosition;
+        
+    }
+    
+}

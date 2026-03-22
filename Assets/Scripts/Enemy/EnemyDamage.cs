@@ -9,7 +9,7 @@ public class EnemyDamage : MonoBehaviour
 
     private EnemyStatsHandler enemyStatsHandler;
    
-    private StatBlockChanges statBlockChanges;
+    private StatBlockChangesE statBlockChangesE;
     private StatBlockUI statBlockUI;
     
     private SpriteRenderer cSpriteRenderer;
@@ -37,7 +37,7 @@ public class EnemyDamage : MonoBehaviour
         
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
-        statBlockChanges = statBlockUI.GetComponent<StatBlockChanges>();
+        statBlockChangesE = statBlockUI.GetComponent<StatBlockChangesE>();
 
         enemyStats.iDamage = 1;
 
@@ -53,16 +53,16 @@ public class EnemyDamage : MonoBehaviour
     {
         OnDamage?.Invoke();
         
-        statBlockChanges.statsE[0] -= damage;
+        statBlockChangesE.statsE[0] -= damage;
         
-        if (statBlockChanges.iPointsLeftE > 0)
+        if (statBlockChangesE.iPointsLeftE > 0)
         {
-            statBlockChanges.iPointsLeftE--;
+            statBlockChangesE.iPointsLeftE--;
         }
         
-        statBlockChanges.iPointsTotalE--;
+        statBlockChangesE.iPointsTotalE--;
         
-        statBlockChanges.StatChangeEHealth();
+        statBlockChangesE.StatChangeEHealth();
 
         
         playerController.bInMenuE = true;

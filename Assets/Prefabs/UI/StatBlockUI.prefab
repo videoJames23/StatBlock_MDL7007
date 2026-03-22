@@ -648,6 +648,7 @@ GameObject:
   - component: {fileID: 4189463090083641187}
   - component: {fileID: 3124104767108883700}
   - component: {fileID: 63270712316841398}
+  - component: {fileID: 2551358007146017258}
   m_Layer: 5
   m_Name: StatBlockUI
   m_TagString: StatBlockUI
@@ -721,6 +722,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
   enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
+  playerStatsHandler: {fileID: 0}
   selectedIndex: 0
 --- !u!223 &5752956506425552972
 Canvas:
@@ -810,15 +812,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
+  levelConfig: {fileID: 11400000, guid: a9bcb53891cf83c45ae2f7ab1fab90df, type: 2}
+  statsP: 010000000100000001000000
+  iPointsTotalP: 4
+  iPointsLeftP: 0
+--- !u!114 &2551358007146017258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5831489033091506738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5783a3b955d10ec43a34d353aa362b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelConfig: {fileID: 11400000, guid: a9bcb53891cf83c45ae2f7ab1fab90df, type: 2}
   enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
   enemyRb: {fileID: 0}
   enemyVisual: {fileID: 0}
   enemyRenderer: {fileID: 0}
-  statsP: 010000000100000001000000
-  statsE: 010000000300000003000000
-  iPointsTotalP: 5
-  iPointsLeftP: 0
-  iPointsTotalE: 7
+  statsE: 010000000100000001000000
+  iPointsTotalE: 0
   iPointsLeftE: 0
 --- !u!1 &6164279559898771015
 GameObject:
@@ -1284,7 +1300,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -409.7, y: 192.1}
+  m_AnchoredPosition: {x: -601.17, y: -304.3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7914650030378830044
@@ -1435,7 +1451,7 @@ GameObject:
   - component: {fileID: 3222110092296802150}
   - component: {fileID: 750530754885650575}
   m_Layer: 5
-  m_Name: User
+  m_Name: User Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
