@@ -4,6 +4,9 @@ using UnityEngine;
 public class StatBlockChangesE : MonoBehaviour
 {
     [SerializeField] private LevelConfigSO levelConfig;
+    
+    [SerializeField] private StatBlockUI statBlockUI;
+    
     [SerializeField] private EnemyStats  enemyStats;
     
     [SerializeField] private Rigidbody2D enemyRb;       
@@ -16,10 +19,32 @@ public class StatBlockChangesE : MonoBehaviour
     
     public int iPointsTotalE;
     public int iPointsLeftE;
+    public delegate void Up();
+    public static event Up OnUp;
+    
+    public delegate void Down();
+    public static event Down OnDown;
+    public delegate void Error();
+    public static event Error OnError;
+    
+    private void OnEnable()
+    {
+        StatBlockInput.OnStatIncreaseE += StatIncrease;
+        StatBlockInput.OnStatDecreaseE += StatDecrease;
+    }
+
+    private void OnDisable()
+    {
+        StatBlockInput.OnStatIncreaseE -= StatIncrease;
+        StatBlockInput.OnStatDecreaseE -= StatDecrease;
+    }
+    
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        statBlockUI = GetComponent<StatBlockUI>();
+        
         GameObject enemyVisual = GameObject.FindGameObjectWithTag("EnemyVisual");
         if (enemyVisual)
         {
@@ -94,6 +119,74 @@ public class StatBlockChangesE : MonoBehaviour
         }
 
     }
+
+    private void StatIncrease(int selectedIndex)
+    {
+        if (iPointsLeftE > 0)
+        {
+            
+
+            statsE[selectedIndex]++;
+            OnUp?.Invoke();
+
+
+
+            if (statsE[selectedIndex] > enemyStats.aEnemyStatBounds[selectedIndex, 1])
+            {
+                OnError?.Invoke();
+                statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 1];
+            }
+
+            switch (selectedIndex)
+            {
+                case 0:
+                    StatChangeEHealth();
+                    break;
+                case 1:
+                    StatChangeESpeed();
+                    break;
+                case 2:
+                    StatChangeESize();
+                    break;
+            }
+
+
+        }
+        else
+        {
+            OnError?.Invoke();
+        }
+    }
+
+    private void StatDecrease(int selectedIndex)
+    {
+        statsE[selectedIndex]--;
+                        
+        if (statsE[selectedIndex] < enemyStats.aEnemyStatBounds[selectedIndex, 0])
+        {
+            OnError?.Invoke();
+            statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 0];
+        }
+        
+        else
+        {
+            OnDown?.Invoke();
+        }
+        
+        switch (selectedIndex)
+        {
+            case 0:
+                StatChangeEHealth();
+                break;
+            case 1:
+                StatChangeESpeed();
+                break;
+            case 2:
+                StatChangeESize();
+                break;
+        }
+    }
+    
     
     private void RecomputePoints()
     {
@@ -105,6 +198,8 @@ public class StatBlockChangesE : MonoBehaviour
         if (!enemyRb || !enemyVisual) return;
         
         enemyStatsHandler.runtimeStats.iEnemyHealth = statsE[0];
+        RecomputePoints();
+        statBlockUI.UpdateUI();
         
     }
     public void StatChangeESpeed()
@@ -121,6 +216,8 @@ public class StatBlockChangesE : MonoBehaviour
         };
 
         enemyStatsHandler.runtimeStats.fEnemySpeed = newSpeed;
+        RecomputePoints();
+        statBlockUI.UpdateUI();
     }
     
     public void StatChangeESize()
@@ -137,6 +234,8 @@ public class StatBlockChangesE : MonoBehaviour
 
         enemyStatsHandler.runtimeStats.fEnemySize = newScale;
         ApplyEnemyScaleBottomAnchored(newScale);
+        RecomputePoints();
+        statBlockUI.UpdateUI();
     }
 
     

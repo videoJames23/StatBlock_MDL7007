@@ -20,15 +20,15 @@ public class StatBlockUI : MonoBehaviour
 
     public GameObject holder;
     public GameObject background;
-    private RectTransform holderRT;
-    private Vector2 UIPosition;
+    [SerializeField] private RectTransform holderRT;
+    [SerializeField] private Vector2 UIPosition;
     
     
     public ShowHide showHideJ;
     public ShowHide showHideS;
     
     public string sUser;
-    [FormerlySerializedAs("prevSize")] public int iPrevSize;
+    
     
     public Vector3 vFocusScale = new Vector3(3f, 3f, 3f);
     public Vector2 vFocusPosition = new Vector2(-87.6f, -74.2f);
@@ -65,18 +65,9 @@ public class StatBlockUI : MonoBehaviour
         UIPosition = holderRT.anchoredPosition;
     }
 
-    void Update()
-    {
-        
-       
-    }
-
     public void UpdateUI()
     {
         holder.SetActive(true);
-        statBlockChangesP.iPointsLeftP = statBlockChangesP.iPointsTotalP - statBlockChangesP.statsP.Sum();
-        statBlockChangesE.iPointsLeftE = statBlockChangesE.iPointsTotalE - statBlockChangesE.statsE.Sum();
-        
         
         if (playerController.bInMenu)
         {
@@ -94,13 +85,9 @@ public class StatBlockUI : MonoBehaviour
 
         for (int i = 0; i < valueTexts.Length - 2; i++)
         {
-            if (playerController == null)
+            if (playerController)
             {
-                
-            }
-
-            else
-            {
+            
                 if (playerController.bInMenuP)
                 {
                     valueTexts[i].text = statBlockChangesP.statsP[i].ToString();

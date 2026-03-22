@@ -8,38 +8,30 @@ public class StatBlockInput : MonoBehaviour
 
     [SerializeField] private EnemyStats enemyStats;
     
-    private GameManager gameManagerScript;
-    
     private StatBlockUI statBlockUI;
-    private StatBlockChangesP statBlockChangesP;
-    private StatBlockChangesE statBlockChangesE;
     
-    [SerializeField] private PlayerStatsHandler playerStatsHandler;
     
-    public delegate void Error();
-    public static event Error OnError;
-
-    public delegate void Up();
-    public static event Up OnUp;
-    public delegate void Down();
-    public static event Down OnDown;
     public delegate void Index();
     public static event Index OnIndex;
+
+    public delegate void StatIncreaseP(int selectedIndex);
+    public static event StatIncreaseP OnStatIncreaseP;
+    public delegate void StatDecreaseP(int selectedIndex);
+    public static event StatDecreaseP OnStatDecreaseP;
+    
+    public delegate void StatIncreaseE(int selectedIndex);
+    public static event StatIncreaseE OnStatIncreaseE;
+    public delegate void StatDecreaseE(int selectedIndex);
+    public static event StatDecreaseE OnStatDecreaseE;
     
     public int selectedIndex;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         statBlockUI = GetComponent<StatBlockUI>();
-        statBlockChangesP = statBlockUI.GetComponent<StatBlockChangesP>();
-        statBlockChangesE = statBlockUI.GetComponent<StatBlockChangesE>();
         
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
-        playerStatsHandler = player.GetComponent<PlayerStatsHandler>();
-        
-        GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
-        gameManagerScript = gameManager.GetComponent<GameManager>();
       
     }
 
@@ -50,8 +42,6 @@ public class StatBlockInput : MonoBehaviour
         {
             if (playerController.bInMenu)
             {
-            
-
                 // select stat
                 if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
                 {
@@ -65,8 +55,6 @@ public class StatBlockInput : MonoBehaviour
                         case 1: break;
                         case 2: break;
                     }
-                    
-                    
                     statBlockUI.UpdateUI();
                 }
 
@@ -83,7 +71,6 @@ public class StatBlockInput : MonoBehaviour
                         case 2: break;
                         case 3 : selectedIndex = 0; break;
                     }
-
                     statBlockUI.UpdateUI();
                 }
 
@@ -93,140 +80,26 @@ public class StatBlockInput : MonoBehaviour
                     
                     if (playerController.bInMenuP)
                     {
-                        if (statBlockChangesP.iPointsLeftP > 0)
-                        {
-                            statBlockChangesP.statsP[selectedIndex]++;
-                            OnUp?.Invoke();
-                            if (statBlockChangesP.statsP[selectedIndex] > playerStats.aPlayerStatBounds[selectedIndex, 1])
-                            {
-                                OnError?.Invoke();
-                                statBlockChangesP.statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 1];
-                            }
-
-                            switch (selectedIndex)
-                            {
-                                case 0:
-                                    statBlockChangesP.StatChangePHealth();
-                                    break;
-                                case 1:
-                                    statBlockChangesP.StatChangePSpeed();
-                                    break;
-                                case 2:
-                                    statBlockChangesP.StatChangePJump();
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            OnError?.Invoke();
-                        }
-
-
+                        OnStatIncreaseP?.Invoke(selectedIndex);
                     }
                     else if (playerController.bInMenuE)
                     {
-                        if (statBlockChangesE.iPointsLeftE > 0)
-                        {
-                            
-                            if (selectedIndex == 2)
-                            {
-                                statBlockUI.iPrevSize = statBlockChangesE.statsE[2];
-                            }
-
-                            statBlockChangesE.statsE[selectedIndex]++;
-                            OnUp?.Invoke();
-
-
-
-                            if (statBlockChangesE.statsE[selectedIndex] > enemyStats.aEnemyStatBounds[selectedIndex, 1])
-                            {
-                                OnError?.Invoke();
-                                statBlockChangesE.statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 1];
-                            }
-
-                            switch (selectedIndex)
-                            {
-                                case 0:
-                                    statBlockChangesE.StatChangeEHealth();
-                                    break;
-                                case 1:
-                                    statBlockChangesE.StatChangeESpeed();
-                                    break;
-                                case 2:
-                                    statBlockChangesE.StatChangeESize();
-                                    break;
-                            }
-
-
-                        }
-                        else
-                        {
-                            OnError?.Invoke();
-                        }
-
-                        
+                        OnStatIncreaseE?.Invoke(selectedIndex);
                     }
-                    statBlockUI.UpdateUI();
+                    
                 }
 
                 if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
                 {
-                    OnDown?.Invoke();
                     if (playerController.bInMenuP)
                     {
-                        statBlockChangesP.statsP[selectedIndex]--;
-                        
-                        if (statBlockChangesP.statsP[selectedIndex] < playerStats.aPlayerStatBounds[selectedIndex, 0])
-                        {
-                            OnError?.Invoke();
-                            statBlockChangesP.statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 0];
-                        }
-                        
-                        switch (selectedIndex)
-                        {
-                            case 0:
-                                statBlockChangesP.StatChangePHealth();
-                                break;
-                            case 1:
-                                statBlockChangesP.StatChangePSpeed();
-                                break;
-                            case 2:
-                                statBlockChangesP.StatChangePJump();
-                                break;
-                        }
+                        OnStatDecreaseP?.Invoke(selectedIndex);
                     }
                     else if (playerController.bInMenuE)
                     {
-                        
-                        if (selectedIndex == 2)
-                        {
-                            statBlockUI.iPrevSize = statBlockChangesE.statsE[2];
-                        }
-
-                        statBlockChangesE.statsE[selectedIndex]--;
-                        
-                        if (statBlockChangesE.statsE[selectedIndex] < enemyStats.aEnemyStatBounds[selectedIndex, 0])
-                        {
-                            OnError?.Invoke();
-                            statBlockChangesE.statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 0];
-                        }
-                        
-                        switch (selectedIndex)
-                        {
-                            case 0:
-                                statBlockChangesE.StatChangeEHealth();
-                                break;
-                            case 1:
-                                statBlockChangesE.StatChangeESpeed();
-                                break;
-                            case 2:
-                                statBlockChangesE.StatChangeESize();
-                                break;
-                        }
-                        
+                        OnStatDecreaseE?.Invoke(selectedIndex);
                     }
-
-                    statBlockUI.UpdateUI();
+                    
                 }
 
 

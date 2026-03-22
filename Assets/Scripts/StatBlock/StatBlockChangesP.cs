@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class StatBlockChangesP : MonoBehaviour
     
     public int[] statsP = {1, 1, 1};
     
+    private StatBlockUI statBlockUI;
     
     private PlayerController playerController;
     private PlayerStatsHandler playerStatsHandler;
@@ -17,17 +19,42 @@ public class StatBlockChangesP : MonoBehaviour
     private EnemyController enemyController;
     private Transform enemyTransform;
     
+    public delegate void Up();
+    public static event Up OnUp;
+    
+    public delegate void Down();
+    public static event Down OnDown;
+    
+    public delegate void Error();
+    public static event Error OnError;
+    
     
     public int iPointsTotalP;
     public int iPointsLeftP;
-    
-    
+
+    private void OnEnable()
+    {
+        StatBlockInput.OnStatIncreaseP += StatIncrease;
+        StatBlockInput.OnStatDecreaseP += StatDecrease;
+        
+    }
+
+    private void OnDisable()
+    {
+        StatBlockInput.OnStatIncreaseP -= StatIncrease;
+        StatBlockInput.OnStatDecreaseP -= StatDecrease;
+        
+    }
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
         playerStatsHandler = player.GetComponent<PlayerStatsHandler>();
+        
+        statBlockUI = GetComponent<StatBlockUI>();
         
         InitializeStatsFromLevelConfig();
         
@@ -93,6 +120,62 @@ public class StatBlockChangesP : MonoBehaviour
 
     }
 
+    private void StatIncrease(int selectedIndex)
+    {
+        if (iPointsLeftP > 0)
+        {
+            statsP[selectedIndex]++;
+            OnUp?.Invoke();
+            if (statsP[selectedIndex] > playerStats.aPlayerStatBounds[selectedIndex, 1])
+            {
+                OnError?.Invoke();
+                statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 1];
+            }
+                    
+            switch (selectedIndex)
+            {
+                case 0:
+                    StatChangePHealth();
+                    break;
+                case 1:
+                    StatChangePSpeed();
+                    break;
+                case 2:
+                    StatChangePJump();
+                    break;
+            }
+        }
+        else
+        {
+            OnError?.Invoke();
+        }
+    }
+
+    private void StatDecrease(int selectedIndex)
+    {
+        OnDown?.Invoke();
+        statsP[selectedIndex]--;
+                        
+        if (statsP[selectedIndex] < playerStats.aPlayerStatBounds[selectedIndex, 0])
+        {
+            OnError?.Invoke();
+            statsP[selectedIndex] = playerStats.aPlayerStatBounds[selectedIndex, 0];
+        }
+                        
+        switch (selectedIndex)
+        {
+            case 0:
+                StatChangePHealth();
+                break;
+            case 1:
+                StatChangePSpeed();
+                break;
+            case 2:
+                StatChangePJump();
+                break;
+        }
+    }
+    
 
     private void RecomputePoints()
     {
@@ -102,6 +185,8 @@ public class StatBlockChangesP : MonoBehaviour
     public void StatChangePHealth()
     {
         playerStatsHandler.runtimeStats.iPlayerHealth = statsP[0];
+        RecomputePoints();
+        statBlockUI.UpdateUI();
     }
     public void StatChangePSpeed()
     {
@@ -115,6 +200,8 @@ public class StatBlockChangesP : MonoBehaviour
                 case 2: playerStatsHandler.runtimeStats.fPlayerSpeed = playerStats.playerSpeedLVL2; break;
                 case 3: playerStatsHandler.runtimeStats.fPlayerSpeed = playerStats.playerSpeedLVL3; break;
             }
+            RecomputePoints();
+            statBlockUI.UpdateUI();
         }
     }
     public void StatChangePJump()
@@ -129,6 +216,8 @@ public class StatBlockChangesP : MonoBehaviour
                 case 2: playerStatsHandler.runtimeStats.fPlayerJump = playerStats.playerJumpLVL2; break;
                 case 3: playerStatsHandler.runtimeStats.fPlayerJump = playerStats.playerJumpLVL3; break;
             }
+            RecomputePoints();
+            statBlockUI.UpdateUI();
         }
     }
     

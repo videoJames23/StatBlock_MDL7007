@@ -19,9 +19,12 @@ public class AudioController : MonoBehaviour
         GameManager.OnMenuOpen += PlayOpen;
         GameManager.OnMenuClose += PlayClose;
         GameManager.OnError += PlayError;
-        StatBlockInput.OnError += PlayError;
-        StatBlockInput.OnUp += PlayUp;
-        StatBlockInput.OnDown += PlayDown;
+        StatBlockChangesP.OnError += PlayError;
+        StatBlockChangesE.OnError += PlayError;
+        StatBlockChangesP.OnUp += PlayUp;
+        StatBlockChangesP.OnDown += PlayDown;
+        StatBlockChangesE.OnUp += PlayUp;
+        StatBlockChangesE.OnDown += PlayDown;
         StatBlockInput.OnIndex += PlayIndex;
         
         MainMenuScreen.OnButtonClicked += PlayUp;
@@ -41,9 +44,12 @@ public class AudioController : MonoBehaviour
         GameManager.OnMenuOpen -= PlayOpen;
         GameManager.OnMenuClose -= PlayClose;
         GameManager.OnError -= PlayError;
-        StatBlockInput.OnError -= PlayError;
-        StatBlockInput.OnUp -= PlayUp;
-        StatBlockInput.OnDown -= PlayDown;
+        StatBlockChangesP.OnError -= PlayError;
+        StatBlockChangesE.OnError -= PlayError;
+        StatBlockChangesP.OnUp -= PlayUp;
+        StatBlockChangesP.OnDown -= PlayDown;
+        StatBlockChangesE.OnUp -= PlayUp;
+        StatBlockChangesE.OnDown -= PlayDown;
         StatBlockInput.OnIndex -= PlayIndex;
         
         MainMenuScreen.OnButtonClicked -= PlayUp;

@@ -1264,9 +1264,17 @@ PrefabInstance:
       propertyPath: levelConfig
       value: 
       objectReference: {fileID: 11400000, guid: f302ed1e319b0c645b3366e7ef3acb24, type: 2}
+    - target: {fileID: 2551358007146017258, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
+      propertyPath: statBlockUI
+      value: 
+      objectReference: {fileID: 953025004}
     - target: {fileID: 5831489033091506738, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
       propertyPath: m_Name
       value: StatBlockUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
+      propertyPath: holderRT
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
       propertyPath: playerController
@@ -1338,6 +1346,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ad02028bc040fc42a392cc603398a64, type: 3}
+--- !u!114 &953025004 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
+  m_PrefabInstance: {fileID: 888191967}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 262d6967e1c149e47b1801719a140f5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &983649260
 PrefabInstance:
   m_ObjectHideFlags: 0
