@@ -85,13 +85,15 @@ public class StatBlockUI : MonoBehaviour
 
         UIPosition = config.uiHolderAnchoredPosition;
         holderRT.anchoredPosition = UIPosition;
-        holderRT.localScale       = config.uiHolderScale;
+        holderRT.localScale = config.uiHolderScale;
 
         var bgRT = background?.GetComponent<RectTransform>();
         if (bgRT) bgRT.localScale = config.uiBackgroundScale;
 
         Debug.Log($"[StatBlockUI] After apply: holderRT.anchoredPosition={holderRT.anchoredPosition}, " +
                   $"localScale={holderRT.localScale}");
+        
+        holder.SetActive(false);
 
     }
 
