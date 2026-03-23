@@ -7,6 +7,9 @@ using UnityEngine.Serialization;
 
 public class StatBlockUI : MonoBehaviour
 {
+    [SerializeField] private LevelConfigSO levelConfig;
+    public bool IsReady { get; private set; } = false;
+    
     private StatBlockInput statBlockInput;
     private StatBlockChangesP statBlockChangesP;
     private StatBlockChangesE  statBlockChangesE;
@@ -62,8 +65,36 @@ public class StatBlockUI : MonoBehaviour
 
         holder.SetActive(false);
         
-        UIPosition = holderRT.anchoredPosition;
+        IsReady = true;
+        
+        if (levelConfig != null)
+            ApplyLevelUILayout(levelConfig);
+
+        
     }
+    
+    
+    public void ApplyLevelUILayout(LevelConfigSO config)
+    {
+        
+        if (config == null) { Debug.LogWarning("[StatBlockUI] Config is null."); return; }
+        if (!holderRT)      { Debug.LogWarning("[StatBlockUI] holderRT is null; Start() likely hasn’t run."); return; }
+
+        Debug.Log($"[StatBlockUI] Applying UI: pos={config.uiHolderAnchoredPosition}, " + 
+                  $"scale={config.uiHolderScale}, bgScale={config.uiBackgroundScale}");
+
+        UIPosition = config.uiHolderAnchoredPosition;
+        holderRT.anchoredPosition = UIPosition;
+        holderRT.localScale       = config.uiHolderScale;
+
+        var bgRT = background?.GetComponent<RectTransform>();
+        if (bgRT) bgRT.localScale = config.uiBackgroundScale;
+
+        Debug.Log($"[StatBlockUI] After apply: holderRT.anchoredPosition={holderRT.anchoredPosition}, " +
+                  $"localScale={holderRT.localScale}");
+
+    }
+
 
     public void UpdateUI()
     {

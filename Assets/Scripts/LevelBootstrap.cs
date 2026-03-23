@@ -59,4 +59,28 @@ public class LevelBootstrap : MonoBehaviour
             enemy.ResetToDefault();
         }
     }
+
+    void Start()
+    {
+        var ui = FindFirstObjectByType<StatBlockUI>();
+        if (ui == null)
+        {
+            
+            Debug.LogWarning("[LevelBootstrap] No StatBlockUI found.");
+            return;
+        }
+        StartCoroutine(ApplyUIWhenReady(ui));
+    }
+
+    private System.Collections.IEnumerator ApplyUIWhenReady(StatBlockUI ui)
+    {
+        yield return null;
+        
+        Debug.Log("[LevelBootstrap] Applying UI layout from LevelConfig...");
+        
+        ui.ApplyLevelUILayout(levelConfig);
+        
+    }
+    
+    
 }

@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStartingPreset: {fileID: 11400000, guid: c78ce7fa608bc5747bcc065d48dc67bf, type: 2}
   enemyStartingPreset: {fileID: 0}
+  uiHolderAnchoredPosition: {x: -36, y: 285.5}
+  uiHolderScale: {x: 1, y: 1, z: 1}
+  uiBackgroundScale: {x: 2.83, y: 2.31, z: 1}
