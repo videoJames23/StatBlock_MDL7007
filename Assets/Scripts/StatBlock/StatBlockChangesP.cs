@@ -27,7 +27,9 @@ public class StatBlockChangesP : MonoBehaviour
     
     public delegate void Error();
     public static event Error OnError;
-    
+
+    public delegate void DamageRefresh();
+    public static event DamageRefresh OnDamageRefresh;
     
     public int iPointsTotalP;
     public int iPointsLeftP;
@@ -36,6 +38,7 @@ public class StatBlockChangesP : MonoBehaviour
     {
         StatBlockInput.OnStatIncreaseP += StatIncrease;
         StatBlockInput.OnStatDecreaseP += StatDecrease;
+        PlayerDamage.OnDamage += HealthDecrease;
         
     }
 
@@ -43,6 +46,7 @@ public class StatBlockChangesP : MonoBehaviour
     {
         StatBlockInput.OnStatIncreaseP -= StatIncrease;
         StatBlockInput.OnStatDecreaseP -= StatDecrease;
+        PlayerDamage.OnDamage -= HealthDecrease;
         
     }
 
@@ -188,6 +192,15 @@ public class StatBlockChangesP : MonoBehaviour
         RecomputePoints();
         statBlockUI.UpdateUI();
     }
+    
+    public void HealthDecrease()
+    {
+        statsP[0]--;
+        iPointsTotalP--;
+        StatChangePHealth();
+        OnDamageRefresh?.Invoke();
+    }
+    
     public void StatChangePSpeed()
     {
         if (playerController)
@@ -220,7 +233,7 @@ public class StatBlockChangesP : MonoBehaviour
             statBlockUI.UpdateUI();
         }
     }
-    
+
     
     
 

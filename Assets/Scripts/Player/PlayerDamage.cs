@@ -13,8 +13,6 @@ public class PlayerDamage : MonoBehaviour
     private PlayerStatsHandler playerStatsHandler;
     private PlayerMovement playerMovement;
     private Rigidbody2D playerRb;
-   
-    private GameManager gameManagerScript;
     
     private StatBlockUI statBlockUI;
     private StatBlockChangesP statBlockChangesP;
@@ -35,8 +33,6 @@ public class PlayerDamage : MonoBehaviour
         playerStatsHandler = GetComponent<PlayerStatsHandler>();
         
         cSpriteRenderer = GetComponent<SpriteRenderer>(); 
-        GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
-        gameManagerScript = gameManager.GetComponent<GameManager>();
         
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
@@ -45,33 +41,21 @@ public class PlayerDamage : MonoBehaviour
         Physics2D.IgnoreLayerCollision(10, 11, false);
     }
     
-    public void TakeDamage(int iDamage)
+    public void TakeDamage()
     {
         if (!bCanTakeDamage)
         {
             return;
         }
         
+        OnDamage?.Invoke(); 
         bCanTakeDamage = false;
         
-        OnDamage?.Invoke();
-        
-        statBlockChangesP.statsP[0] -= iDamage;
-        statBlockChangesP.iPointsTotalP--;
-            
-        statBlockChangesP.StatChangePHealth();
-        playerController.bInMenuP = true;
-        statBlockUI.UpdateUI();
-        playerController.bInMenuP = false;
-        statBlockUI.UpdateUI();
-            
-            
-        // I-frames
         if (playerStatsHandler.runtimeStats.iPlayerHealth > 0)
         {
             StartCoroutine(Invulnerability());
         }
-            
+        
         else if (playerStatsHandler.runtimeStats.iPlayerHealth <= 0)
         {
             Destroy(gameObject);

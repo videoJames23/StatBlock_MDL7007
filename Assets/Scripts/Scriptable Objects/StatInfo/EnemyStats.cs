@@ -15,6 +15,5 @@ public class EnemyStats : ScriptableObject
     [SerializeField] public float enemySizeLVL2 = 3f;
     [SerializeField] public float enemySizeLVL3 = 4.5f;
     
-    public int iDamage;
     public float fCosAngle = 0.70710678118f;
 }

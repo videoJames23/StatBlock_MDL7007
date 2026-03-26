@@ -8,6 +8,8 @@ public class StatBlockInput : MonoBehaviour
 
     [SerializeField] private EnemyStats enemyStats;
     
+    [SerializeField] private GameManager gameManager;
+    
     private StatBlockUI statBlockUI;
     
     

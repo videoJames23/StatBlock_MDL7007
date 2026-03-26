@@ -6,19 +6,12 @@ public class SpikesController : MonoBehaviour
     public Rigidbody2D spikeRb;
     public float fSpikeSpeed;
     public float fSpikeDir;
-    public PlayerController playerController;
     private bool bEntityDetected = false;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         spikeRb =  GetComponent<Rigidbody2D>();
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            playerController = player.GetComponent<PlayerController>();
-        }
-        
     }
 
     // Update is called once per frame

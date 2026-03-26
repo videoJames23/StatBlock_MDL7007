@@ -3,14 +3,7 @@ using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
 {
-    private GameManager gameManagerScript;
-    
-    public PlayerController playerController;
-
     private EnemyStatsHandler enemyStatsHandler;
-   
-    private StatBlockChangesE statBlockChangesE;
-    private StatBlockUI statBlockUI;
     
     private SpriteRenderer cSpriteRenderer;
 
@@ -18,6 +11,8 @@ public class EnemyDamage : MonoBehaviour
     
     private float fIFramesDuration = 1;
     private int iNumberOfFlashes = 5;
+    
+    private bool bCanTakeDamage = true;
 
     public delegate void Damage();
     public static event Damage OnDamage;
@@ -27,20 +22,8 @@ public class EnemyDamage : MonoBehaviour
     void Start()
     {
         enemyStatsHandler = GetComponent<EnemyStatsHandler>();
-        
-        GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
-        gameManagerScript = gameManager.GetComponent<GameManager>();
         cSpriteRenderer = GetComponent<SpriteRenderer>();
         
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        playerController = player.GetComponent<PlayerController>();
-        
-        GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
-        this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
-        statBlockChangesE = statBlockUI.GetComponent<StatBlockChangesE>();
-
-        enemyStats.iDamage = 1;
-
 
     }
 
@@ -49,35 +32,30 @@ public class EnemyDamage : MonoBehaviour
     {
         
     }
-    public void TakeDamage(int damage)
+    public void TakeDamage()
     {
-        OnDamage?.Invoke();
         
-        statBlockChangesE.statsE[0] -= damage;
-        
-        if (statBlockChangesE.iPointsLeftE > 0)
+        if (!bCanTakeDamage)
         {
-            statBlockChangesE.iPointsLeftE--;
+            return;
         }
         
-        statBlockChangesE.iPointsTotalE--;
+        OnDamage?.Invoke(); 
+        bCanTakeDamage = false;
         
-        statBlockChangesE.StatChangeEHealth();
-
+        if (enemyStatsHandler.runtimeStats.iEnemyHealth > 0)
+        {
+            StartCoroutine(Invulnerability());
+        }
         
-        playerController.bInMenuE = true;
-        statBlockUI.UpdateUI();
-        playerController.bInMenuE = false;
-        statBlockUI.UpdateUI();
-        
-        if (enemyStatsHandler.runtimeStats.iEnemyHealth <= 0)
+        else if (enemyStatsHandler.runtimeStats.iEnemyHealth <= 0)
         {
             Destroy(gameObject);
         }
     }
     public IEnumerator Invulnerability()
     {
-        enemyStats.iDamage = 0;
+        bCanTakeDamage = false;
         
         for (int i = 0; i < iNumberOfFlashes; i++)
         {
@@ -87,6 +65,6 @@ public class EnemyDamage : MonoBehaviour
             yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
         }
         
-        enemyStats.iDamage = 1;
+        bCanTakeDamage = true;
     }
 }

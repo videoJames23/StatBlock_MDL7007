@@ -21,7 +21,7 @@ public class PlayerCollisions : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Spike"))
         {
-                playerDamage.TakeDamage(1);
+                playerDamage.TakeDamage();
         }
     }
     private void OnTriggerEnter2D(Collider2D other)

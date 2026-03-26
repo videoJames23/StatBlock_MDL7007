@@ -60,25 +60,21 @@ public class EnemyCollisions : MonoBehaviour
             if (playerCosAngle > enemyStats.fCosAngle && bPlayerIsFalling)
             {
                 Debug.Log("Squash!");
-                enemyDamage.TakeDamage(1);
+                enemyDamage.TakeDamage();
                 playerMovement.bIsGrounded = true;
                 playerMovement.Jump();
-                if (enemyStatsHandler.runtimeStats.iEnemyHealth <= 0)
-                {
-                    Destroy(gameObject);
-                }
             }
             
             else if (playerCosAngle < enemyStats.fCosAngle || !bPlayerIsFalling)
             {
                 Debug.Log("Ow!");
-                playerDamage.TakeDamage(1);
+                playerDamage.TakeDamage();
             }
         }
 
         if (other.gameObject.CompareTag("Spike"))
         {
-            enemyDamage.TakeDamage(enemyStats.iDamage);
+            enemyDamage.TakeDamage();
             
             enemyController.fEnemyDir *= -1;
                 

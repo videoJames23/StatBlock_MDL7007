@@ -26,17 +26,21 @@ public class StatBlockChangesE : MonoBehaviour
     public static event Down OnDown;
     public delegate void Error();
     public static event Error OnError;
+    public delegate void DamageRefresh();
+    public static event DamageRefresh OnDamageRefresh;
     
     private void OnEnable()
     {
         StatBlockInput.OnStatIncreaseE += StatIncrease;
         StatBlockInput.OnStatDecreaseE += StatDecrease;
+        EnemyDamage.OnDamage += HealthDecrease;
     }
 
     private void OnDisable()
     {
         StatBlockInput.OnStatIncreaseE -= StatIncrease;
         StatBlockInput.OnStatDecreaseE -= StatDecrease;
+        EnemyDamage.OnDamage -= HealthDecrease;
     }
     
     
@@ -200,7 +204,14 @@ public class StatBlockChangesE : MonoBehaviour
         enemyStatsHandler.runtimeStats.iEnemyHealth = statsE[0];
         RecomputePoints();
         statBlockUI.UpdateUI();
-        
+    }
+    
+    public void HealthDecrease()
+    {
+        statsE[0]--;
+        iPointsTotalE--;
+        StatChangeEHealth();
+        OnDamageRefresh?.Invoke();
     }
     public void StatChangeESpeed()
     {
