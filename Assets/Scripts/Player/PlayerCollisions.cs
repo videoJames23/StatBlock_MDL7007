@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class PlayerCollisions : MonoBehaviour
@@ -6,23 +5,16 @@ public class PlayerCollisions : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerDamage playerDamage;
     
-    private GameManager gameManagerScript;
     
     public bool bIsTouchingStatBlockP;
     public bool bIsTouchingStatBlockE;
 
     public delegate void Completion();
-    public static  event Completion OnCompletion;
+    public static event Completion OnCompletion;
     void Start()
     {
         playerDamage = GetComponent<PlayerDamage>();
         playerMovement = GetComponent<PlayerMovement>();
-        
-        GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
-        gameManagerScript = gameManager.GetComponent<GameManager>();
-        
-        
-      
     }
     
     void OnCollisionEnter2D(Collision2D other)
@@ -32,16 +24,15 @@ public class PlayerCollisions : MonoBehaviour
                 playerDamage.TakeDamage(1);
         }
     }
-    private IEnumerator OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
 
         switch (other.gameObject.tag)
         
-        {  case "Finish":
+        {  
+            case "Finish":
             Debug.Log("Level Complete!");
             OnCompletion?.Invoke();
-            yield return new WaitForSeconds(1.8f);
-            gameManagerScript.LoadScene();
             break;
         }
         
@@ -64,7 +55,7 @@ public class PlayerCollisions : MonoBehaviour
             case "StatBlockP":
                 bIsTouchingStatBlockP = true;
                 break;
-            case  "StatBlockE":
+            case "StatBlockE":
                 bIsTouchingStatBlockE = true;
                 break;
         }

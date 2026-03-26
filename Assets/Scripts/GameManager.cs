@@ -1,27 +1,27 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    //serializedfield stuff here again -F
-    private Rigidbody2D playerRb;
-    private PlayerController playerController;
-    private PlayerCollisions  playerCollisions;
+    [SerializeField] private PlayerController playerController;
+    [SerializeField] private PlayerCollisions  playerCollisions;
     
-    [SerializeField]private Rigidbody2D enemyRb;
-    [SerializeField]private EnemyController enemyController;
+    public bool BInMenu { get; private set; } = false;
+    public bool BInMenuP { get; private set; } = false;
+    public bool BInMenuE { get; private set; } = false;
     
-    private StatBlockUI statBlockUI;
-    private StatBlockChangesP statBlockChangesP;
-    private StatBlockChangesE statBlockChangesE;
     
-    public int iBuildIndex;
     
-    [SerializeField] private PlayerStats  playerStats;
-    [SerializeField] private EnemyStats enemyStats;
+    [SerializeField] private EnemyController enemyController;
+    
+    [SerializeField] private StatBlockUI statBlockUI;
+    [SerializeField] private StatBlockChangesE statBlockChangesE;
 
-    
-    private Vector2 vEnemyVelocity;
+    private int iBuildIndex;
+     
+    [SerializeField]  private PlayerStats  playerStats;
+    [SerializeField]  private EnemyStats enemyStats;
 
 
     public delegate void MenuOpen();
@@ -32,55 +32,80 @@ public class GameManager : MonoBehaviour
 
     public delegate void Error();
     public static event Error OnError;
+
+    private void Awake()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        playerController = player.GetComponent<PlayerController>();
+        playerCollisions = player.GetComponent<PlayerCollisions>();
+
+        GameObject enemy = GameObject.FindGameObjectWithTag("EnemyVisual");
+        if (enemy)
+        {
+            enemyController = enemy.GetComponent<EnemyController>();
+        }
+        
+        GameObject statBlockUIGO = GameObject.FindGameObjectWithTag("StatBlockUI");
+        statBlockUI = statBlockUIGO.GetComponent<StatBlockUI>();
+        statBlockChangesE = statBlockUI.GetComponent<StatBlockChangesE>();
+        
+    }
+    
+    private void OnEnable()
+    {
+        PlayerCollisions.OnCompletion += OnCompletion;
+        StatBlockChangesP.OnDamageRefresh += DamageMenuRefreshP;
+        StatBlockChangesE.OnDamageRefresh += DamageMenuRefreshE;
+    }
+
+    private void OnDisable()
+    {
+        PlayerCollisions.OnCompletion -= OnCompletion;
+        StatBlockChangesP.OnDamageRefresh -= DamageMenuRefreshP;
+        StatBlockChangesE.OnDamageRefresh -= DamageMenuRefreshE;
+    }
     
     void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        playerRb = player.GetComponent<Rigidbody2D>();
-        playerController = player.GetComponent<PlayerController>();
-        playerCollisions = player.GetComponent<PlayerCollisions>();
-        
-        GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
-        this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
-        statBlockChangesP = statBlockUI.GetComponent<StatBlockChangesP>();
-        statBlockChangesE = statBlockUI.GetComponent<StatBlockChangesE>();
-        
-        
         iBuildIndex = SceneManager.GetActiveScene().buildIndex;
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //there has to be a better way to do this that doesn't involve this many if/else statements -F
         if (Input.GetKeyDown(KeyCode.R))
         {
             Time.timeScale = 1;
             SceneManager.LoadScene(iBuildIndex);
         }
-        
-        if (playerCollisions.bIsTouchingStatBlockP && Input.GetKeyDown(KeyCode.E))
+
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            playerController.bInMenuP = !playerController.bInMenuP;
-            
-            MenuChecks();
-            MenuFreezeToggle();
+            CollisionChecks();
         }
-        
-        if (playerCollisions.bIsTouchingStatBlockE && Input.GetKeyDown(KeyCode.E))
+    }
+
+    // CollisionChecks checks to see if the player is touching either StatBlock before opening the menu
+    private void CollisionChecks()
+    {
+        if (playerCollisions.bIsTouchingStatBlockP)
         {
-            if (!playerController.bInMenuE)
+            BInMenuP = !BInMenuP;
+        }
+            
+        if (playerCollisions.bIsTouchingStatBlockE)
+        {
+            if (!BInMenuE)
             {
-                playerController.bInMenuE = true;
+                BInMenuE = true;
                 enemyController.fPrevDir = enemyController.fEnemyDir;
                 MenuChecks();
             }
-            else if (playerController.bInMenuE)
+            else if (BInMenuE)
             {
                 if (statBlockChangesE.iPointsLeftE == 0)
                 {
-                    playerController.bInMenuE = false;
+                    BInMenuE = false;
                     enemyController.fEnemyDir = enemyController.fPrevDir;
                     MenuChecks();
                 }
@@ -89,46 +114,65 @@ public class GameManager : MonoBehaviour
                     OnError?.Invoke();
                 }
             }
-            MenuFreezeToggle();
         }
+            
+        MenuChecks();
+        statBlockUI.UpdateUI();
     }
-
-    void MenuChecks()
+    
+    private void MenuChecks()
     {
-        if (playerController.bInMenuP || playerController.bInMenuE)
+        if (BInMenuP || BInMenuE)
         {
-            playerController.bInMenu = true;
+            BInMenu = true;
             OnMenuOpen?.Invoke();
         }
         
         else
         {
-            playerController.bInMenu = false;
+            BInMenu = false;
             OnMenuClose?.Invoke();
         }
+        MenuFreezeToggle();
+    }
+    
+    void MenuFreezeToggle()
+    {
+        if (BInMenu)
+        {
+            Time.timeScale = 0;
+        }
+        else if (!BInMenu)
+        {
+            Time.timeScale = 1;
+        }
+    }
+    
+    // DamageMenuRefresh quickly updates the UI to display the stats of the entity that has just taken damage
+    void DamageMenuRefreshP()
+    {
+        BInMenuP = true; 
+        statBlockUI.UpdateUI(); 
+        BInMenuP = false; 
         statBlockUI.UpdateUI();
     }
 
-    //Pausing in general could be implemented better, getting rid of all of these if/else statements -F
-    void MenuFreezeToggle()
-    {
-        if (playerController.bInMenu)
-        {
-            Time.timeScale = 0;
+    void DamageMenuRefreshE()
+    { 
+        BInMenuE = true; 
+        statBlockUI.UpdateUI(); 
+        BInMenuE = false; 
+        statBlockUI.UpdateUI();
+    }
 
-        }
-        else if (!playerController.bInMenu)
-        {
-            Time.timeScale = 1;
-                
-        }
+    private void OnCompletion()
+    {
+        StartCoroutine(LoadScene());
     }
     
-    
-
-    public void LoadScene()
+    private IEnumerator LoadScene()
     {
-        
+        yield return new WaitForSeconds(1.8f);
         SceneManager.LoadScene(iBuildIndex + 1);
     }
 

@@ -40,7 +40,7 @@ public class StatBlockInput : MonoBehaviour
     {
          if (playerController)
         {
-            if (playerController.bInMenu)
+            if (gameManager.BInMenu)
             {
                 // select stat
                 if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
@@ -78,11 +78,11 @@ public class StatBlockInput : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
                 {
                     
-                    if (playerController.bInMenuP)
+                    if (gameManager.BInMenuP)
                     {
                         OnStatIncreaseP?.Invoke(selectedIndex);
                     }
-                    else if (playerController.bInMenuE)
+                    else if (gameManager.BInMenuE)
                     {
                         OnStatIncreaseE?.Invoke(selectedIndex);
                     }
@@ -91,11 +91,11 @@ public class StatBlockInput : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
                 {
-                    if (playerController.bInMenuP)
+                    if (gameManager.BInMenuP)
                     {
                         OnStatDecreaseP?.Invoke(selectedIndex);
                     }
-                    else if (playerController.bInMenuE)
+                    else if (gameManager.BInMenuE)
                     {
                         OnStatDecreaseE?.Invoke(selectedIndex);
                     }

@@ -14,6 +14,8 @@ public class StatBlockUI : MonoBehaviour
     private StatBlockChangesP statBlockChangesP;
     private StatBlockChangesE  statBlockChangesE;
     
+    [SerializeField] private GameManager gameManager;
+    
     public TextMeshProUGUI[] valueTexts;
 
     [SerializeField] private PlayerStats  playerStats;
@@ -38,9 +40,6 @@ public class StatBlockUI : MonoBehaviour
     public Vector3 vBackgroundFocusScale = new Vector3(10, 10, 10);
     public Vector3 vOutFocusScale = new Vector3(1f, 1f, 1f);
     public Vector3 vBackgroundOutFocusScale = new Vector3(2.82999992f,2.30865788f,1f);
-
-    
-    
     
     
     void Start()
@@ -102,14 +101,14 @@ public class StatBlockUI : MonoBehaviour
     {
         holder.SetActive(true);
         
-        if (playerController.bInMenu)
+        if (gameManager.BInMenu)
         {
                 holderRT.anchoredPosition = vFocusPosition;
                 holderRT.localScale = vFocusScale;
                 background.GetComponent<RectTransform>().localScale = vBackgroundFocusScale;
 
         }
-        else if (!playerController.bInMenu)
+        else if (!gameManager.BInMenu)
         {
             holderRT.anchoredPosition = UIPosition;
             holderRT.localScale = vOutFocusScale;
@@ -121,7 +120,7 @@ public class StatBlockUI : MonoBehaviour
             if (playerController)
             {
             
-                if (playerController.bInMenuP)
+                if (gameManager.BInMenuP)
                 {
                     valueTexts[i].text = statBlockChangesP.statsP[i].ToString();
                     valueTexts[3].text = statBlockChangesP.iPointsLeftP.ToString();
@@ -132,7 +131,7 @@ public class StatBlockUI : MonoBehaviour
                     
                 }
 
-                else if (playerController.bInMenuE)
+                else if (gameManager.BInMenuE)
                 {
                     valueTexts[i].text = statBlockChangesE.statsE[i].ToString();
                     valueTexts[3].text = statBlockChangesE.iPointsLeftE.ToString();
@@ -142,11 +141,11 @@ public class StatBlockUI : MonoBehaviour
 
                 }
 
-                if (playerController.bInMenuP || playerController.bInMenuE)
+                if (gameManager.BInMenuP || gameManager.BInMenuE)
                 {
                     valueTexts[i].color = (i == statBlockInput.selectedIndex) ? Color.green : Color.white;
                 }
-                else if (!playerController.bInMenuP && !playerController.bInMenuE)
+                else if (!gameManager.BInMenuP && !gameManager.BInMenuE)
                 {
                     valueTexts[i].color = Color.white;
                 }

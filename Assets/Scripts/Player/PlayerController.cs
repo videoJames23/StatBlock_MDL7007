@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,24 +7,17 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRb;
     
     
-    [FormerlySerializedAs("fSpeed")] [Header("Stats")]
+    [Header("Stats")]
     
     [SerializeField] private PlayerStats  playerStats;
     
-   
-    public bool bInMenu;
-    public bool bInMenuP;
-    public bool bInMenuE;
     
-    
-    
-
     public float fInput;
     
     
     
     private StatBlockUI statBlockUI;
-    private GameManager gameManagerScript;
+    private GameManager gameManager;
     
     public PlayerMovement playerMovement;
     public PlayerDamage playerDamage;
@@ -44,22 +33,18 @@ public class PlayerController : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
-        gameManagerScript = gameManager.GetComponent<GameManager>();
+        this.gameManager = gameManager.GetComponent<GameManager>();
         
         GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
         this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
         
-        
-        
-        
-       
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && !bInMenu)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && !gameManager.BInMenu)
         {
             playerMovement.Jump();
         }
@@ -68,8 +53,7 @@ public class PlayerController : MonoBehaviour
 
     public void FixedUpdate()
     {
-
-        if (!bInMenu)
+        if (!gameManager.BInMenu)
         {
             fInput = Input.GetAxisRaw("Horizontal");
         }
