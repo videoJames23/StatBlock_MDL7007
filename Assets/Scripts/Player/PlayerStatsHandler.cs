@@ -4,12 +4,6 @@ public class PlayerStatsHandler : MonoBehaviour
 {
     public PlayerStatsPresetSO defaultPreset;
     public PlayerRuntimeStats runtimeStats;
-
-
-    void Start()
-    {
-        
-    }
     
     public void ApplyPreset(PlayerStatsPresetSO preset)
     {

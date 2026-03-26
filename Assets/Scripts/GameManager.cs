@@ -4,12 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private PlayerController playerController;
     [SerializeField] private PlayerCollisions  playerCollisions;
     
-    public bool BInMenu { get; private set; } = false;
-    public bool BInMenuP { get; private set; } = false;
-    public bool BInMenuE { get; private set; } = false;
+    public bool BInMenu { get; private set; }
+    public bool BInMenuP { get; private set; }
+    public bool BInMenuE { get; private set; }
     
     
     
@@ -36,7 +35,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        playerController = player.GetComponent<PlayerController>();
         playerCollisions = player.GetComponent<PlayerCollisions>();
 
         GameObject enemy = GameObject.FindGameObjectWithTag("EnemyVisual");

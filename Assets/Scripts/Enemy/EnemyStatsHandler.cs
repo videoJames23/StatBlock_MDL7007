@@ -5,12 +5,6 @@ public class EnemyStatsHandler : MonoBehaviour
     public EnemyStatsPresetSO defaultPreset;
     public EnemyRuntimeStats runtimeStats;
 
-
-    void Start()
-    {
-        
-    }
-    
     public void ApplyPreset(EnemyStatsPresetSO preset)
     {
         var source = preset != null ? preset : defaultPreset;

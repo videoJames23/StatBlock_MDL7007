@@ -1,4 +1,3 @@
-// LevelBootstrap.cs
 using UnityEngine;
 
 public class LevelBootstrap : MonoBehaviour

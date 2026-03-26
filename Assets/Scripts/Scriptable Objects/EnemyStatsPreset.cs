@@ -12,10 +12,9 @@ public class EnemyStatsPresetSO : ScriptableObject
     {
         return new EnemyRuntimeStats
         {
-            iEnemyHealth = this.iEnemyHealth,
-            fEnemySpeed  = this.fEnemySpeed,
-            fEnemySize   = this.fEnemySize,
-            iPointsTotalE = this.iPointsTotalE,
+            iEnemyHealth = iEnemyHealth,
+            fEnemySpeed  = fEnemySpeed,
+            fEnemySize   = fEnemySize,
         };
     }
 }

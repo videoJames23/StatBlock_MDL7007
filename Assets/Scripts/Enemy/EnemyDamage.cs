@@ -23,15 +23,8 @@ public class EnemyDamage : MonoBehaviour
     {
         enemyStatsHandler = GetComponent<EnemyStatsHandler>();
         cSpriteRenderer = GetComponent<SpriteRenderer>();
-        
-
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
     public void TakeDamage()
     {
         

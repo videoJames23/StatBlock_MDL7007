@@ -12,10 +12,9 @@ public class PlayerStatsPresetSO : ScriptableObject
     {
         return new PlayerRuntimeStats
         {
-            iPlayerHealth = this.iPlayerHealth,
-            fPlayerSpeed  = this.fPlayerSpeed,
-            fPlayerJump   = this.fPlayerJump,
-            iPointsTotalP = this.iPointsTotalP,
+            iPlayerHealth = iPlayerHealth,
+            fPlayerSpeed  = fPlayerSpeed,
+            fPlayerJump   = fPlayerJump,
         };
     }
 }

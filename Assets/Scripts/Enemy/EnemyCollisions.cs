@@ -1,4 +1,3 @@
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class EnemyCollisions : MonoBehaviour
@@ -25,12 +24,7 @@ public class EnemyCollisions : MonoBehaviour
         playerMovement = player.GetComponent<PlayerMovement>();
         playerDamage = player.GetComponent<PlayerDamage>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Wall"))
@@ -77,11 +71,7 @@ public class EnemyCollisions : MonoBehaviour
             enemyDamage.TakeDamage();
             
             enemyController.fEnemyDir *= -1;
-                
-            if (enemyStatsHandler.runtimeStats.iEnemyHealth > 0)
-            {
-                StartCoroutine(enemyDamage.Invulnerability());
-            }
+            
         }
     }
 

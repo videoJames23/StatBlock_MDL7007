@@ -1,15 +1,9 @@
-using System;
-using System.Linq;
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEngine.Serialization;
 
 public class StatBlockUI : MonoBehaviour
 {
     [SerializeField] private LevelConfigSO levelConfig;
-    public bool IsReady { get; private set; } = false;
-    
     private StatBlockInput statBlockInput;
     private StatBlockChangesP statBlockChangesP;
     private StatBlockChangesE  statBlockChangesE;
@@ -35,11 +29,11 @@ public class StatBlockUI : MonoBehaviour
     public string sUser;
     
     
-    public Vector3 vFocusScale = new Vector3(3f, 3f, 3f);
-    public Vector2 vFocusPosition = new Vector2(-87.6f, -74.2f);
-    public Vector3 vBackgroundFocusScale = new Vector3(10, 10, 10);
-    public Vector3 vOutFocusScale = new Vector3(1f, 1f, 1f);
-    public Vector3 vBackgroundOutFocusScale = new Vector3(2.82999992f,2.30865788f,1f);
+    public Vector3 vFocusScale = new (3f, 3f, 3f);
+    public Vector2 vFocusPosition = new (-87.6f, -74.2f);
+    public Vector3 vBackgroundFocusScale = new (10, 10, 10);
+    public Vector3 vOutFocusScale = new (1f, 1f, 1f);
+    public Vector3 vBackgroundOutFocusScale = new (2.82999992f,2.30865788f,1f);
     
     
     void Start()
@@ -63,8 +57,6 @@ public class StatBlockUI : MonoBehaviour
         statBlockInput.selectedIndex = 0;
 
         holder.SetActive(false);
-        
-        IsReady = true;
         
         if (levelConfig != null)
             ApplyLevelUILayout(levelConfig);

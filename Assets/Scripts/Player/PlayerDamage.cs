@@ -9,13 +9,7 @@ public class PlayerDamage : MonoBehaviour
     private int iNumberOfFlashes = 5;
     private SpriteRenderer cSpriteRenderer;
     
-    private PlayerController playerController;
     private PlayerStatsHandler playerStatsHandler;
-    private PlayerMovement playerMovement;
-    private Rigidbody2D playerRb;
-    
-    private StatBlockUI statBlockUI;
-    private StatBlockChangesP statBlockChangesP;
     
     public delegate void Damage();
     public static event  Damage OnDamage;
@@ -27,16 +21,9 @@ public class PlayerDamage : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerRb = GetComponent<Rigidbody2D>();
-        playerController = GetComponent<PlayerController>();
-        playerMovement = GetComponent<PlayerMovement>();
         playerStatsHandler = GetComponent<PlayerStatsHandler>();
         
         cSpriteRenderer = GetComponent<SpriteRenderer>(); 
-        
-        GameObject statBlockUI = GameObject.FindGameObjectWithTag("StatBlockUI");
-        this.statBlockUI = statBlockUI.GetComponent<StatBlockUI>();
-        statBlockChangesP = statBlockUI.GetComponent<StatBlockChangesP>();
         
         Physics2D.IgnoreLayerCollision(10, 11, false);
     }

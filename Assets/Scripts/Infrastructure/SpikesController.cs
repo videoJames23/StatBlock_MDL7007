@@ -6,7 +6,7 @@ public class SpikesController : MonoBehaviour
     public Rigidbody2D spikeRb;
     public float fSpikeSpeed;
     public float fSpikeDir;
-    private bool bEntityDetected = false;
+    private bool bEntityDetected;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
