@@ -69,53 +69,48 @@ public class AudioController : MonoBehaviour
         
     }
 
-    public void PlayOpen()
+    private void PlayOpen()
     {
         openSource.Play();
     }
 
-    public void PlayClose()
+    private void PlayClose()
     {
         closeSource.Play();
     }
 
-    public void PlayDamage()
+    private void PlayDamage()
     {
         damageSource.Play();
     }
 
-    public void PlayUp()
+    private void PlayUp()
     {
         upSource.Play();
     }
 
-    public void PlayDown()
+    private void PlayDown()
     {
         downSource.Play();
     }
 
-    public void PlayIndex()
+    private void PlayIndex()
     {
         indexSource.Play();
     }
 
-    public void PlayError()
+    private void PlayError()
     {
         errorSource.Play();
     }
 
-    public void PlayJump()
+    private void PlayJump()
     {
         jumpSource.Play();
     }
 
-    public void PlayCompletion()
+    private void PlayCompletion()
     {
         completionSource.Play();
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
