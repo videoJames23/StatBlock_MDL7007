@@ -217,7 +217,7 @@ public class StatBlockChangesE : MonoBehaviour
     {
         if (!enemyRb || !enemyVisual) return;
 
-        float newSpeed = statsE[1] switch
+        var newSpeed = statsE[1] switch
         {
             0 => enemyStats.enemySpeedLVL0,
             1 => enemyStats.enemySpeedLVL1,
@@ -235,7 +235,7 @@ public class StatBlockChangesE : MonoBehaviour
     {
         if (!enemyRb || !enemyVisual) return;
 
-        float newScale = statsE[2] switch
+        var newScale = statsE[2] switch
         {
             1 => enemyStats.enemySizeLVL1,
             2 => enemyStats.enemySizeLVL2,
@@ -252,13 +252,13 @@ public class StatBlockChangesE : MonoBehaviour
     
     private void ApplyEnemyScaleBottomAnchored(float scale)
     {
-        Vector2 rootPosition = enemyRb.position;
+        var rootPosition = enemyRb.position;
         
         var localScale = enemyVisual.localScale;
         enemyVisual.localScale = new Vector3(scale, scale, localScale.z);
         
-        float spriteHeight = GetSpriteHeightUnits(enemyRenderer);
-        float childLocalY = (spriteHeight * scale) * 0.5f;
+        var spriteHeight = GetSpriteHeightUnits(enemyRenderer);
+        var childLocalY = (spriteHeight * scale) * 0.5f;
         var localPosition = enemyVisual.localPosition;
         enemyVisual.localPosition = new Vector3(localPosition.x, childLocalY, localPosition.z);
         
