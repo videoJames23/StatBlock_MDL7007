@@ -6,6 +6,7 @@ public class EnemyStatsPresetSO : ScriptableObject
     public int iEnemyHealth = 1;
     public float fEnemySpeed = 3f;
     public float fEnemySize  = 4.5f;
+    public int iEnemyDir = 1;
     public int iPointsTotalE;
 
     public EnemyRuntimeStats CreateRuntimeCopy()
@@ -15,6 +16,7 @@ public class EnemyStatsPresetSO : ScriptableObject
             iEnemyHealth = iEnemyHealth,
             fEnemySpeed  = fEnemySpeed,
             fEnemySize   = fEnemySize,
+            iEnemyDir = iEnemyDir,
         };
     }
 }
