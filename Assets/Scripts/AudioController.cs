@@ -16,9 +16,8 @@ public class AudioController : MonoBehaviour
     private void OnEnable()
 
     {
-        GameManager.OnMenuOpen += PlayOpen;
-        GameManager.OnMenuClose += PlayClose;
-        GameManager.OnError += PlayError;
+        StatBlockUI.OnMenuOpen += PlayOpen;
+        StatBlockUI.OnMenuClose += PlayClose;
         StatBlockChangesP.OnError += PlayError;
         StatBlockChangesE.OnError += PlayError;
         StatBlockChangesP.OnUp += PlayUp;
@@ -40,9 +39,8 @@ public class AudioController : MonoBehaviour
 
     private void OnDisable()
     {
-        GameManager.OnMenuOpen -= PlayOpen;
-        GameManager.OnMenuClose -= PlayClose;
-        GameManager.OnError -= PlayError;
+        StatBlockUI.OnMenuOpen -= PlayOpen;
+        StatBlockUI.OnMenuClose -= PlayClose;
         StatBlockChangesP.OnError -= PlayError;
         StatBlockChangesE.OnError -= PlayError;
         StatBlockChangesP.OnUp -= PlayUp;

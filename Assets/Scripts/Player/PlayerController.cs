@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     
     public float FInput{ get; private set; }
     
-    private GameManager gameManager;
+    [SerializeField] private StatBlockUI statBlockUI;
     
     public PlayerMovement playerMovement;
     
@@ -15,16 +15,12 @@ public class PlayerController : MonoBehaviour
     void Start()
     {   
         playerMovement = GetComponent<PlayerMovement>();
-        
-        GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
-        this.gameManager = gameManager.GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && !gameManager.BInMenu)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && Time.timeScale != 0)
         {
             playerMovement.Jump();
         }
@@ -33,10 +29,7 @@ public class PlayerController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (!gameManager.BInMenu)
-        {
-            FInput = Input.GetAxisRaw("Horizontal");
-        }
+        FInput = Input.GetAxisRaw("Horizontal");
     }
 
 }

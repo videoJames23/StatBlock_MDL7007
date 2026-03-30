@@ -557,8 +557,6 @@ MonoBehaviour:
   enemyVisual: {fileID: 3991566223012137704}
   enemyRenderer: {fileID: 967604024287754443}
   statsE: 010000000100000001000000
-  iPointsTotalE: 0
-  iPointsLeftE: 0
 --- !u!114 &686395324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,8 +572,6 @@ MonoBehaviour:
   playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
   levelConfig: {fileID: 11400000, guid: 18fc2c0981a1e58479efa93b4b5aeab0, type: 2}
   statsP: 010000000100000001000000
-  iPointsTotalP: 4
-  iPointsLeftP: 0
 --- !u!114 &686395325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,8 +587,6 @@ MonoBehaviour:
   playerStats: {fileID: 0}
   levelConfig: {fileID: 0}
   statsP: 010000000100000001000000
-  iPointsTotalP: 0
-  iPointsLeftP: 0
 --- !u!4 &686395326
 Transform:
   m_ObjectHideFlags: 0
@@ -1481,6 +1475,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 18fc2c0981a1e58479efa93b4b5aeab0, type: 2}
     - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
+      propertyPath: showHideJump
+      value: 
+      objectReference: {fileID: 1887163087679706403}
+    - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
+      propertyPath: showHideSpeed
+      value: 
+      objectReference: {fileID: 1887163087679706402}
+    - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 943131319}
@@ -1489,6 +1491,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
+--- !u!114 &1887163087679706402 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2569729562222940473, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
+  m_PrefabInstance: {fileID: 1887163087679706401}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c24dbef75beab34ba4a6af676cedd6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1887163087679706403 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5247032621137200694, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
+  m_PrefabInstance: {fileID: 1887163087679706401}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c24dbef75beab34ba4a6af676cedd6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2425095356023304413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1618,6 +1642,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4277488488149247715, guid: 2bebbbe7e30cea34fa21c63ea4a824d4, type: 3}
+      propertyPath: statBlockUI
+      value: 
+      objectReference: {fileID: 1428782741}
     - target: {fileID: 5744648186350750262, guid: 2bebbbe7e30cea34fa21c63ea4a824d4, type: 3}
       propertyPath: m_Name
       value: Player

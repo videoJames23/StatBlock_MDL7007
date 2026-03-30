@@ -6,53 +6,18 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private PlayerCollisions  playerCollisions;
     
-    public bool BInMenu { get; private set; }
-    public bool BInMenuP { get; private set; }
-    public bool BInMenuE { get; private set; }
-    
-    
     [SerializeField] private StatBlockUI statBlockUI;
-    [SerializeField] private StatBlockChangesE statBlockChangesE;
-
+    
     private int iBuildIndex;
-     
-    [SerializeField]  private PlayerStats  playerStats;
-    [SerializeField]  private EnemyStats enemyStats;
-
-
-    public delegate void MenuOpen();
-    public static event MenuOpen OnMenuOpen;
-
-    public delegate void MenuClose();
-    public static event MenuClose OnMenuClose;
-
-    public delegate void Error();
-    public static event Error OnError;
-
-    private void Awake()
-    {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        playerCollisions = player.GetComponent<PlayerCollisions>();
-        
-        
-        GameObject statBlockUIGO = GameObject.FindGameObjectWithTag("StatBlockUI");
-        statBlockUI = statBlockUIGO.GetComponent<StatBlockUI>();
-        statBlockChangesE = statBlockUI.GetComponent<StatBlockChangesE>();
-        
-    }
     
     private void OnEnable()
     {
         PlayerCollisions.OnCompletion += OnCompletion;
-        StatBlockChangesP.OnDamageRefresh += DamageMenuRefreshP;
-        StatBlockChangesE.OnDamageRefresh += DamageMenuRefreshE;
     }
 
     private void OnDisable()
     {
         PlayerCollisions.OnCompletion -= OnCompletion;
-        StatBlockChangesP.OnDamageRefresh -= DamageMenuRefreshP;
-        StatBlockChangesE.OnDamageRefresh -= DamageMenuRefreshE;
     }
     
     void Start()
@@ -71,88 +36,36 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            CollisionChecks();
-        }
-    }
 
-    // CollisionChecks checks to see if the player is touching either StatBlock before opening the menu
-    private void CollisionChecks()
-    {
-        if (playerCollisions.BIsTouchingStatBlockP)
-        {
-            BInMenuP = !BInMenuP;
-        }
-            
-        if (playerCollisions.BIsTouchingStatBlockE)
-        {
-            if (!BInMenuE)
+            if (playerCollisions.BIsTouchingStatBlockP)
             {
-                BInMenuE = true;
-                MenuChecks();
+                statBlockUI.TogglePlayerMenu();
             }
-            else if (BInMenuE)
+
+            else if (playerCollisions.BIsTouchingStatBlockE)
             {
-                if (statBlockChangesE.IPointsLeftE == 0)
-                {
-                    BInMenuE = false;
-                    MenuChecks();
-                }
-                else if (statBlockChangesE.IPointsLeftE > 0)
-                {
-                    OnError?.Invoke();
-                }
+                statBlockUI.ToggleEnemyMenu();
             }
-        }
-            
-        MenuChecks();
-        statBlockUI.UpdateUI();
-    }
-    
-    private void MenuChecks()
-    {
-        if (BInMenuP || BInMenuE)
-        {
-            BInMenu = true;
-            OnMenuOpen?.Invoke();
-        }
-        
-        else
-        {
-            BInMenu = false;
-            OnMenuClose?.Invoke();
-        }
-        MenuFreezeToggle();
-    }
-    
-    void MenuFreezeToggle()
-    {
-        if (BInMenu)
-        {
-            Time.timeScale = 0;
-        }
-        else if (!BInMenu)
-        {
-            Time.timeScale = 1;
-        }
-    }
-    
-    // DamageMenuRefresh quickly updates the UI to display the stats of the entity that has just taken damage
-    void DamageMenuRefreshP()
-    {
-        BInMenuP = true; 
-        statBlockUI.UpdateUI(); 
-        BInMenuP = false; 
-        statBlockUI.UpdateUI();
-    }
 
-    void DamageMenuRefreshE()
-    { 
-        BInMenuE = true; 
-        statBlockUI.UpdateUI(); 
-        BInMenuE = false; 
-        statBlockUI.UpdateUI();
-    }
+            else
+            {
+                statBlockUI.SetMenuMode(StatBlockUI.MenuMode.None);
+            }
 
+            PauseChecks();
+
+        }
+    }
+    
+    private void PauseChecks()
+    {
+        bool shouldPause =
+            statBlockUI.CurrentMode == StatBlockUI.MenuMode.PlayerMenu ||
+            statBlockUI.CurrentMode == StatBlockUI.MenuMode.EnemyMenu;
+
+        Time.timeScale = shouldPause ? 0 : 1;
+    }
+    
     private void OnCompletion()
     {
         StartCoroutine(LoadScene());

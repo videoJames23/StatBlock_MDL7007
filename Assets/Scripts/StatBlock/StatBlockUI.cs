@@ -4,28 +4,28 @@ using TMPro;
 public class StatBlockUI : MonoBehaviour
 {
     [SerializeField] private LevelConfigSO levelConfig;
+    [SerializeField] private PlayerStats  playerStats;
+    [SerializeField] private EnemyStats  enemyStats;
+    
+    
     private StatBlockInput statBlockInput;
     private StatBlockChangesP statBlockChangesP;
     private StatBlockChangesE  statBlockChangesE;
     
     [SerializeField] private GameManager gameManager;
     
-    [SerializeField] private TextMeshProUGUI[] valueTexts;
-
-    [SerializeField] private PlayerStats  playerStats;
-    [SerializeField] private EnemyStats  enemyStats;
-    
     private PlayerController playerController;
-
+    
+    [SerializeField] private TextMeshProUGUI[] valueTexts;
     [SerializeField] private GameObject holder;
     [SerializeField] private GameObject background;
     [SerializeField] private RectTransform holderRT;
     [SerializeField] private Vector2 UIPosition;
     
     
-    private ShowHide showHideJ;
-    private ShowHide showHideS;
-
+    
+    [SerializeField] private ShowHide showHideJump;
+    [SerializeField] private ShowHide showHideSpeed;
     private string sUser;
     
     
@@ -34,6 +34,48 @@ public class StatBlockUI : MonoBehaviour
     public Vector3 vBackgroundFocusScale = new (10, 10, 10);
     public Vector3 vOutFocusScale = new (1f, 1f, 1f);
     public Vector3 vBackgroundOutFocusScale = new (2.82999992f,2.30865788f,1f);
+    
+    public delegate void MenuOpen();
+    public static event MenuOpen OnMenuOpen;
+
+    public delegate void MenuClose();
+    public static event MenuClose OnMenuClose;
+
+
+    private void OnEnable()
+    {
+        StatBlockChangesP.OnDamageRefresh += DamageMenuRefreshP;
+        StatBlockChangesE.OnDamageRefresh += DamageMenuRefreshE;
+    }
+
+    private void OnDisable()
+    {
+        StatBlockChangesP.OnDamageRefresh -= DamageMenuRefreshP;
+        StatBlockChangesE.OnDamageRefresh -= DamageMenuRefreshE;
+    }
+    
+    public enum MenuMode
+    {
+        None,
+        PlayerMenu,
+        EnemyMenu,
+        PlayerPreview,
+        EnemyPreview
+    }
+
+    // private MenuMode currentMode = MenuMode.None;
+    
+    
+    [SerializeField] private MenuMode currentMode = MenuMode.None;
+
+    public MenuMode CurrentMode
+    {
+        get => currentMode;
+        private set => currentMode = value;
+    }
+
+
+    
     
     
     void Start()
@@ -45,18 +87,9 @@ public class StatBlockUI : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
         
-        // holder = GameObject.FindGameObjectWithTag("Holder");
-        // background = GameObject.Find("Background");
         holderRT = holder.GetComponent<RectTransform>();
-        
-        GameObject size = GameObject.FindGameObjectWithTag("Size");
-        GameObject jump = GameObject.FindGameObjectWithTag("Jump");
-        showHideS = size.GetComponent<ShowHide>();
-        showHideJ = jump.GetComponent<ShowHide>();
 
         statBlockInput.selectedIndex = 0;
-
-        holder.SetActive(false);
         
         if (levelConfig != null)
             ApplyLevelUILayout(levelConfig);
@@ -87,59 +120,111 @@ public class StatBlockUI : MonoBehaviour
         holder.SetActive(false);
 
     }
+    public void SetMenuMode(MenuMode mode)
+    {
+        currentMode = mode;
+        UpdateUI();
+    }
 
+    
+    public void TogglePlayerMenu()
+    {
+        if (currentMode == MenuMode.PlayerMenu)
+        {
+            SetMenuMode(MenuMode.None);
+            OnMenuClose?.Invoke();
+        }
+        else if (!currentMode.Equals(MenuMode.PlayerMenu))
+        {
+            SetMenuMode(MenuMode.PlayerMenu);
+            OnMenuOpen?.Invoke();
+        }
+    }
+
+    
+    public void ToggleEnemyMenu()
+    {
+        if (currentMode == MenuMode.EnemyMenu)
+        {
+            SetMenuMode(MenuMode.None);
+            OnMenuClose?.Invoke();
+        }
+        else if (!currentMode.Equals(MenuMode.EnemyMenu))
+        {
+            SetMenuMode(MenuMode.EnemyMenu);
+            OnMenuOpen?.Invoke();
+        }
+        
+    }
+
+
+    void DamageMenuRefreshP()
+    {
+        SetMenuMode(MenuMode.PlayerPreview);
+    }
+    
+    void DamageMenuRefreshE()
+    { 
+        SetMenuMode(MenuMode.EnemyPreview);
+    }
 
     public void UpdateUI()
     {
-        holder.SetActive(true);
         
-        if (gameManager.BInMenu)
+        
+        if (CurrentMode == MenuMode.PlayerMenu || CurrentMode == MenuMode.EnemyMenu)
         {
-                holderRT.anchoredPosition = vFocusPosition;
-                holderRT.localScale = vFocusScale;
-                background.GetComponent<RectTransform>().localScale = vBackgroundFocusScale;
+            holder.SetActive(true);
+            holderRT.anchoredPosition = vFocusPosition;
+            holderRT.localScale = vFocusScale;
+            background.GetComponent<RectTransform>().localScale = vBackgroundFocusScale;
 
         }
-        else if (!gameManager.BInMenu)
+        else if (CurrentMode == MenuMode.PlayerPreview || CurrentMode == MenuMode.EnemyPreview)
         {
+            holder.SetActive(true);
             holderRT.anchoredPosition = UIPosition;
             holderRT.localScale = vOutFocusScale;
             background.GetComponent<RectTransform>().localScale = vBackgroundOutFocusScale;
+        }
+        else if (CurrentMode == MenuMode.None)
+        {
+            holder.SetActive(false);
         }
 
         for (int i = 0; i < valueTexts.Length - 2; i++)
         {
             if (playerController)
             {
-            
-                if (gameManager.BInMenuP)
+                if (CurrentMode == MenuMode.PlayerMenu ||
+                    CurrentMode == MenuMode.PlayerPreview)
                 {
                     valueTexts[i].text = statBlockChangesP.statsP[i].ToString();
                     valueTexts[3].text = statBlockChangesP.IPointsLeftP.ToString();
-                    showHideJ.Show();
-                    showHideS.Hide();
+                    showHideJump.Show();
+                    showHideSpeed.Hide();
                     sUser = "Player";
-                    
-                    
                 }
 
-                else if (gameManager.BInMenuE)
+
+                if (CurrentMode == MenuMode.EnemyMenu ||
+                    CurrentMode == MenuMode.EnemyPreview)
                 {
                     valueTexts[i].text = statBlockChangesE.statsE[i].ToString();
                     valueTexts[3].text = statBlockChangesE.IPointsLeftE.ToString();
-                    showHideJ.Hide();
-                    showHideS.Show();
+                    showHideJump.Hide();
+                    showHideSpeed.Show();
                     sUser = "Enemy";
 
                 }
+                
+                bool isSelectionMode = CurrentMode == MenuMode.PlayerMenu || CurrentMode == MenuMode.EnemyMenu;
+                {
+                    valueTexts[i].color =
+                        isSelectionMode && i == statBlockInput.selectedIndex
+                            ? Color.green
+                            : Color.white;
 
-                if (gameManager.BInMenuP || gameManager.BInMenuE)
-                {
-                    valueTexts[i].color = (i == statBlockInput.selectedIndex) ? Color.green : Color.white;
-                }
-                else if (!gameManager.BInMenuP && !gameManager.BInMenuE)
-                {
-                    valueTexts[i].color = Color.white;
                 }
                 valueTexts[4].text = sUser;
             }
