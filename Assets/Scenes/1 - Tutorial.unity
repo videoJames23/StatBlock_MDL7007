@@ -2417,6 +2417,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1132282816253610148, guid: 3f690067d1e798c4fbbf46380cf49b51, type: 3}
   m_PrefabInstance: {fileID: 7629029841080213847}
   m_PrefabAsset: {fileID: 0}
+--- !u!50 &1699104065 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 7824783817548543263, guid: 3f690067d1e798c4fbbf46380cf49b51, type: 3}
+  m_PrefabInstance: {fileID: 7629029841080213847}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1716276105 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2489713619763611389, guid: 1d6e4b41fc128bc48b7de166cc438a1e, type: 3}
@@ -3033,6 +3038,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 270
       objectReference: {fileID: 0}
+    - target: {fileID: 3861867317899429845, guid: 3f690067d1e798c4fbbf46380cf49b51, type: 3}
+      propertyPath: spikeRb
+      value: 
+      objectReference: {fileID: 1699104065}
     - target: {fileID: 5281720123393059187, guid: 3f690067d1e798c4fbbf46380cf49b51, type: 3}
       propertyPath: m_LocalScale.y
       value: 11.055836

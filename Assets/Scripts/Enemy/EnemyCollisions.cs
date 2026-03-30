@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyCollisions : MonoBehaviour
 {
     [SerializeField]private Rigidbody2D enemyRb;
+    [SerializeField] private Transform enemyTransform;
     private EnemyDamage enemyDamage;
     [SerializeField] private EnemyStats enemyStats;
     
@@ -26,6 +27,8 @@ public class EnemyCollisions : MonoBehaviour
     void Start()
     {
         enemyDamage = GetComponent<EnemyDamage>();
+        GameObject enemyVisual = GameObject.FindGameObjectWithTag("EnemyVisual");
+        enemyTransform = enemyVisual.GetComponent<Transform>();
         
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerRb = player.GetComponent<Rigidbody2D>();
@@ -47,7 +50,7 @@ public class EnemyCollisions : MonoBehaviour
             
             // MATHS CONTENT HERE
             // ((px x ex) + (py + ey))/|p||e| = cosangle
-            Vector2 toPlayer = playerRb.position - enemyRb.position;
+            Vector2 toPlayer = playerRb.position - (Vector2)enemyTransform.position;
             float upMag = Vector2.up.magnitude;
             float toPlayerMag = toPlayer.magnitude;
             float magProduct = toPlayerMag * upMag;
