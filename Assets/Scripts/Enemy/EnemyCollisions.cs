@@ -3,26 +3,32 @@ using UnityEngine;
 public class EnemyCollisions : MonoBehaviour
 {
     [SerializeField]private Rigidbody2D enemyRb;
-    private EnemyController enemyController;
     private EnemyDamage enemyDamage;
     [SerializeField] private EnemyStats enemyStats;
-    private EnemyStatsHandler enemyStatsHandler;
     
     [SerializeField] private PlayerStats playerStats;
     private Rigidbody2D playerRb;
-    private PlayerMovement playerMovement;
-    private PlayerDamage playerDamage;
+
+    public delegate void PlayerSquash();
+    public static event PlayerSquash OnPlayerSquash;
+
+    public delegate void EnemyAttack();
+
+    public static event EnemyAttack OnEnemyAttack;
+
+    public delegate void EnemySpike();
+    public static event EnemySpike OnEnemySpike;
+
+    public delegate void EnemyWall();
+
+    public static event EnemyWall OnEnemyWall;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        enemyController = GetComponent<EnemyController>();
         enemyDamage = GetComponent<EnemyDamage>();
-        enemyStatsHandler = GetComponent<EnemyStatsHandler>();
         
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerRb = player.GetComponent<Rigidbody2D>();
-        playerMovement = player.GetComponent<PlayerMovement>();
-        playerDamage = player.GetComponent<PlayerDamage>();
     }
     
     private void OnCollisionEnter2D(Collision2D other)
@@ -32,7 +38,7 @@ public class EnemyCollisions : MonoBehaviour
             
             if (Mathf.Abs(enemyRb.linearVelocity.x) < 0.1f)
             {
-                enemyController.fEnemyDir *= -1;
+                OnEnemyWall?.Invoke();
             }
         }
 
@@ -54,33 +60,28 @@ public class EnemyCollisions : MonoBehaviour
             if (playerCosAngle > enemyStats.fCosAngle && bPlayerIsFalling)
             {
                 Debug.Log("Squash!");
-                enemyDamage.TakeDamage();
-                playerMovement.bIsGrounded = true;
-                playerMovement.Jump();
+                OnPlayerSquash?.Invoke();
             }
             
             else if (playerCosAngle < enemyStats.fCosAngle || !bPlayerIsFalling)
             {
                 Debug.Log("Ow!");
-                playerDamage.TakeDamage();
+                OnEnemyAttack?.Invoke();
             }
         }
 
         if (other.gameObject.CompareTag("Spike"))
         {
-            enemyDamage.TakeDamage();
-            
-            enemyController.fEnemyDir *= -1;
+            OnEnemySpike?.Invoke();
             
         }
     }
 
     private void OnCollisionStay2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Spike"))
+        if (other.gameObject.CompareTag("Spike") && enemyDamage.BCanTakeDamage)
         {
-           enemyDamage.TakeDamage();
-           
+            OnEnemySpike?.Invoke();
         }
         
     }

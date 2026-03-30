@@ -10,23 +10,23 @@ public class StatBlockUI : MonoBehaviour
     
     [SerializeField] private GameManager gameManager;
     
-    public TextMeshProUGUI[] valueTexts;
+    [SerializeField] private TextMeshProUGUI[] valueTexts;
 
     [SerializeField] private PlayerStats  playerStats;
     [SerializeField] private EnemyStats  enemyStats;
     
-    public PlayerController playerController;
+    private PlayerController playerController;
 
-    public GameObject holder;
-    public GameObject background;
+    [SerializeField] private GameObject holder;
+    [SerializeField] private GameObject background;
     [SerializeField] private RectTransform holderRT;
     [SerializeField] private Vector2 UIPosition;
     
     
-    public ShowHide showHideJ;
-    public ShowHide showHideS;
-    
-    public string sUser;
+    private ShowHide showHideJ;
+    private ShowHide showHideS;
+
+    private string sUser;
     
     
     public Vector3 vFocusScale = new (3f, 3f, 3f);
@@ -45,8 +45,8 @@ public class StatBlockUI : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
         
-        holder = GameObject.FindGameObjectWithTag("Holder");
-        background = GameObject.Find("Background");
+        // holder = GameObject.FindGameObjectWithTag("Holder");
+        // background = GameObject.Find("Background");
         holderRT = holder.GetComponent<RectTransform>();
         
         GameObject size = GameObject.FindGameObjectWithTag("Size");
@@ -115,7 +115,7 @@ public class StatBlockUI : MonoBehaviour
                 if (gameManager.BInMenuP)
                 {
                     valueTexts[i].text = statBlockChangesP.statsP[i].ToString();
-                    valueTexts[3].text = statBlockChangesP.iPointsLeftP.ToString();
+                    valueTexts[3].text = statBlockChangesP.IPointsLeftP.ToString();
                     showHideJ.Show();
                     showHideS.Hide();
                     sUser = "Player";
@@ -126,7 +126,7 @@ public class StatBlockUI : MonoBehaviour
                 else if (gameManager.BInMenuE)
                 {
                     valueTexts[i].text = statBlockChangesE.statsE[i].ToString();
-                    valueTexts[3].text = statBlockChangesE.iPointsLeftE.ToString();
+                    valueTexts[3].text = statBlockChangesE.IPointsLeftE.ToString();
                     showHideJ.Hide();
                     showHideS.Show();
                     sUser = "Enemy";

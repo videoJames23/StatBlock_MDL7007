@@ -31,7 +31,6 @@ public class AudioController : MonoBehaviour
         LevelSelectScreen.OnBack += PlayDown;
         CreditsScreen.OnBack += PlayDown;
         
-        
         PlayerMovement.OnJumpEvent += PlayJump;
         PlayerDamage.OnDamage += PlayDamage;
         PlayerCollisions.OnCompletion += PlayCompletion;
@@ -63,11 +62,6 @@ public class AudioController : MonoBehaviour
         EnemyDamage.OnDamage -= PlayDamage;
     }
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
     private void PlayOpen()
     {

@@ -11,11 +11,27 @@ public class PlayerMovement : MonoBehaviour
     private PlayerStatsHandler playerStatsHandler;
     
     [SerializeField] PlayerStats playerStats;
-    
-    public bool bIsGrounded;
+
+    private bool bIsGrounded;
 
     public delegate void JumpEvent();
     public static event JumpEvent OnJumpEvent;
+
+    private void OnEnable()
+    {
+        EnemyCollisions.OnPlayerSquash += Ground;
+        PlayerCollisions.OnGround += Ground;
+        PlayerCollisions.OnUnGround += UnGround;
+        EnemyCollisions.OnPlayerSquash += Jump;
+    }
+
+    private void OnDisable()
+    {
+        EnemyCollisions.OnPlayerSquash -= Ground;
+        PlayerCollisions.OnGround -= Ground;
+        PlayerCollisions.OnUnGround -= UnGround;
+        EnemyCollisions.OnPlayerSquash -= Jump;
+    }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,11 +51,21 @@ public class PlayerMovement : MonoBehaviour
             bIsGrounded = false;
         }
     }
+
+    private void Ground()
+    {
+        bIsGrounded = true;
+    }
+
+    private void UnGround()
+    {
+        bIsGrounded = false;
+    }
     
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector2 vTargetVelocity = new Vector2(playerController.fInput * playerStatsHandler.runtimeStats.fPlayerSpeed, playerRb.linearVelocity.y);
+        Vector2 vTargetVelocity = new Vector2(playerController.FInput * playerStatsHandler.runtimeStats.fPlayerSpeed, playerRb.linearVelocity.y);
 
         float fControl = bIsGrounded ? 1f : airControlMultiplier;
 

@@ -4,8 +4,8 @@ using UnityEngine;
 public class SpikesController : MonoBehaviour
 {
     public Rigidbody2D spikeRb;
-    public float fSpikeSpeed;
-    public float fSpikeDir;
+    [SerializeField] private float fSpikeSpeed;
+    [SerializeField] private float fSpikeDir;
     private bool bEntityDetected;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created

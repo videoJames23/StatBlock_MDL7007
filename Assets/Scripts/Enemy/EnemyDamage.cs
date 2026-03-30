@@ -12,29 +12,42 @@ public class EnemyDamage : MonoBehaviour
     private float fIFramesDuration = 1;
     private int iNumberOfFlashes = 5;
     
-    private bool bCanTakeDamage = true;
+    public bool BCanTakeDamage{ get; private set; }
 
     public delegate void Damage();
     public static event Damage OnDamage;
 
+    private void OnEnable()
+    {
+        EnemyCollisions.OnEnemySpike += TakeDamage;
+        EnemyCollisions.OnPlayerSquash += TakeDamage;
+    }
+    
+    private void OnDisable()
+    {
+        EnemyCollisions.OnEnemySpike -= TakeDamage;
+        EnemyCollisions.OnPlayerSquash -= TakeDamage;
+    }
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         enemyStatsHandler = GetComponent<EnemyStatsHandler>();
         cSpriteRenderer = GetComponent<SpriteRenderer>();
+        BCanTakeDamage = true;
     }
     
     public void TakeDamage()
     {
         
-        if (!bCanTakeDamage)
+        if (!BCanTakeDamage)
         {
             return;
         }
         
         OnDamage?.Invoke(); 
-        bCanTakeDamage = false;
+        BCanTakeDamage = false;
         
         if (enemyStatsHandler.runtimeStats.iEnemyHealth > 0)
         {
@@ -46,9 +59,9 @@ public class EnemyDamage : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public IEnumerator Invulnerability()
+    private IEnumerator Invulnerability()
     {
-        bCanTakeDamage = false;
+        BCanTakeDamage = false;
         
         for (int i = 0; i < iNumberOfFlashes; i++)
         {
@@ -58,6 +71,6 @@ public class EnemyDamage : MonoBehaviour
             yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
         }
         
-        bCanTakeDamage = true;
+        BCanTakeDamage = true;
     }
 }

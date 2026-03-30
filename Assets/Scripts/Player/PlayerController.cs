@@ -3,22 +3,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Stats")]
-    
     [SerializeField] private PlayerStats  playerStats;
     
-    
-    public float fInput;
-    
-    
+    public float FInput{ get; private set; }
     
     private GameManager gameManager;
     
     public PlayerMovement playerMovement;
     
-
-    
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {   
@@ -43,7 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!gameManager.BInMenu)
         {
-            fInput = Input.GetAxisRaw("Horizontal");
+            FInput = Input.GetAxisRaw("Horizontal");
         }
     }
 

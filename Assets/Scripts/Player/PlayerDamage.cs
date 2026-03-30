@@ -13,9 +13,16 @@ public class PlayerDamage : MonoBehaviour
     
     public delegate void Damage();
     public static event  Damage OnDamage;
-    
-    
-    
+
+    private void OnEnable()
+    {
+        EnemyCollisions.OnEnemyAttack += TakeDamage;
+    }
+
+    private void OnDisable()
+    {
+        EnemyCollisions.OnEnemyAttack -= TakeDamage;
+    }
         
         
     // Start is called once before the first execution of Update after the MonoBehaviour is created

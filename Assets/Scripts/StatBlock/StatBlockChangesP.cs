@@ -10,6 +10,7 @@ public class StatBlockChangesP : MonoBehaviour
     
     public int[] statsP = {1, 1, 1};
     
+    
     private StatBlockUI statBlockUI;
     
     private PlayerController playerController;
@@ -30,8 +31,8 @@ public class StatBlockChangesP : MonoBehaviour
     public delegate void DamageRefresh();
     public static event DamageRefresh OnDamageRefresh;
     
-    public int iPointsTotalP;
-    public int iPointsLeftP;
+    public int IPointsTotalP { get; private set; }
+    public int IPointsLeftP { get; private set; }
 
     private void OnEnable()
     {
@@ -91,7 +92,7 @@ public class StatBlockChangesP : MonoBehaviour
         
         var presetP = levelConfig.playerStartingPreset;
         
-        iPointsTotalP = presetP.iPointsTotalP;
+        IPointsTotalP = presetP.iPointsTotalP;
 
         statsP[0] = Mathf.Max(0, presetP.iPlayerHealth);
         
@@ -125,7 +126,7 @@ public class StatBlockChangesP : MonoBehaviour
 
     private void StatIncrease(int selectedIndex)
     {
-        if (iPointsLeftP > 0)
+        if (IPointsLeftP > 0)
         {
             statsP[selectedIndex]++;
             OnUp?.Invoke();
@@ -182,7 +183,7 @@ public class StatBlockChangesP : MonoBehaviour
 
     private void RecomputePoints()
     {
-        iPointsLeftP = iPointsTotalP - statsP.Sum();
+        IPointsLeftP = IPointsTotalP - statsP.Sum();
     }
     
     public void StatChangePHealth()
@@ -195,7 +196,7 @@ public class StatBlockChangesP : MonoBehaviour
     public void HealthDecrease()
     {
         statsP[0]--;
-        iPointsTotalP--;
+        IPointsTotalP--;
         StatChangePHealth();
         OnDamageRefresh?.Invoke();
     }

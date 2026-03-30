@@ -11,9 +11,6 @@ public class GameManager : MonoBehaviour
     public bool BInMenuE { get; private set; }
     
     
-    
-    [SerializeField] private EnemyController enemyController;
-    
     [SerializeField] private StatBlockUI statBlockUI;
     [SerializeField] private StatBlockChangesE statBlockChangesE;
 
@@ -36,12 +33,7 @@ public class GameManager : MonoBehaviour
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerCollisions = player.GetComponent<PlayerCollisions>();
-
-        GameObject enemy = GameObject.FindGameObjectWithTag("EnemyVisual");
-        if (enemy)
-        {
-            enemyController = enemy.GetComponent<EnemyController>();
-        }
+        
         
         GameObject statBlockUIGO = GameObject.FindGameObjectWithTag("StatBlockUI");
         statBlockUI = statBlockUIGO.GetComponent<StatBlockUI>();
@@ -86,28 +78,26 @@ public class GameManager : MonoBehaviour
     // CollisionChecks checks to see if the player is touching either StatBlock before opening the menu
     private void CollisionChecks()
     {
-        if (playerCollisions.bIsTouchingStatBlockP)
+        if (playerCollisions.BIsTouchingStatBlockP)
         {
             BInMenuP = !BInMenuP;
         }
             
-        if (playerCollisions.bIsTouchingStatBlockE)
+        if (playerCollisions.BIsTouchingStatBlockE)
         {
             if (!BInMenuE)
             {
                 BInMenuE = true;
-                enemyController.fPrevDir = enemyController.fEnemyDir;
                 MenuChecks();
             }
             else if (BInMenuE)
             {
-                if (statBlockChangesE.iPointsLeftE == 0)
+                if (statBlockChangesE.IPointsLeftE == 0)
                 {
                     BInMenuE = false;
-                    enemyController.fEnemyDir = enemyController.fPrevDir;
                     MenuChecks();
                 }
-                else if (statBlockChangesE.iPointsLeftE > 0)
+                else if (statBlockChangesE.IPointsLeftE > 0)
                 {
                     OnError?.Invoke();
                 }

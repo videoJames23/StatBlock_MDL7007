@@ -17,8 +17,8 @@ public class StatBlockChangesE : MonoBehaviour
     private EnemyStatsHandler enemyStatsHandler;
     public int[] statsE = {1, 1, 1};
     
-    public int iPointsTotalE;
-    public int iPointsLeftE;
+    public int IPointsTotalE{ get; private set; }
+    public int IPointsLeftE{ get; private set; }
     public delegate void Up();
     public static event Up OnUp;
     
@@ -97,7 +97,7 @@ public class StatBlockChangesE : MonoBehaviour
             
             var presetE = levelConfig.enemyStartingPreset;
             
-            iPointsTotalE = presetE.iPointsTotalE;
+            IPointsTotalE = presetE.iPointsTotalE;
             
             statsE[0] = Mathf.Max(0, presetE.iEnemyHealth);
             
@@ -126,7 +126,7 @@ public class StatBlockChangesE : MonoBehaviour
 
     private void StatIncrease(int selectedIndex)
     {
-        if (iPointsLeftE > 0)
+        if (IPointsLeftE > 0)
         {
             
 
@@ -194,7 +194,7 @@ public class StatBlockChangesE : MonoBehaviour
     
     private void RecomputePoints()
     {
-        iPointsLeftE = iPointsTotalE - statsE.Sum();
+        IPointsLeftE = IPointsTotalE - statsE.Sum();
     }
 
     public void StatChangeEHealth()
@@ -209,7 +209,7 @@ public class StatBlockChangesE : MonoBehaviour
     public void HealthDecrease()
     {
         statsE[0]--;
-        iPointsTotalE--;
+        IPointsTotalE--;
         StatChangeEHealth();
         OnDamageRefresh?.Invoke();
     }

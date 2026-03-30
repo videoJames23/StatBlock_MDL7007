@@ -2,19 +2,22 @@ using UnityEngine;
 
 public class PlayerCollisions : MonoBehaviour
 {
-    private PlayerMovement playerMovement;
     private PlayerDamage playerDamage;
     
     
-    public bool bIsTouchingStatBlockP;
-    public bool bIsTouchingStatBlockE;
+    public bool BIsTouchingStatBlockP{ get; private set; }
+    public bool BIsTouchingStatBlockE{ get; private set; }
 
     public delegate void Completion();
     public static event Completion OnCompletion;
+
+    public delegate void Ground();
+    public static event Ground OnGround;
+    public delegate void UnGround();
+    public static event UnGround OnUnGround;
     void Start()
     {
         playerDamage = GetComponent<PlayerDamage>();
-        playerMovement = GetComponent<PlayerMovement>();
     }
     
     void OnCollisionEnter2D(Collision2D other)
@@ -42,7 +45,7 @@ public class PlayerCollisions : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            playerMovement.bIsGrounded = true;
+            OnGround?.Invoke();
         }
         
         
@@ -53,10 +56,10 @@ public class PlayerCollisions : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "StatBlockP":
-                bIsTouchingStatBlockP = true;
+                BIsTouchingStatBlockP = true;
                 break;
             case "StatBlockE":
-                bIsTouchingStatBlockE = true;
+                BIsTouchingStatBlockE = true;
                 break;
         }
         
@@ -68,7 +71,7 @@ public class PlayerCollisions : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            playerMovement.bIsGrounded = false;
+            OnUnGround?.Invoke();
         }
         
     }
@@ -78,10 +81,10 @@ public class PlayerCollisions : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "StatBlockP":
-                bIsTouchingStatBlockP = false;
+                BIsTouchingStatBlockP = false;
                 break;
             case "StatBlockE":
-                bIsTouchingStatBlockE = false;
+                BIsTouchingStatBlockE = false;
                 break;
         }
         
