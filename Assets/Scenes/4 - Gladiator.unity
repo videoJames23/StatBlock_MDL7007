@@ -609,6 +609,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c24dbef75beab34ba4a6af676cedd6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &903956553 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1117336626852961260, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
+  m_PrefabInstance: {fileID: 1143258291}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1086613530 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5247032621137200694, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
@@ -777,6 +782,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 181295187}
     - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
+      propertyPath: currentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 740399392}
@@ -784,6 +793,10 @@ PrefabInstance:
       propertyPath: levelConfig
       value: 
       objectReference: {fileID: 11400000, guid: 61b76f3510a19394584f344c273d3e6b, type: 2}
+    - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
+      propertyPath: backgroundRT
+      value: 
+      objectReference: {fileID: 903956553}
     - target: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
       propertyPath: showHideJump
       value: 

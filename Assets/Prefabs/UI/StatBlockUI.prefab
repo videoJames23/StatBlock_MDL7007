@@ -688,26 +688,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 262d6967e1c149e47b1801719a140f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelConfig: {fileID: 11400000, guid: a9bcb53891cf83c45ae2f7ab1fab90df, type: 2}
+  playerController: {fileID: 0}
   valueTexts:
   - {fileID: 2390947330739867895}
   - {fileID: 4448675078910750087}
   - {fileID: 5654618725045004365}
   - {fileID: 5445885438135700974}
   - {fileID: 750530754885650575}
-  playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
-  enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
-  playerController: {fileID: 0}
   holder: {fileID: 7031388086280753611}
+  holderRT: {fileID: 1972689550776690605}
   background: {fileID: 1399443520318355992}
-  showHideJ: {fileID: 5247032621137200694}
-  showHideS: {fileID: 2569729562222940473}
-  sUser: 
-  iPrevSize: 0
+  backgroundRT: {fileID: 1117336626852961260}
+  uiPosition: {x: 0, y: 0}
+  showHideJump: {fileID: 5247032621137200694}
+  showHideSpeed: {fileID: 2569729562222940473}
   vFocusScale: {x: 3, y: 3, z: 3}
   vFocusPosition: {x: -87.6, y: -74.2}
   vBackgroundFocusScale: {x: 10, y: 10, z: 10}
   vOutFocusScale: {x: 1, y: 1, z: 1}
   vBackgroundOutFocusScale: {x: 2.83, y: 2.308658, z: 1}
+  currentMode: 0
 --- !u!114 &5492014364087014244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -720,10 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db60791d73c90d47a611c14f9adebbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
-  enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
-  playerStatsHandler: {fileID: 0}
-  selectedIndex: 0
+  gameManager: {fileID: 0}
 --- !u!223 &5752956506425552972
 Canvas:
   m_ObjectHideFlags: 0
@@ -814,8 +812,6 @@ MonoBehaviour:
   playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
   levelConfig: {fileID: 11400000, guid: a9bcb53891cf83c45ae2f7ab1fab90df, type: 2}
   statsP: 010000000100000001000000
-  iPointsTotalP: 4
-  iPointsLeftP: 0
 --- !u!114 &2551358007146017258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,13 +825,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelConfig: {fileID: 11400000, guid: a9bcb53891cf83c45ae2f7ab1fab90df, type: 2}
+  statBlockUI: {fileID: 6686633217548592756}
   enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
   enemyRb: {fileID: 0}
   enemyVisual: {fileID: 0}
   enemyRenderer: {fileID: 0}
   statsE: 010000000100000001000000
-  iPointsTotalE: 0
-  iPointsLeftE: 0
 --- !u!1 &6164279559898771015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,7 +1295,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -601.17, y: -304.3}
+  m_AnchoredPosition: {x: -603.9, y: -260.1}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7914650030378830044
