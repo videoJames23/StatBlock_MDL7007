@@ -24,7 +24,7 @@ public class AudioController : MonoBehaviour
         StatBlockChangesP.OnDown += PlayDown;
         StatBlockChangesE.OnUp += PlayUp;
         StatBlockChangesE.OnDown += PlayDown;
-        StatBlockInput.OnIndex += PlayIndex;
+        StatBlockInput.OnIndexChanged += PlayIndex;
         
         MainMenuScreen.OnButtonClicked += PlayUp;
         LevelSelectScreen.OnBack += PlayDown;
@@ -47,7 +47,7 @@ public class AudioController : MonoBehaviour
         StatBlockChangesP.OnDown -= PlayDown;
         StatBlockChangesE.OnUp -= PlayUp;
         StatBlockChangesE.OnDown -= PlayDown;
-        StatBlockInput.OnIndex -= PlayIndex;
+        StatBlockInput.OnIndexChanged -= PlayIndex;
         
         MainMenuScreen.OnButtonClicked -= PlayUp;
         LevelSelectScreen.OnBack -= PlayDown;

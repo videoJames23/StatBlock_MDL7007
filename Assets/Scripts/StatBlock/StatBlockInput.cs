@@ -1,20 +1,19 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class StatBlockInput : MonoBehaviour
 {
     private PlayerController playerController;
-    [SerializeField] private PlayerStats playerStats;
-
-    [SerializeField] private EnemyStats enemyStats;
     
     [SerializeField] private GameManager gameManager;
     
     private StatBlockUI statBlockUI;
-    
-    
-    public delegate void Index();
-    public static event Index OnIndex;
+
+    private int maxIndex = 2;
+    private int minIndex = 0;
+    public delegate void IndexChanged();
+    public static event IndexChanged OnIndexChanged;
 
     public delegate void StatIncreaseP(int selectedIndex);
     public static event StatIncreaseP OnStatIncreaseP;
@@ -25,12 +24,13 @@ public class StatBlockInput : MonoBehaviour
     public static event StatIncreaseE OnStatIncreaseE;
     public delegate void StatDecreaseE(int selectedIndex);
     public static event StatDecreaseE OnStatDecreaseE;
-    
-    public int selectedIndex;
+
+    public int SelectedIndex{ get; private set; }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     { 
         statBlockUI = GetComponent<StatBlockUI>();
+        SelectedIndex = 0;
         
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
@@ -48,32 +48,28 @@ public class StatBlockInput : MonoBehaviour
         // select stat
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-            selectedIndex--;
-            OnIndex?.Invoke();
-
-            switch (selectedIndex)
+            SelectedIndex--;
+            
+            if (SelectedIndex < minIndex)
             {
-                case -1: selectedIndex = 2; break;
-                case 0:
-                case 1:
-                case 2: break;
+                SelectedIndex = maxIndex;
             }
+            
+            OnIndexChanged?.Invoke();
             statBlockUI.UpdateUI();
         }
 
 
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
-            selectedIndex++;
-            OnIndex?.Invoke();
-
-            switch (selectedIndex)
+            SelectedIndex++;
+            
+            if (SelectedIndex > maxIndex)
             {
-                case 0:
-                case 1:
-                case 2: break;
-                case 3: selectedIndex = 0; break;
+                SelectedIndex = minIndex;
             }
+            
+            OnIndexChanged?.Invoke();
             statBlockUI.UpdateUI();
         }
 
@@ -82,11 +78,11 @@ public class StatBlockInput : MonoBehaviour
         {
             if (statBlockUI.CurrentMode == StatBlockUI.MenuMode.PlayerMenu)
             {
-                OnStatIncreaseP?.Invoke(selectedIndex);
+                OnStatIncreaseP?.Invoke(SelectedIndex);
             }
             else if (statBlockUI.CurrentMode == StatBlockUI.MenuMode.EnemyMenu)
             {
-                OnStatIncreaseE?.Invoke(selectedIndex);
+                OnStatIncreaseE?.Invoke(SelectedIndex);
             }
         }
 
@@ -94,11 +90,11 @@ public class StatBlockInput : MonoBehaviour
         {
             if (statBlockUI.CurrentMode == StatBlockUI.MenuMode.PlayerMenu)
             {
-                OnStatDecreaseP?.Invoke(selectedIndex);
+                OnStatDecreaseP?.Invoke(SelectedIndex);
             }
             else if (statBlockUI.CurrentMode == StatBlockUI.MenuMode.EnemyMenu)
             {
-                OnStatDecreaseE?.Invoke(selectedIndex);
+                OnStatDecreaseE?.Invoke(SelectedIndex);
             }
         }
     }
