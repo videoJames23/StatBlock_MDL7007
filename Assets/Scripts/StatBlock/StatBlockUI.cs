@@ -73,12 +73,12 @@ public class StatBlockUI : MonoBehaviour
         if (CurrentMode == mode)
             return;
 
-        var wasOpen = currentMode == MenuMode.PlayerMenu || currentMode == MenuMode.EnemyMenu;
+        var wasOpen = CurrentMode == MenuMode.PlayerMenu || CurrentMode == MenuMode.EnemyMenu;
 
-        currentMode = mode;
+        CurrentMode = mode;
         UpdateUI();
 
-        var isOpen = currentMode == MenuMode.PlayerMenu || currentMode == MenuMode.EnemyMenu;
+        var isOpen = CurrentMode == MenuMode.PlayerMenu || CurrentMode == MenuMode.EnemyMenu;
 
         if (!wasOpen && isOpen)
             OnMenuOpen?.Invoke();
@@ -138,6 +138,7 @@ public class StatBlockUI : MonoBehaviour
     {
         if (currentMode == MenuMode.PlayerMenu)
         {
+            // Closing menu returns to preview in order to show current stats
             SetMenuMode(MenuMode.PlayerPreview);
         }
         else if (!currentMode.Equals(MenuMode.PlayerMenu))
@@ -151,6 +152,7 @@ public class StatBlockUI : MonoBehaviour
     {
         if (currentMode == MenuMode.EnemyMenu)
         {
+            // Closing menu returns to preview in order to show current stats
             SetMenuMode(MenuMode.EnemyPreview);
         }
         else if (!currentMode.Equals(MenuMode.EnemyMenu))
@@ -159,7 +161,8 @@ public class StatBlockUI : MonoBehaviour
         }
     }
 
-
+    
+    // Damage updates preview to show current stats
     void DamageMenuRefreshP()
     {
         SetMenuMode(MenuMode.PlayerPreview);
@@ -209,8 +212,7 @@ public class StatBlockUI : MonoBehaviour
                 showHideSpeed.Hide();
                 sUser = "Player";
             }
-
-
+            
             if (CurrentMode == MenuMode.EnemyMenu || CurrentMode == MenuMode.EnemyPreview)
             {
                 valueTexts[i].text = statBlockChangesE.statsE[i].ToString();
