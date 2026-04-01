@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7570688587872432275}
   - component: {fileID: 8186158846325506216}
+  - component: {fileID: 1661897708731055296}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -44,13 +45,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59196f89aefd4a74bb30889cc6d1212b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iBuildIndex: 0
-  playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
-  enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
-  enemySpeedLVL0: 0
-  enemySpeedLVL1: 3
-  enemySpeedLVL2: 7
-  enemySpeedLVL3: 10
-  enemySizeLVL1: 1.5
-  enemySizeLVL2: 3
-  enemySizeLVL3: 4.5
+  playerCollisions: {fileID: 0}
+  statBlockUI: {fileID: 0}
+  pauseManager: {fileID: 1661897708731055296}
+--- !u!114 &1661897708731055296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145329414932980155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08a2902f4e80a3c4593fd03f9129f8d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statBlockUI: {fileID: 0}

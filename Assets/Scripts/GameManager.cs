@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerCollisions  playerCollisions;
     
     [SerializeField] private StatBlockUI statBlockUI;
+    [SerializeField] private PauseManager pauseManager;
     
     private int iBuildIndex;
     
@@ -30,7 +31,6 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Time.timeScale = 1;
             SceneManager.LoadScene(iBuildIndex);
         }
 
@@ -52,19 +52,12 @@ public class GameManager : MonoBehaviour
                 statBlockUI.SetMenuMode(StatBlockUI.MenuMode.None);
             }
 
-            PauseChecks();
+            pauseManager.UpdatePauseState();
 
         }
     }
     
-    private void PauseChecks()
-    {
-        bool shouldPause =
-            statBlockUI.CurrentMode == StatBlockUI.MenuMode.PlayerMenu ||
-            statBlockUI.CurrentMode == StatBlockUI.MenuMode.EnemyMenu;
-
-        Time.timeScale = shouldPause ? 0 : 1;
-    }
+    
     
     private void OnCompletion()
     {
