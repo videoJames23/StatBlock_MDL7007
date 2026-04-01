@@ -801,6 +801,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1661897708731055296, guid: 545fe4282ff4ff04dbaf76d7600ccc10, type: 3}
+      propertyPath: statBlockUI
+      value: 
+      objectReference: {fileID: 1428782741}
     - target: {fileID: 7570688587872432275, guid: 545fe4282ff4ff04dbaf76d7600ccc10, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -842,33 +846,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8186158846325506216, guid: 545fe4282ff4ff04dbaf76d7600ccc10, type: 3}
-      propertyPath: enemyRb
-      value: 
-      objectReference: {fileID: 177983401}
-    - target: {fileID: 8186158846325506216, guid: 545fe4282ff4ff04dbaf76d7600ccc10, type: 3}
       propertyPath: statBlockUI
       value: 
       objectReference: {fileID: 1428782741}
     - target: {fileID: 8186158846325506216, guid: 545fe4282ff4ff04dbaf76d7600ccc10, type: 3}
-      propertyPath: enemyController
-      value: 
-      objectReference: {fileID: 272107435197920608}
-    - target: {fileID: 8186158846325506216, guid: 545fe4282ff4ff04dbaf76d7600ccc10, type: 3}
       propertyPath: playerCollisions
       value: 
       objectReference: {fileID: 5117501967468652123}
-    - target: {fileID: 8186158846325506216, guid: 545fe4282ff4ff04dbaf76d7600ccc10, type: 3}
-      propertyPath: playerController
-      value: 
-      objectReference: {fileID: 943131319}
-    - target: {fileID: 8186158846325506216, guid: 545fe4282ff4ff04dbaf76d7600ccc10, type: 3}
-      propertyPath: statBlockChangesE
-      value: 
-      objectReference: {fileID: 1428782743}
-    - target: {fileID: 8186158846325506216, guid: 545fe4282ff4ff04dbaf76d7600ccc10, type: 3}
-      propertyPath: statBlockChangesP
-      value: 
-      objectReference: {fileID: 1428782735}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -879,17 +863,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2852572768228270822, guid: 3ad02028bc040fc42a392cc603398a64, type: 3}
   m_PrefabInstance: {fileID: 2425095356023304413}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1428782735 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 63270712316841398, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
-  m_PrefabInstance: {fileID: 1887163087679706401}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51b16a5bb7903ff4aa88919de7654636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1428782741 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6686633217548592756, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
@@ -899,17 +872,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 262d6967e1c149e47b1801719a140f5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1428782743 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2551358007146017258, guid: 5213c7a271d7b614ca9ed514540231c1, type: 3}
-  m_PrefabInstance: {fileID: 1887163087679706401}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5783a3b955d10ec43a34d353aa362b35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1499588501
@@ -1298,17 +1260,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db45c8cafaaf5a9478674e49501d25ed, type: 3}
---- !u!114 &272107435197920608 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8250650954908997018, guid: db45c8cafaaf5a9478674e49501d25ed, type: 3}
-  m_PrefabInstance: {fileID: 272107435197920607}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0ef0147e9acb9e4d97f313f73bfc52d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &967604024287754443 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 8903127996242638056, guid: db45c8cafaaf5a9478674e49501d25ed, type: 3}

@@ -487,6 +487,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1661897708731055296, guid: 545fe4282ff4ff04dbaf76d7600ccc10, type: 3}
+      propertyPath: statBlockUI
+      value: 
+      objectReference: {fileID: 1143258292}
     - target: {fileID: 7570688587872432275, guid: 545fe4282ff4ff04dbaf76d7600ccc10, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.177068
