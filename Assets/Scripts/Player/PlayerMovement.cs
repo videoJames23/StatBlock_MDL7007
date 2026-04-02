@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerController playerController;
     private PlayerStatsHandler playerStatsHandler;
     
-    [SerializeField] PlayerStats playerStats;
+    [SerializeField] PlayerStatValues playerStats;
 
     private bool isGrounded;
 

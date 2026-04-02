@@ -52,8 +52,6 @@ MonoBehaviour:
   enemyRb: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
   enemyStatsHandler: {fileID: 1998484001756151778}
-  fEnemyDir: 1
-  fPrevDir: 0
 --- !u!212 &8491414037366413147
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -167,9 +165,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112b5a53f1d34fe42a4644e726d67c8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyRb: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
   playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
+  enemyRb: {fileID: 0}
+  enemyTransform: {fileID: 0}
 --- !u!114 &2193503974808337713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,7 +181,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71f2d06c9d0a9654ab3d22505cdc7e3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
 --- !u!114 &1998484001756151778
 MonoBehaviour:
@@ -196,8 +194,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c63c8989ca801a449533755dcfd0cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statValues: {fileID: 11400000, guid: ff17b9a7d69990842950f40bbebf6d83, type: 2}
   defaultPreset: {fileID: 11400000, guid: be4b608b8e2ce0143aa4d583c14f0c0b, type: 2}
   runtimeStats:
-    iEnemyHealth: 0
-    fEnemySpeed: 0
-    fEnemySize: 0
+    enemyHealth: 0
+    enemySpeed: 0
+    enemySize: 0
+    enemyDir: 0

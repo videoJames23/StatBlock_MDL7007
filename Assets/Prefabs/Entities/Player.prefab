@@ -55,7 +55,6 @@ MonoBehaviour:
   acceleration: 12
   airControlMultiplier: 0.5
   playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
-  bIsGrounded: 0
 --- !u!114 &4277488488149247715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,12 +68,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
-  bInMenu: 0
-  bInMenuP: 0
-  bInMenuE: 0
-  fInput: 0
+  statBlockUI: {fileID: 0}
   playerMovement: {fileID: 8498139214254430403}
-  playerDamage: {fileID: 3131354415799336966}
 --- !u!212 &8678867525025807306
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -218,8 +213,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ab81ea7892aaa46bc72d27532d71d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bIsTouchingStatBlockP: 0
-  bIsTouchingStatBlockE: 0
 --- !u!114 &766932768989670642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,11 +225,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8ae1708a015a0343ac2dcc080430a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statValues: {fileID: 11400000, guid: 0d474b172b90c684c8b10fcaaee5f746, type: 2}
   defaultPreset: {fileID: 11400000, guid: 33007a3145368dc41b6cf0c5f0f2f94b, type: 2}
   runtimeStats:
-    iPlayerHealth: 0
-    fPlayerSpeed: 0
-    fPlayerJump: 0
+    playerHealth: 0
+    playerSpeed: 0
+    playerJump: 0
 --- !u!114 &8980058498945247471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,8 +243,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8ae1708a015a0343ac2dcc080430a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statValues: {fileID: 0}
   defaultPreset: {fileID: 11400000, guid: 33007a3145368dc41b6cf0c5f0f2f94b, type: 2}
   runtimeStats:
-    iPlayerHealth: 0
-    fPlayerSpeed: 0
-    fPlayerJump: 0
+    playerHealth: 0
+    playerSpeed: 0
+    playerJump: 0

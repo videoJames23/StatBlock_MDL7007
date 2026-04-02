@@ -4,17 +4,15 @@ using UnityEngine;
 public class StatBlockChangesE : MonoBehaviour
 {
     [SerializeField] private LevelConfigSO levelConfig;
+    [SerializeField] private EnemyStatValues  enemyStats;
     
     [SerializeField] private StatBlockUI statBlockUI;
-    
-    [SerializeField] private EnemyStats  enemyStats;
     
     [SerializeField] private Rigidbody2D enemyRb;       
     [SerializeField] private Transform enemyVisual; 
     [SerializeField] private SpriteRenderer enemyRenderer; 
-    
-    
     private EnemyStatsHandler enemyStatsHandler;
+    
     public int[] statsE = {1, 1, 1};
     
     public int PointsTotalE{ get; private set; }
@@ -49,11 +47,13 @@ public class StatBlockChangesE : MonoBehaviour
     {
         statBlockUI = GetComponent<StatBlockUI>();
         
-        GameObject enemyVisual = GameObject.FindGameObjectWithTag("EnemyVisual");
-        if (enemyVisual)
+        var enemyVisualGO = GameObject.FindGameObjectWithTag("EnemyVisual");
+        if (enemyVisualGO)
         {
-            enemyStatsHandler = enemyVisual.GetComponent<EnemyStatsHandler>();
+            enemyVisual = enemyVisualGO.transform;
+            enemyStatsHandler = enemyVisualGO.GetComponent<EnemyStatsHandler>();
         }
+
         GameObject enemyRoot = GameObject.FindGameObjectWithTag("EnemyRoot");
         if (enemyRoot)
         {
@@ -86,42 +86,28 @@ public class StatBlockChangesE : MonoBehaviour
                 levelConfig = bootstrap.levelConfig;
             }
         }
-        
-        if (enemyVisual)
-        {
-            if (levelConfig == null || levelConfig.enemyStartingPreset == null)
-            {
-                Debug.Log("[StatBlockChanges] No LevelConfig or no enemyStartingPreset; keeping default statsE.");
-                return;
-            }
-            
-            var presetE = levelConfig.enemyStartingPreset;
-            
-            PointsTotalE = presetE.pointsTotalE;
-            
-            statsE[0] = Mathf.Max(0, presetE.enemyHealth);
-            
-            if      (Mathf.Approximately(presetE.enemySpeed, enemyStats.enemySpeedLVL0)) statsE[1] = 0;
-            else if (Mathf.Approximately(presetE.enemySpeed, enemyStats.enemySpeedLVL1)) statsE[1] = 1;
-            else if (Mathf.Approximately(presetE.enemySpeed, enemyStats.enemySpeedLVL2)) statsE[1] = 2;
-            else if (Mathf.Approximately(presetE.enemySpeed, enemyStats.enemySpeedLVL3)) statsE[1] = 3;
-            else
-            {
-                Debug.LogWarning($"[StatBlockChanges] Preset speed {presetE.enemySpeed} does not match any level value; defaulting to level 1.");
-                statsE[1] = 1;
-            }
-            
-            if (Mathf.Approximately(presetE.enemySize, enemyStats.enemySizeLVL1)) statsE[2] = 1;
-            else if (Mathf.Approximately(presetE.enemySize, enemyStats.enemySizeLVL2)) statsE[2] = 2;
-            else if (Mathf.Approximately(presetE.enemySize, enemyStats.enemySizeLVL3)) statsE[2] = 3;
-            else
-            {
-                Debug.LogWarning($"[StatBlockChanges] Preset size {presetE.enemySize} does not match any level value; defaulting to level 1.");
-                statsE[2] = 1;
-            }
-            Debug.Log($"[StatBlockChanges] statsE <- preset | Health:{statsE[0]} Speed Index:{statsE[1]} Size Index:{statsE[2]}");
-        }
 
+        if (levelConfig == null || levelConfig.enemyStartingPreset == null)
+        {
+            Debug.Log("[StatBlockChanges] No LevelConfig or no enemyStartingPreset; keeping default statsE.");
+            return;
+        }
+        
+        var presetE = levelConfig.enemyStartingPreset;
+        
+        statsE[0] = (int)presetE.healthLevel;
+        statsE[1] = (int)presetE.speedLevel;
+        statsE[2] = (int)presetE.sizeLevel;
+
+        PointsTotalE = presetE.pointsTotal;
+        RecomputePoints();
+
+        Debug.Log($"[StatBlockChanges] statsE <- preset | Health:{statsE[0]} Speed Index:{statsE[1]} Jump Index:{statsE[2]}");
+
+    }
+    private void RecomputePoints()
+    {
+        PointsLeftE = PointsTotalE - statsE.Sum();
     }
 
     private void StatIncrease(int selectedIndex)
@@ -191,63 +177,46 @@ public class StatBlockChangesE : MonoBehaviour
         }
     }
     
-    
-    private void RecomputePoints()
-    {
-        PointsLeftE = PointsTotalE - statsE.Sum();
-    }
 
-    public void StatChangeEHealth()
+    private void StatChangeEHealth()
     {
         if (!enemyRb || !enemyVisual) return;
         
-        enemyStatsHandler.runtimeStats.enemyHealth = statsE[0];
+        enemyStatsHandler.runtimeStats.enemyHealth = enemyStats.healthByLevel[statsE[0]];
         RecomputePoints();
         statBlockUI.UpdateUI();
     }
-    
-    public void HealthDecrease()
+
+    private void HealthDecrease()
     {
         statsE[0]--;
         PointsTotalE--;
         StatChangeEHealth();
         OnDamageRefresh?.Invoke();
     }
-    public void StatChangeESpeed()
+
+    private void StatChangeESpeed()
     {
         if (!enemyRb || !enemyVisual) return;
 
-        var newSpeed = statsE[1] switch
-        {
-            0 => enemyStats.enemySpeedLVL0,
-            1 => enemyStats.enemySpeedLVL1,
-            2 => enemyStats.enemySpeedLVL2,
-            3 => enemyStats.enemySpeedLVL3,
-            _ => enemyRb.linearVelocity.x
-        };
-
-        enemyStatsHandler.runtimeStats.enemySpeed = newSpeed;
+        enemyStatsHandler.runtimeStats.enemySpeed = enemyStats.speedByLevel[statsE[1]];
         RecomputePoints();
         statBlockUI.UpdateUI();
     }
-    
-    public void StatChangeESize()
+
+
+    private void StatChangeESize()
     {
         if (!enemyRb || !enemyVisual) return;
 
-        var newScale = statsE[2] switch
-        {
-            1 => enemyStats.enemySizeLVL1,
-            2 => enemyStats.enemySizeLVL2,
-            3 => enemyStats.enemySizeLVL3,
-            _ => enemyVisual.localScale.x
-        };
+        var newScale = enemyStats.sizeByLevel[statsE[2]];
 
         enemyStatsHandler.runtimeStats.enemySize = newScale;
         ApplyEnemyScaleBottomAnchored(newScale);
         RecomputePoints();
         statBlockUI.UpdateUI();
     }
+
 
     
     private void ApplyEnemyScaleBottomAnchored(float scale)

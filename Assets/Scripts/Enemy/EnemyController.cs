@@ -4,7 +4,7 @@ public class EnemyController : MonoBehaviour
 {
     
     [SerializeField] private Rigidbody2D enemyRb;
-    [SerializeField] private EnemyStats enemyStats;
+    [SerializeField] private EnemyStatValues enemyStats;
 
     [SerializeField] private EnemyStatsHandler enemyStatsHandler;
     

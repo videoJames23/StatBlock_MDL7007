@@ -21,13 +21,13 @@ public class GameManager : MonoBehaviour
         PlayerCollisions.OnCompletion -= OnCompletion;
     }
     
-    void Start()
+    private void Start()
     {
         buildIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {

@@ -1,22 +1,19 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Stats/Enemy Stats Preset", fileName = "NewEnemyStatsPreset")]
+[CreateAssetMenu(menuName = "Starting Stats/Enemy Stats Preset", fileName = "NewEnemyStatsPreset")]
 public class EnemyStatsPresetSO : ScriptableObject
 {
-    public int enemyHealth = 1;
-    public float enemySpeed = 3f;
-    public float enemySize  = 4.5f;
-    public int enemyDir = 1;
-    public int pointsTotalE;
+    [Header("Starting Stat Levels")]
+    public StatLevel healthLevel = StatLevel.Level1;
+    public StatLevel speedLevel  = StatLevel.Level1;
+    public StatLevel sizeLevel   = StatLevel.Level1;
 
-    public EnemyRuntimeStats CreateRuntimeCopy()
-    {
-        return new EnemyRuntimeStats
-        {
-            enemyHealth = enemyHealth,
-            enemySpeed  = enemySpeed,
-            enemySize   = enemySize,
-            enemyDir = enemyDir,
-        };
-    }
+    // +1 == right, -1 == left
+    [Header ("Starting Direction")]
+    public int enemyDir = 1;
+    
+    // Total points for the enemy in this level
+    [Header("Points")]
+    public int pointsTotal = 5;
+    
 }

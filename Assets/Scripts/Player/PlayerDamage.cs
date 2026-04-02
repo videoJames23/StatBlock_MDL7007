@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerDamage : MonoBehaviour
 {
-    [SerializeField] private PlayerStats  playerStats;
+    [SerializeField] private PlayerStatValues  playerStats;
     private bool canTakeDamage = true;
     private float iFramesDuration = 1;
     private int numberOfFlashes = 5;

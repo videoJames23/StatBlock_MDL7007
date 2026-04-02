@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3711fe64f39ca5b4994d1edb338ec0e1, type: 3}
-  m_Name: Level2EnemyStats
+  m_Name: Level3EnemyStats
   m_EditorClassIdentifier: 
-  enemyHealth: 1
-  enemySpeed: 3
-  enemySize: 4.5
+  healthLevel: 1
+  speedLevel: 3
+  sizeLevel: 3
   enemyDir: 1
-  pointsTotalE: 5
+  pointsTotal: 7

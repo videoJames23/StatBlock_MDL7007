@@ -7,7 +7,7 @@ public class EnemyDamage : MonoBehaviour
     
     private SpriteRenderer spriteRenderer;
 
-    [SerializeField] private EnemyStats enemyStats;
+    [SerializeField] private EnemyStatValues enemyStats;
     
     private float iFramesDuration = 1;
     private int numberOfFlashes = 5;

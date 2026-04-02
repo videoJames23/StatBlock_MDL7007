@@ -3,13 +3,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Levels/Level Config", fileName = "NewLevelConfig")]
 public class LevelConfigSO : ScriptableObject
 {
+    // Starting stats for player
     [Header("Player")]
     public PlayerStatsPresetSO playerStartingPreset;
 
+    // Starting stats for enemy
     [Header("Enemy")] 
     public EnemyStatsPresetSO enemyStartingPreset;
     
-    
+    // Out-of-focus position for StatBlock UI
     [Header("StatBlock UI (preview layout)")]
     public Vector2 uiHolderAnchoredPosition = new (-601.17f, -373.82f);
     public Vector3 uiHolderScale            = new (1f, 1f, 1f);

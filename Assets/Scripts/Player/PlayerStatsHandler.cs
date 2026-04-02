@@ -2,21 +2,27 @@ using UnityEngine;
 
 public class PlayerStatsHandler : MonoBehaviour
 {
-    public PlayerStatsPresetSO defaultPreset;
+    
+    [SerializeField] private PlayerStatValues statValues;
+    [SerializeField] private PlayerStatsPresetSO defaultPreset;
+
     public PlayerRuntimeStats runtimeStats;
+
+    
     
     public void ApplyPreset(PlayerStatsPresetSO preset)
     {
-        var source = preset != null ? preset : defaultPreset;
-        if (source == null)
+        if (preset == null || statValues == null)
         {
-            Debug.LogWarning("[PlayerStatsHandler] No preset provided and no default preset set.");
-            runtimeStats = new PlayerRuntimeStats();
+            Debug.LogWarning("[PlayerStatsHandler] Missing preset or stats table.");
             return;
         }
 
-        runtimeStats = source.CreateRuntimeCopy();
+        runtimeStats.playerHealth = statValues.healthByLevel[(int)preset.healthLevel];
+        runtimeStats.playerSpeed  = statValues.speedByLevel[(int)preset.speedLevel];
+        runtimeStats.playerJump   = statValues.jumpByLevel[(int)preset.jumpLevel];
     }
+
 
     public void ResetToDefault() => ApplyPreset(defaultPreset);
 }

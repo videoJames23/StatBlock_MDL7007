@@ -1,20 +1,16 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Stats/Player Stats Preset", fileName = "NewPlayerStatsPreset")]
+[CreateAssetMenu(menuName = "Starting Stats/Player Stats Preset", fileName = "NewPlayerStatsPreset")]
 public class PlayerStatsPresetSO : ScriptableObject
 {
-    public int playerHealth = 1;
-    public float playerSpeed = 3f;
-    public float playerJump  = 5f;
-    public int pointsTotalP = 6;
+    
+    [Header("Starting Stat Levels")]
+    public StatLevel healthLevel = StatLevel.Level1;
+    public StatLevel speedLevel  = StatLevel.Level1;
+    public StatLevel jumpLevel   = StatLevel.Level1;
 
-    public PlayerRuntimeStats CreateRuntimeCopy()
-    {
-        return new PlayerRuntimeStats
-        {
-            playerHealth = playerHealth,
-            playerSpeed  = playerSpeed,
-            playerJump   = playerJump,
-        };
-    }
+    // Total points for the player in this level
+    [Header("Points")]
+    public int pointsTotal = 5;
+    
 }

@@ -1,9 +1,8 @@
 using UnityEngine;
 
-
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private PlayerStats  playerStats;
+    [SerializeField] private PlayerStatValues  playerStats;
     
     public float Input{ get; private set; }
     

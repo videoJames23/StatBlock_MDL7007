@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EnemyCollisions : MonoBehaviour
 {
-    [SerializeField] private EnemyStats enemyStats;
-    [SerializeField] private PlayerStats playerStats;
+    [SerializeField] private EnemyStatValues enemyStats;
+    [SerializeField] private PlayerStatValues playerStats;
     
     [SerializeField]private Rigidbody2D enemyRb;
     [SerializeField] private Transform enemyTransform;

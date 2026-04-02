@@ -2,21 +2,37 @@ using UnityEngine;
 
 public class EnemyStatsHandler : MonoBehaviour
 {
-    public EnemyStatsPresetSO defaultPreset;
+    [SerializeField] private EnemyStatValues statValues;
+    [SerializeField] private EnemyStatsPresetSO defaultPreset;
+
     public EnemyRuntimeStats runtimeStats;
 
+    
+    
     public void ApplyPreset(EnemyStatsPresetSO preset)
     {
-        var source = preset != null ? preset : defaultPreset;
-        if (source == null)
+        if (preset == null || statValues == null)
         {
-            Debug.LogWarning("[EnemyStatsHandler] No preset provided and no default preset set.");
-            runtimeStats = new EnemyRuntimeStats();
+            Debug.LogWarning("[EnemyStatsHandler] Missing preset or stats table.");
             return;
         }
 
-        runtimeStats = source.CreateRuntimeCopy();
+        runtimeStats.enemyHealth = statValues.healthByLevel[(int)preset.healthLevel];
+        runtimeStats.enemySpeed  = statValues.speedByLevel[(int)preset.speedLevel];
+        
+        
+        int sizeLevel = Mathf.Clamp
+        (
+            (int)preset.sizeLevel,
+            0,
+            statValues.sizeByLevel.Length - 1
+        );
+
+        runtimeStats.enemySize = statValues.sizeByLevel[sizeLevel];
+        
+        runtimeStats.enemyDir = preset.enemyDir;
     }
+
 
     public void ResetToDefault() => ApplyPreset(defaultPreset);
 }
