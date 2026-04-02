@@ -31,8 +31,8 @@ public class StatBlockChangesP : MonoBehaviour
     public delegate void DamageRefresh();
     public static event DamageRefresh OnDamageRefresh;
     
-    public int IPointsTotalP { get; private set; }
-    public int IPointsLeftP { get; private set; }
+    public int PointsTotalP { get; private set; }
+    public int PointsLeftP { get; private set; }
 
     private void OnEnable()
     {
@@ -92,30 +92,30 @@ public class StatBlockChangesP : MonoBehaviour
         
         var presetP = levelConfig.playerStartingPreset;
         
-        IPointsTotalP = presetP.iPointsTotalP;
+        PointsTotalP = presetP.pointsTotalP;
 
-        statsP[0] = Mathf.Max(0, presetP.iPlayerHealth);
+        statsP[0] = Mathf.Max(0, presetP.playerHealth);
         
         
         
-        if      (Mathf.Approximately(presetP.fPlayerSpeed, playerStats.playerSpeedLVL0)) statsP[1] = 0;
-        else if (Mathf.Approximately(presetP.fPlayerSpeed, playerStats.playerSpeedLVL1)) statsP[1] = 1;
-        else if (Mathf.Approximately(presetP.fPlayerSpeed, playerStats.playerSpeedLVL2)) statsP[1] = 2;
-        else if (Mathf.Approximately(presetP.fPlayerSpeed, playerStats.playerSpeedLVL3)) statsP[1] = 3;
+        if      (Mathf.Approximately(presetP.playerSpeed, playerStats.playerSpeedLVL0)) statsP[1] = 0;
+        else if (Mathf.Approximately(presetP.playerSpeed, playerStats.playerSpeedLVL1)) statsP[1] = 1;
+        else if (Mathf.Approximately(presetP.playerSpeed, playerStats.playerSpeedLVL2)) statsP[1] = 2;
+        else if (Mathf.Approximately(presetP.playerSpeed, playerStats.playerSpeedLVL3)) statsP[1] = 3;
         else
         {
-            Debug.LogWarning($"[StatBlockChanges] Preset speed {presetP.fPlayerSpeed} does not match any level value; defaulting to level 1.");
+            Debug.LogWarning($"[StatBlockChanges] Preset speed {presetP.playerSpeed} does not match any level value; defaulting to level 1.");
             statsP[1] = 1;
         }
         
         
-        if      (Mathf.Approximately(presetP.fPlayerJump, playerStats.playerJumpLVL0)) statsP[2] = 0;
-        else if (Mathf.Approximately(presetP.fPlayerJump, playerStats.playerJumpLVL1)) statsP[2] = 1;
-        else if (Mathf.Approximately(presetP.fPlayerJump, playerStats.playerJumpLVL2)) statsP[2] = 2;
-        else if (Mathf.Approximately(presetP.fPlayerJump, playerStats.playerJumpLVL3)) statsP[2] = 3;
+        if      (Mathf.Approximately(presetP.playerJump, playerStats.playerJumpLVL0)) statsP[2] = 0;
+        else if (Mathf.Approximately(presetP.playerJump, playerStats.playerJumpLVL1)) statsP[2] = 1;
+        else if (Mathf.Approximately(presetP.playerJump, playerStats.playerJumpLVL2)) statsP[2] = 2;
+        else if (Mathf.Approximately(presetP.playerJump, playerStats.playerJumpLVL3)) statsP[2] = 3;
         else
         {
-            Debug.LogWarning($"[StatBlockChanges] Preset jump {presetP.fPlayerJump} does not match any level value; defaulting to level 1.");
+            Debug.LogWarning($"[StatBlockChanges] Preset jump {presetP.playerJump} does not match any level value; defaulting to level 1.");
             statsP[2] = 1;
         }
 
@@ -126,7 +126,7 @@ public class StatBlockChangesP : MonoBehaviour
 
     private void StatIncrease(int selectedIndex)
     {
-        if (IPointsLeftP > 0)
+        if (PointsLeftP > 0)
         {
             statsP[selectedIndex]++;
             OnUp?.Invoke();
@@ -183,12 +183,12 @@ public class StatBlockChangesP : MonoBehaviour
 
     private void RecomputePoints()
     {
-        IPointsLeftP = IPointsTotalP - statsP.Sum();
+        PointsLeftP = PointsTotalP - statsP.Sum();
     }
     
     public void StatChangePHealth()
     {
-        playerStatsHandler.runtimeStats.iPlayerHealth = statsP[0];
+        playerStatsHandler.runtimeStats.playerHealth = statsP[0];
         RecomputePoints();
         statBlockUI.UpdateUI();
     }
@@ -196,7 +196,7 @@ public class StatBlockChangesP : MonoBehaviour
     public void HealthDecrease()
     {
         statsP[0]--;
-        IPointsTotalP--;
+        PointsTotalP--;
         StatChangePHealth();
         OnDamageRefresh?.Invoke();
     }
@@ -208,10 +208,10 @@ public class StatBlockChangesP : MonoBehaviour
             switch (statsP[1]) // player speeds
             {
                 
-                case 0: playerStatsHandler.runtimeStats.fPlayerSpeed = playerStats.playerSpeedLVL0; break;
-                case 1: playerStatsHandler.runtimeStats.fPlayerSpeed = playerStats.playerSpeedLVL1; break;
-                case 2: playerStatsHandler.runtimeStats.fPlayerSpeed = playerStats.playerSpeedLVL2; break;
-                case 3: playerStatsHandler.runtimeStats.fPlayerSpeed = playerStats.playerSpeedLVL3; break;
+                case 0: playerStatsHandler.runtimeStats.playerSpeed = playerStats.playerSpeedLVL0; break;
+                case 1: playerStatsHandler.runtimeStats.playerSpeed = playerStats.playerSpeedLVL1; break;
+                case 2: playerStatsHandler.runtimeStats.playerSpeed = playerStats.playerSpeedLVL2; break;
+                case 3: playerStatsHandler.runtimeStats.playerSpeed = playerStats.playerSpeedLVL3; break;
             }
             RecomputePoints();
             statBlockUI.UpdateUI();
@@ -224,10 +224,10 @@ public class StatBlockChangesP : MonoBehaviour
             switch (statsP[2]) //player jump heights
             {
                 
-                case 0: playerStatsHandler.runtimeStats.fPlayerJump = playerStats.playerJumpLVL0; break;
-                case 1: playerStatsHandler.runtimeStats.fPlayerJump = playerStats.playerJumpLVL1; break;
-                case 2: playerStatsHandler.runtimeStats.fPlayerJump = playerStats.playerJumpLVL2; break;
-                case 3: playerStatsHandler.runtimeStats.fPlayerJump = playerStats.playerJumpLVL3; break;
+                case 0: playerStatsHandler.runtimeStats.playerJump = playerStats.playerJumpLVL0; break;
+                case 1: playerStatsHandler.runtimeStats.playerJump = playerStats.playerJumpLVL1; break;
+                case 2: playerStatsHandler.runtimeStats.playerJump = playerStats.playerJumpLVL2; break;
+                case 3: playerStatsHandler.runtimeStats.playerJump = playerStats.playerJumpLVL3; break;
             }
             RecomputePoints();
             statBlockUI.UpdateUI();

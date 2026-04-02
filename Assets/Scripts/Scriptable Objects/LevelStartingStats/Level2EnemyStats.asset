@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3711fe64f39ca5b4994d1edb338ec0e1, type: 3}
   m_Name: Level2EnemyStats
   m_EditorClassIdentifier: 
-  iEnemyHealth: 1
-  fEnemySpeed: 3
-  fEnemySize: 4.5
-  iPointsTotalE: 5
+  enemyHealth: 1
+  enemySpeed: 3
+  enemySize: 4.5
+  enemyDir: 1
+  pointsTotalE: 5

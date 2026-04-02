@@ -59,7 +59,7 @@ public class TextFade : MonoBehaviour
 
     IEnumerator FadeText(TMP_Text text, float start, float end)
     {
-        float t = 0f;
+        var t = 0f;
 
         while (t < 1f)
         {

@@ -1,10 +1,12 @@
+using UnityEngine.Serialization;
+
 [System.Serializable]
 public class EnemyRuntimeStats
 {
-    public int iEnemyHealth;
-    public float fEnemySpeed;
-    public float fEnemySize;
-    public int iEnemyDir;
+    public int enemyHealth;
+    public float enemySpeed;
+    public float enemySize;
+    public int enemyDir;
 
 
 }

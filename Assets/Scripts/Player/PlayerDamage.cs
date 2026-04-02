@@ -4,10 +4,10 @@ using UnityEngine;
 public class PlayerDamage : MonoBehaviour
 {
     [SerializeField] private PlayerStats  playerStats;
-    private bool bCanTakeDamage = true;
-    private float fIFramesDuration = 1;
-    private int iNumberOfFlashes = 5;
-    private SpriteRenderer cSpriteRenderer;
+    private bool canTakeDamage = true;
+    private float iFramesDuration = 1;
+    private int numberOfFlashes = 5;
+    private SpriteRenderer spriteRenderer;
     
     private PlayerStatsHandler playerStatsHandler;
     
@@ -30,27 +30,27 @@ public class PlayerDamage : MonoBehaviour
     {
         playerStatsHandler = GetComponent<PlayerStatsHandler>();
         
-        cSpriteRenderer = GetComponent<SpriteRenderer>(); 
+        spriteRenderer = GetComponent<SpriteRenderer>(); 
         
         Physics2D.IgnoreLayerCollision(10, 11, false);
     }
     
     public void TakeDamage()
     {
-        if (!bCanTakeDamage)
+        if (!canTakeDamage)
         {
             return;
         }
         
         OnDamage?.Invoke(); 
-        bCanTakeDamage = false;
+        canTakeDamage = false;
         
-        if (playerStatsHandler.runtimeStats.iPlayerHealth > 0)
+        if (playerStatsHandler.runtimeStats.playerHealth > 0)
         {
             StartCoroutine(Invulnerability());
         }
         
-        else if (playerStatsHandler.runtimeStats.iPlayerHealth <= 0)
+        else if (playerStatsHandler.runtimeStats.playerHealth <= 0)
         {
             Destroy(gameObject);
         }
@@ -60,15 +60,15 @@ public class PlayerDamage : MonoBehaviour
         Physics2D.IgnoreLayerCollision(10, 11, true);
         
       
-        for (int i = 0; i < iNumberOfFlashes; i++)
+        for (int i = 0; i < numberOfFlashes; i++)
         {
-            cSpriteRenderer.color = new Color(0, 0.25f, 1, 0.5f);
-            yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
-            cSpriteRenderer.color = Color.blue;
-            yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
+            spriteRenderer.color = new Color(0, 0.25f, 1, 0.5f);
+            yield return new WaitForSeconds(iFramesDuration/numberOfFlashes);
+            spriteRenderer.color = Color.blue;
+            yield return new WaitForSeconds(iFramesDuration/numberOfFlashes);
         }
         
         Physics2D.IgnoreLayerCollision(10, 11, false);
-        bCanTakeDamage = true;
+        canTakeDamage = true;
     }
 }

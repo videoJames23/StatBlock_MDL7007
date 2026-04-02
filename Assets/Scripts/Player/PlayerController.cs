@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerStats  playerStats;
     
-    public float FInput{ get; private set; }
+    public float Input{ get; private set; }
     
     [SerializeField] private StatBlockUI statBlockUI;
     
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && Time.timeScale != 0)
+        if ((UnityEngine.Input.GetKeyDown(KeyCode.W) || UnityEngine.Input.GetKeyDown(KeyCode.Space)) && Time.timeScale != 0)
         {
             playerMovement.Jump();
         }
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        FInput = Input.GetAxisRaw("Horizontal");
+        Input = UnityEngine.Input.GetAxisRaw("Horizontal");
     }
 
 }

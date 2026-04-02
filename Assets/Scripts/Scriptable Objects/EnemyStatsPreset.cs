@@ -3,20 +3,20 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Stats/Enemy Stats Preset", fileName = "NewEnemyStatsPreset")]
 public class EnemyStatsPresetSO : ScriptableObject
 {
-    public int iEnemyHealth = 1;
-    public float fEnemySpeed = 3f;
-    public float fEnemySize  = 4.5f;
-    public int iEnemyDir = 1;
-    public int iPointsTotalE;
+    public int enemyHealth = 1;
+    public float enemySpeed = 3f;
+    public float enemySize  = 4.5f;
+    public int enemyDir = 1;
+    public int pointsTotalE;
 
     public EnemyRuntimeStats CreateRuntimeCopy()
     {
         return new EnemyRuntimeStats
         {
-            iEnemyHealth = iEnemyHealth,
-            fEnemySpeed  = fEnemySpeed,
-            fEnemySize   = fEnemySize,
-            iEnemyDir = iEnemyDir,
+            enemyHealth = enemyHealth,
+            enemySpeed  = enemySpeed,
+            enemySize   = enemySize,
+            enemyDir = enemyDir,
         };
     }
 }

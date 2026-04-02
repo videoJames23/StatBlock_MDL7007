@@ -17,8 +17,8 @@ public class StatBlockChangesE : MonoBehaviour
     private EnemyStatsHandler enemyStatsHandler;
     public int[] statsE = {1, 1, 1};
     
-    public int IPointsTotalE{ get; private set; }
-    public int IPointsLeftE{ get; private set; }
+    public int PointsTotalE{ get; private set; }
+    public int PointsLeftE{ get; private set; }
     public delegate void Up();
     public static event Up OnUp;
     
@@ -97,26 +97,26 @@ public class StatBlockChangesE : MonoBehaviour
             
             var presetE = levelConfig.enemyStartingPreset;
             
-            IPointsTotalE = presetE.iPointsTotalE;
+            PointsTotalE = presetE.pointsTotalE;
             
-            statsE[0] = Mathf.Max(0, presetE.iEnemyHealth);
+            statsE[0] = Mathf.Max(0, presetE.enemyHealth);
             
-            if      (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL0)) statsE[1] = 0;
-            else if (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL1)) statsE[1] = 1;
-            else if (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL2)) statsE[1] = 2;
-            else if (Mathf.Approximately(presetE.fEnemySpeed, enemyStats.enemySpeedLVL3)) statsE[1] = 3;
+            if      (Mathf.Approximately(presetE.enemySpeed, enemyStats.enemySpeedLVL0)) statsE[1] = 0;
+            else if (Mathf.Approximately(presetE.enemySpeed, enemyStats.enemySpeedLVL1)) statsE[1] = 1;
+            else if (Mathf.Approximately(presetE.enemySpeed, enemyStats.enemySpeedLVL2)) statsE[1] = 2;
+            else if (Mathf.Approximately(presetE.enemySpeed, enemyStats.enemySpeedLVL3)) statsE[1] = 3;
             else
             {
-                Debug.LogWarning($"[StatBlockChanges] Preset speed {presetE.fEnemySpeed} does not match any level value; defaulting to level 1.");
+                Debug.LogWarning($"[StatBlockChanges] Preset speed {presetE.enemySpeed} does not match any level value; defaulting to level 1.");
                 statsE[1] = 1;
             }
             
-            if (Mathf.Approximately(presetE.fEnemySize, enemyStats.enemySizeLVL1)) statsE[2] = 1;
-            else if (Mathf.Approximately(presetE.fEnemySize, enemyStats.enemySizeLVL2)) statsE[2] = 2;
-            else if (Mathf.Approximately(presetE.fEnemySize, enemyStats.enemySizeLVL3)) statsE[2] = 3;
+            if (Mathf.Approximately(presetE.enemySize, enemyStats.enemySizeLVL1)) statsE[2] = 1;
+            else if (Mathf.Approximately(presetE.enemySize, enemyStats.enemySizeLVL2)) statsE[2] = 2;
+            else if (Mathf.Approximately(presetE.enemySize, enemyStats.enemySizeLVL3)) statsE[2] = 3;
             else
             {
-                Debug.LogWarning($"[StatBlockChanges] Preset size {presetE.fEnemySize} does not match any level value; defaulting to level 1.");
+                Debug.LogWarning($"[StatBlockChanges] Preset size {presetE.enemySize} does not match any level value; defaulting to level 1.");
                 statsE[2] = 1;
             }
             Debug.Log($"[StatBlockChanges] statsE <- preset | Health:{statsE[0]} Speed Index:{statsE[1]} Size Index:{statsE[2]}");
@@ -126,7 +126,7 @@ public class StatBlockChangesE : MonoBehaviour
 
     private void StatIncrease(int selectedIndex)
     {
-        if (IPointsLeftE > 0)
+        if (PointsLeftE > 0)
         {
             
 
@@ -135,10 +135,10 @@ public class StatBlockChangesE : MonoBehaviour
 
 
 
-            if (statsE[selectedIndex] > enemyStats.aEnemyStatBounds[selectedIndex, 1])
+            if (statsE[selectedIndex] > enemyStats.enemyStatBounds[selectedIndex, 1])
             {
                 OnError?.Invoke();
-                statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 1];
+                statsE[selectedIndex] = enemyStats.enemyStatBounds[selectedIndex, 1];
             }
 
             switch (selectedIndex)
@@ -166,10 +166,10 @@ public class StatBlockChangesE : MonoBehaviour
     {
         statsE[selectedIndex]--;
                         
-        if (statsE[selectedIndex] < enemyStats.aEnemyStatBounds[selectedIndex, 0])
+        if (statsE[selectedIndex] < enemyStats.enemyStatBounds[selectedIndex, 0])
         {
             OnError?.Invoke();
-            statsE[selectedIndex] = enemyStats.aEnemyStatBounds[selectedIndex, 0];
+            statsE[selectedIndex] = enemyStats.enemyStatBounds[selectedIndex, 0];
         }
         
         else
@@ -194,14 +194,14 @@ public class StatBlockChangesE : MonoBehaviour
     
     private void RecomputePoints()
     {
-        IPointsLeftE = IPointsTotalE - statsE.Sum();
+        PointsLeftE = PointsTotalE - statsE.Sum();
     }
 
     public void StatChangeEHealth()
     {
         if (!enemyRb || !enemyVisual) return;
         
-        enemyStatsHandler.runtimeStats.iEnemyHealth = statsE[0];
+        enemyStatsHandler.runtimeStats.enemyHealth = statsE[0];
         RecomputePoints();
         statBlockUI.UpdateUI();
     }
@@ -209,7 +209,7 @@ public class StatBlockChangesE : MonoBehaviour
     public void HealthDecrease()
     {
         statsE[0]--;
-        IPointsTotalE--;
+        PointsTotalE--;
         StatChangeEHealth();
         OnDamageRefresh?.Invoke();
     }
@@ -226,7 +226,7 @@ public class StatBlockChangesE : MonoBehaviour
             _ => enemyRb.linearVelocity.x
         };
 
-        enemyStatsHandler.runtimeStats.fEnemySpeed = newSpeed;
+        enemyStatsHandler.runtimeStats.enemySpeed = newSpeed;
         RecomputePoints();
         statBlockUI.UpdateUI();
     }
@@ -243,7 +243,7 @@ public class StatBlockChangesE : MonoBehaviour
             _ => enemyVisual.localScale.x
         };
 
-        enemyStatsHandler.runtimeStats.fEnemySize = newScale;
+        enemyStatsHandler.runtimeStats.enemySize = newScale;
         ApplyEnemyScaleBottomAnchored(newScale);
         RecomputePoints();
         statBlockUI.UpdateUI();

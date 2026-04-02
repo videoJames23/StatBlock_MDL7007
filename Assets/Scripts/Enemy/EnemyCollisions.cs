@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class EnemyCollisions : MonoBehaviour
 {
+    [SerializeField] private EnemyStats enemyStats;
+    [SerializeField] private PlayerStats playerStats;
+    
     [SerializeField]private Rigidbody2D enemyRb;
     [SerializeField] private Transform enemyTransform;
     private EnemyDamage enemyDamage;
-    [SerializeField] private EnemyStats enemyStats;
     
-    [SerializeField] private PlayerStats playerStats;
+    
     private Rigidbody2D playerRb;
 
     public delegate void PlayerSquash();
@@ -51,22 +53,22 @@ public class EnemyCollisions : MonoBehaviour
             // MATHS CONTENT HERE
             // ((px x ex) + (py + ey))/|p||e| = cosangle
             Vector2 toPlayer = playerRb.position - (Vector2)enemyTransform.position;
-            float upMag = Vector2.up.magnitude;
-            float toPlayerMag = toPlayer.magnitude;
-            float magProduct = toPlayerMag * upMag;
-            float playerCosAngle =
+           var upMag = Vector2.up.magnitude;
+           var toPlayerMag = toPlayer.magnitude;
+           var magProduct = toPlayerMag * upMag;
+           var playerCosAngle =
                 ((toPlayer.x * Vector2.up.x) + (toPlayer.y * Vector2.up.y)) /
                 magProduct;
-            bool bPlayerIsFalling = playerRb.linearVelocity.y <= 0f;
+            var bPlayerIsFalling = playerRb.linearVelocity.y <= 0f;
             
            
-            if (playerCosAngle > enemyStats.fCosAngle && bPlayerIsFalling)
+            if (playerCosAngle > enemyStats.cosAngle && bPlayerIsFalling)
             {
                 Debug.Log("Squash!");
                 OnPlayerSquash?.Invoke();
             }
             
-            else if (playerCosAngle < enemyStats.fCosAngle || !bPlayerIsFalling)
+            else if (playerCosAngle < enemyStats.cosAngle || !bPlayerIsFalling)
             {
                 Debug.Log("Ow!");
                 OnEnemyAttack?.Invoke();
@@ -82,7 +84,7 @@ public class EnemyCollisions : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Spike") && enemyDamage.BCanTakeDamage)
+        if (other.gameObject.CompareTag("Spike") && enemyDamage.CanTakeDamage)
         {
             OnEnemySpike?.Invoke();
         }

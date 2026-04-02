@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0962a7c3838754e469ca0ce554e9f2ce, type: 3}
   m_Name: Level2PlayerStats
   m_EditorClassIdentifier: 
-  iPlayerHealth: 1
-  fPlayerSpeed: 7
-  fPlayerJump: 5
+  playerHealth: 1
+  playerSpeed: 7
+  playerJump: 5
+  pointsTotalP: 6

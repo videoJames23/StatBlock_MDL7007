@@ -18,18 +18,19 @@ public class StatBlockUI : MonoBehaviour
     [SerializeField] private RectTransform holderRT;
     [SerializeField] private GameObject background;
     [SerializeField] private RectTransform backgroundRT;
-    [SerializeField] private Vector2 uiPosition;
+    
     [SerializeField] private ShowHide showHideJump;
     [SerializeField] private ShowHide showHideSpeed;
     
     [Header ("UI Positions")]
-    [SerializeField] private Vector3 vFocusScale = new (3f, 3f, 3f);
-    [SerializeField] private Vector2 vFocusPosition = new (-87.6f, -74.2f);
-    [SerializeField] private Vector3 vBackgroundFocusScale = new (10, 10, 10);
-    [SerializeField] private Vector3 vOutFocusScale = new (1f, 1f, 1f);
-    [SerializeField] private Vector3 vBackgroundOutFocusScale = new (2.82999992f,2.30865788f,1f);
+    [SerializeField] private Vector3 focusScale = new (3f, 3f, 3f);
+    [SerializeField] private Vector2 focusPosition = new (-87.6f, -74.2f);
+    [SerializeField] private Vector3 backgroundFocusScale = new (10, 10, 10);
+    [SerializeField] private Vector3 outFocusScale = new (1f, 1f, 1f);
+    [SerializeField] private Vector2 outFocusPosition;
+    [SerializeField] private Vector3 backgroundOutFocusScale = new (2.82999992f,2.30865788f,1f);
     
-    private string sUser;
+    private string user;
     private const int statCount = 3;
     
     public delegate void MenuOpen();
@@ -116,8 +117,8 @@ public class StatBlockUI : MonoBehaviour
         Debug.Log($"[StatBlockUI] Applying UI: pos={config.uiHolderAnchoredPosition}, " + 
                   $"scale={config.uiHolderScale}, bgScale={config.uiBackgroundScale}");
 
-        uiPosition = config.uiHolderAnchoredPosition;
-        holderRT.anchoredPosition = uiPosition;
+        outFocusPosition = config.uiHolderAnchoredPosition;
+        holderRT.anchoredPosition = outFocusPosition;
         holderRT.localScale = config.uiHolderScale;
         
         if (backgroundRT)
@@ -185,16 +186,16 @@ public class StatBlockUI : MonoBehaviour
             case MenuMode.PlayerMenu:
             case MenuMode.EnemyMenu:
                 holder.SetActive(true);
-                holderRT.anchoredPosition = vFocusPosition;
-                holderRT.localScale = vFocusScale;
-                backgroundRT.localScale = vBackgroundFocusScale;
+                holderRT.anchoredPosition = focusPosition;
+                holderRT.localScale = focusScale;
+                backgroundRT.localScale = backgroundFocusScale;
                 break;
             case MenuMode.PlayerPreview:
             case MenuMode.EnemyPreview:
                 holder.SetActive(true);
-                holderRT.anchoredPosition = uiPosition;
-                holderRT.localScale = vOutFocusScale;
-                backgroundRT.localScale = vBackgroundOutFocusScale;
+                holderRT.anchoredPosition = outFocusPosition;
+                holderRT.localScale = outFocusScale;
+                backgroundRT.localScale = backgroundOutFocusScale;
                 break;
             case MenuMode.None:
                 holder.SetActive(false);
@@ -207,19 +208,19 @@ public class StatBlockUI : MonoBehaviour
             if (CurrentMode == MenuMode.PlayerMenu || CurrentMode == MenuMode.PlayerPreview)
             {
                 valueTexts[i].text = statBlockChangesP.statsP[i].ToString();
-                valueTexts[3].text = statBlockChangesP.IPointsLeftP.ToString();
+                valueTexts[3].text = statBlockChangesP.PointsLeftP.ToString();
                 showHideJump.Show();
                 showHideSpeed.Hide();
-                sUser = "Player";
+                user = "Player";
             }
             
             if (CurrentMode == MenuMode.EnemyMenu || CurrentMode == MenuMode.EnemyPreview)
             {
                 valueTexts[i].text = statBlockChangesE.statsE[i].ToString();
-                valueTexts[3].text = statBlockChangesE.IPointsLeftE.ToString();
+                valueTexts[3].text = statBlockChangesE.PointsLeftE.ToString();
                 showHideJump.Hide();
                 showHideSpeed.Show();
-                sUser = "Enemy";
+                user = "Enemy";
 
             }
                 
@@ -231,7 +232,7 @@ public class StatBlockUI : MonoBehaviour
                         : Color.white;
 
             }
-            valueTexts[4].text = sUser;
+            valueTexts[4].text = user;
         }
         
     }

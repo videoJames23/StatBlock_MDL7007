@@ -3062,6 +3062,14 @@ PrefabInstance:
       propertyPath: spikeRb
       value: 
       objectReference: {fileID: 1699104065}
+    - target: {fileID: 3861867317899429845, guid: 3f690067d1e798c4fbbf46380cf49b51, type: 3}
+      propertyPath: spikeDir
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3861867317899429845, guid: 3f690067d1e798c4fbbf46380cf49b51, type: 3}
+      propertyPath: spikeSpeed
+      value: 7.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5281720123393059187, guid: 3f690067d1e798c4fbbf46380cf49b51, type: 3}
       propertyPath: m_LocalScale.y
       value: 11.055836

@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     
     [SerializeField] PlayerStats playerStats;
 
-    private bool bIsGrounded;
+    private bool isGrounded;
 
     public delegate void JumpEvent();
     public static event JumpEvent OnJumpEvent;
@@ -44,31 +44,31 @@ public class PlayerMovement : MonoBehaviour
     
     public void Jump()
     {
-        if (bIsGrounded)
+        if (isGrounded)
         {
             OnJumpEvent?.Invoke();
-            playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, playerStatsHandler.runtimeStats.fPlayerJump);
-            bIsGrounded = false;
+            playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, playerStatsHandler.runtimeStats.playerJump);
+            isGrounded = false;
         }
     }
 
     private void Ground()
     {
-        bIsGrounded = true;
+        isGrounded = true;
     }
 
     private void UnGround()
     {
-        bIsGrounded = false;
+        isGrounded = false;
     }
     
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector2 vTargetVelocity = new Vector2(playerController.FInput * playerStatsHandler.runtimeStats.fPlayerSpeed, playerRb.linearVelocity.y);
+        var targetVelocity = new Vector2(playerController.Input * playerStatsHandler.runtimeStats.playerSpeed, playerRb.linearVelocity.y);
 
-        float fControl = bIsGrounded ? 1f : airControlMultiplier;
+        var control = isGrounded ? 1f : airControlMultiplier;
 
-        playerRb.linearVelocity = Vector2.Lerp(playerRb.linearVelocity, vTargetVelocity,acceleration * fControl * Time.fixedDeltaTime);
+        playerRb.linearVelocity = Vector2.Lerp(playerRb.linearVelocity, targetVelocity,acceleration * control * Time.fixedDeltaTime);
     }
 }

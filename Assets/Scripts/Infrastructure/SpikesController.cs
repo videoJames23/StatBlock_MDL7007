@@ -1,12 +1,13 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public class SpikesController : MonoBehaviour
 {
     public Rigidbody2D spikeRb;
-    [SerializeField] private float fSpikeSpeed;
-    [SerializeField] private float fSpikeDir;
-    private bool bEntityDetected;
+    [SerializeField] private float spikeSpeed;
+    [SerializeField] private float spikeDir;
+    private bool entityDetected;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,9 +18,9 @@ public class SpikesController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (bEntityDetected)
+        if (entityDetected)
         {
-            spikeRb.linearVelocity = new Vector2(fSpikeSpeed * fSpikeDir, 0);
+            spikeRb.linearVelocity = new Vector2(spikeSpeed * spikeDir, 0);
         }
                 
     }
@@ -28,8 +29,8 @@ public class SpikesController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("EnemyVisual"))
         {
-            bEntityDetected = true;
-            spikeRb.linearVelocity = new Vector2(fSpikeSpeed * fSpikeDir, 0);
+            entityDetected = true;
+            spikeRb.linearVelocity = new Vector2(spikeSpeed * spikeDir, 0);
         }
     }
 }

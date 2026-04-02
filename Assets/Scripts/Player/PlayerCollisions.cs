@@ -5,8 +5,8 @@ public class PlayerCollisions : MonoBehaviour
     private PlayerDamage playerDamage;
     
     
-    public bool BIsTouchingStatBlockP{ get; private set; }
-    public bool BIsTouchingStatBlockE{ get; private set; }
+    public bool IsTouchingStatBlockP{ get; private set; }
+    public bool IsTouchingStatBlockE{ get; private set; }
 
     public delegate void Completion();
     public static event Completion OnCompletion;
@@ -56,10 +56,10 @@ public class PlayerCollisions : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "StatBlockP":
-                BIsTouchingStatBlockP = true;
+                IsTouchingStatBlockP = true;
                 break;
             case "StatBlockE":
-                BIsTouchingStatBlockE = true;
+                IsTouchingStatBlockE = true;
                 break;
         }
         
@@ -81,10 +81,10 @@ public class PlayerCollisions : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "StatBlockP":
-                BIsTouchingStatBlockP = false;
+                IsTouchingStatBlockP = false;
                 break;
             case "StatBlockE":
-                BIsTouchingStatBlockE = false;
+                IsTouchingStatBlockE = false;
                 break;
         }
         

@@ -5,14 +5,14 @@ public class EnemyDamage : MonoBehaviour
 {
     private EnemyStatsHandler enemyStatsHandler;
     
-    private SpriteRenderer cSpriteRenderer;
+    private SpriteRenderer spriteRenderer;
 
     [SerializeField] private EnemyStats enemyStats;
     
-    private float fIFramesDuration = 1;
-    private int iNumberOfFlashes = 5;
+    private float iFramesDuration = 1;
+    private int numberOfFlashes = 5;
     
-    public bool BCanTakeDamage{ get; private set; }
+    public bool CanTakeDamage{ get; private set; }
 
     public delegate void Damage();
     public static event Damage OnDamage;
@@ -34,43 +34,43 @@ public class EnemyDamage : MonoBehaviour
     void Start()
     {
         enemyStatsHandler = GetComponent<EnemyStatsHandler>();
-        cSpriteRenderer = GetComponent<SpriteRenderer>();
-        BCanTakeDamage = true;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        CanTakeDamage = true;
     }
     
     public void TakeDamage()
     {
         
-        if (!BCanTakeDamage)
+        if (!CanTakeDamage)
         {
             return;
         }
         
         OnDamage?.Invoke(); 
-        BCanTakeDamage = false;
+        CanTakeDamage = false;
         
-        if (enemyStatsHandler.runtimeStats.iEnemyHealth > 0)
+        if (enemyStatsHandler.runtimeStats.enemyHealth > 0)
         {
             StartCoroutine(Invulnerability());
         }
         
-        else if (enemyStatsHandler.runtimeStats.iEnemyHealth <= 0)
+        else if (enemyStatsHandler.runtimeStats.enemyHealth <= 0)
         {
             Destroy(gameObject);
         }
     }
     private IEnumerator Invulnerability()
     {
-        BCanTakeDamage = false;
+        CanTakeDamage = false;
         
-        for (int i = 0; i < iNumberOfFlashes; i++)
+        for (int i = 0; i < numberOfFlashes; i++)
         {
-            cSpriteRenderer.color = new Color(1, 0.25f, 0, 0.5f);
-            yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
-            cSpriteRenderer.color = Color.red;
-            yield return new WaitForSeconds(fIFramesDuration/iNumberOfFlashes);
+            spriteRenderer.color = new Color(1, 0.25f, 0, 0.5f);
+            yield return new WaitForSeconds(iFramesDuration/numberOfFlashes);
+            spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(iFramesDuration/numberOfFlashes);
         }
         
-        BCanTakeDamage = true;
+        CanTakeDamage = true;
     }
 }

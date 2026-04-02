@@ -26,12 +26,12 @@ public class EnemyController : MonoBehaviour
     private void FixedUpdate()
     {
         if (!enemyRb || !enemyStats) return;
-        enemyRb.linearVelocity = new Vector2(enemyStatsHandler.runtimeStats.fEnemySpeed * enemyStatsHandler.runtimeStats.iEnemyDir, enemyRb.linearVelocity.y);
+        enemyRb.linearVelocity = new Vector2(enemyStatsHandler.runtimeStats.enemySpeed * enemyStatsHandler.runtimeStats.enemyDir, enemyRb.linearVelocity.y);
     }
 
     private void FlipDirection()
     {
-        enemyStatsHandler.runtimeStats.iEnemyDir *= -1;
+        enemyStatsHandler.runtimeStats.enemyDir *= -1;
     }
     
 }

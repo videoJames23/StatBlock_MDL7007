@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private StatBlockUI statBlockUI;
     [SerializeField] private PauseManager pauseManager;
     
-    private int iBuildIndex;
+    private int buildIndex;
     
     private void OnEnable()
     {
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
-        iBuildIndex = SceneManager.GetActiveScene().buildIndex;
+        buildIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     // Update is called once per frame
@@ -31,18 +31,18 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(iBuildIndex);
+            SceneManager.LoadScene(buildIndex);
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
 
-            if (playerCollisions.BIsTouchingStatBlockP)
+            if (playerCollisions.IsTouchingStatBlockP)
             {
                 statBlockUI.TogglePlayerMenu();
             }
 
-            else if (playerCollisions.BIsTouchingStatBlockE)
+            else if (playerCollisions.IsTouchingStatBlockE)
             {
                 statBlockUI.ToggleEnemyMenu();
             }
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator LoadScene()
     {
         yield return new WaitForSeconds(1.8f);
-        SceneManager.LoadScene(iBuildIndex + 1);
+        SceneManager.LoadScene(buildIndex + 1);
     }
 
 
