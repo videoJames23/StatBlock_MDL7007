@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 public class StatBlockUI : MonoBehaviour
 {
     [SerializeField] private LevelConfigSO levelConfig;
+    private LevelBootstrap levelBootstrap;
     
     private StatBlockInput statBlockInput;
     private StatBlockChangesP statBlockChangesP;
@@ -95,7 +96,9 @@ public class StatBlockUI : MonoBehaviour
         statBlockChangesE = GetComponent<StatBlockChangesE>();
         
         holderRT = holder.GetComponent<RectTransform>();
-        
+
+        levelBootstrap =  FindFirstObjectByType<LevelBootstrap>();
+        levelConfig = levelBootstrap.levelConfig;
         if (levelConfig != null)
             ApplyLevelUILayout(levelConfig);
     }

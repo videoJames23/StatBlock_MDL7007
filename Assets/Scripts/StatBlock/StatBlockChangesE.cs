@@ -4,6 +4,7 @@ using UnityEngine;
 public class StatBlockChangesE : MonoBehaviour
 {
     [SerializeField] private LevelConfigSO levelConfig;
+    [SerializeField] private LevelBootstrap levelBootstrap;
     [SerializeField] private EnemyStatValues  enemyStats;
     
     [SerializeField] private StatBlockUI statBlockUI;
@@ -46,6 +47,9 @@ public class StatBlockChangesE : MonoBehaviour
     void Start()
     {
         statBlockUI = GetComponent<StatBlockUI>();
+        
+        levelBootstrap = FindFirstObjectByType<LevelBootstrap>();
+        levelConfig = levelBootstrap.levelConfig;
         
         var enemyVisualGO = GameObject.FindGameObjectWithTag("EnemyVisual");
         if (enemyVisualGO)

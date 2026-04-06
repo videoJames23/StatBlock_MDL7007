@@ -6,6 +6,7 @@ public class StatBlockChangesP : MonoBehaviour
     [SerializeField] private PlayerStatValues  playerStats;
     
     [SerializeField] private LevelConfigSO levelConfig;
+    [SerializeField] private LevelBootstrap levelBootstrap;
 
     
     public int[] statsP = {1, 1, 1};
@@ -54,11 +55,15 @@ public class StatBlockChangesP : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        levelBootstrap = FindFirstObjectByType<LevelBootstrap>();
+        levelConfig = levelBootstrap.levelConfig;
+        
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
         playerStatsHandler = player.GetComponent<PlayerStatsHandler>();
         
         statBlockUI = GetComponent<StatBlockUI>();
+        
         
         InitializeStatsFromLevelConfig();
         
