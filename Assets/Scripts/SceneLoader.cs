@@ -4,7 +4,7 @@ using StatBlock;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class SceneLoader : MonoBehaviour
 {
     [SerializeField] private PlayerCollisions  playerCollisions;
     
@@ -34,27 +34,6 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(buildIndex);
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-
-            if (playerCollisions.IsTouchingStatBlockP)
-            {
-                statBlockUI.TogglePlayerMenu();
-            }
-
-            else if (playerCollisions.IsTouchingStatBlockE)
-            {
-                statBlockUI.ToggleEnemyMenu();
-            }
-
-            else
-            {
-                statBlockUI.SetMenuMode(StatBlockUI.MenuMode.None);
-            }
-            
-            pauseManager.UpdatePauseState();
         }
     }
     
