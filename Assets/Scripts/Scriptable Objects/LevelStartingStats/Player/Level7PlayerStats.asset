@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0962a7c3838754e469ca0ce554e9f2ce, type: 3}
   m_Name: Level7PlayerStats
   m_EditorClassIdentifier: 
-  healthLevel: 1
-  speedLevel: 1
-  jumpLevel: 1
+  healthLevel: 2
+  speedLevel: 2
+  jumpLevel: 3
   pointsTotal: 9
