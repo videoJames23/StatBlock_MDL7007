@@ -1,13 +1,12 @@
 using Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace StatBlock
 {
     public class StatBlockInput : MonoBehaviour
     {
         private PlayerController playerController;
-    
-        [SerializeField] private GameManager gameManager;
     
         private StatBlockUI statBlockUI;
 
