@@ -1,12 +1,11 @@
-using UnityEngine.Serialization;
-
-[System.Serializable]
-public class EnemyRuntimeStats
+namespace Scriptable_Objects
 {
-    public int enemyHealth;
-    public float enemySpeed;
-    public float enemySize;
-    public int enemyDir;
-
-
+    [System.Serializable]
+    public class EnemyRuntimeStats
+    {
+        public int enemyHealth;
+        public float enemySpeed;
+        public float enemySize;
+        public int enemyDir;
+    }
 }

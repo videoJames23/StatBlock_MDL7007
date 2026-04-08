@@ -1,3 +1,7 @@
+using Enemy;
+using Player;
+using Scriptable_Objects.LevelConfigs;
+using StatBlock;
 using UnityEngine;
 
 public class LevelBootstrap : MonoBehaviour
@@ -7,28 +11,29 @@ public class LevelBootstrap : MonoBehaviour
     public PlayerStatsHandler player;
 
     public EnemyStatsHandler enemy;
-    void Awake()
+
+    private void Awake()
     {
-        if (player == null)
+        if (!player)
             player = FindFirstObjectByType<PlayerStatsHandler>();
         
-        if (enemy == null)
+        if (!enemy)
             enemy = FindFirstObjectByType<EnemyStatsHandler>();
 
-        if (player == null)
+        if (!player)
         {
             Debug.LogError("[LevelBootstrap] No PlayerStatsHandler found in scene.");
             return;
         }
 
-        if (levelConfig == null)
+        if (!levelConfig)
         {
             Debug.LogWarning("[LevelBootstrap] No LevelConfig assigned; using Player's default preset.");
             player.ResetToDefault();
             return;
         }
 
-        if (levelConfig.playerStartingPreset != null)
+        if (levelConfig.playerStartingPreset)
         {
             player.ApplyPreset(levelConfig.playerStartingPreset);
             Debug.Log("[LevelBootstrap] Applied level player preset.");
@@ -41,13 +46,13 @@ public class LevelBootstrap : MonoBehaviour
         
         
 
-        if (enemy == null)
+        if (!enemy)
         {
             Debug.LogError("[LevelBootstrap] No EnemyStatsHandler found in scene.");
             return;
         }
 
-        if (levelConfig.enemyStartingPreset != null)
+        if (levelConfig.enemyStartingPreset)
         {
             enemy.ApplyPreset(levelConfig.enemyStartingPreset);
             Debug.Log("[LevelBootstrap] Applied level enemy preset.");
@@ -59,10 +64,10 @@ public class LevelBootstrap : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
         var ui = FindFirstObjectByType<StatBlockUI>();
-        if (ui == null)
+        if (!ui)
         {
             
             Debug.LogWarning("[LevelBootstrap] No StatBlockUI found.");

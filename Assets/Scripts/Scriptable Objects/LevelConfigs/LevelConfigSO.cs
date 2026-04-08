@@ -1,21 +1,22 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Levels/Level Config", fileName = "NewLevelConfig")]
-public class LevelConfigSO : ScriptableObject
+namespace Scriptable_Objects.LevelConfigs
 {
-    // Starting stats for player
-    [Header("Player")]
-    public PlayerStatsPresetSO playerStartingPreset;
+    [CreateAssetMenu(menuName = "Levels/Level Config", fileName = "NewLevelConfig")]
+    public class LevelConfigSO : ScriptableObject
+    {
+        // Starting stats for player
+        [Header("Player")]
+        public PlayerStatsPresetSO playerStartingPreset;
 
-    // Starting stats for enemy
-    [Header("Enemy")] 
-    public EnemyStatsPresetSO enemyStartingPreset;
+        // Starting stats for enemy
+        [Header("Enemy")] 
+        public EnemyStatsPresetSO enemyStartingPreset;
     
-    // Out-of-focus position for StatBlock UI
-    [Header("StatBlock UI (preview layout)")]
-    public Vector2 uiHolderAnchoredPosition = new (-601.17f, -373.82f);
-    public Vector3 uiHolderScale            = new (1f, 1f, 1f);
-    public Vector3 uiBackgroundScale        = new (2.83f, 2.31f, 1f);
-
-    
+        // Out-of-focus position for StatBlock UI
+        [Header("StatBlock UI (preview layout)")]
+        public Vector2 uiHolderAnchoredPosition = new (-601.17f, -373.82f);
+        public Vector3 uiHolderScale            = new (1f, 1f, 1f);
+        public Vector3 uiBackgroundScale        = new (2.83f, 2.31f, 1f);
+    }
 }

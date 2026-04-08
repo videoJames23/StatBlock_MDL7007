@@ -1,28 +1,33 @@
+using Scriptable_Objects;
+using Scriptable_Objects.StatInfo;
 using UnityEngine;
 
-public class PlayerStatsHandler : MonoBehaviour
+namespace Player
 {
-    
-    [SerializeField] private PlayerStatValues statValues;
-    [SerializeField] private PlayerStatsPresetSO defaultPreset;
-
-    public PlayerRuntimeStats runtimeStats;
-
-    
-    
-    public void ApplyPreset(PlayerStatsPresetSO preset)
+    public class PlayerStatsHandler : MonoBehaviour
     {
-        if (preset == null || statValues == null)
+    
+        [SerializeField] private PlayerStatValues statValues;
+        [SerializeField] private PlayerStatsPresetSO defaultPreset;
+
+        public PlayerRuntimeStats runtimeStats;
+
+    
+    
+        public void ApplyPreset(PlayerStatsPresetSO preset)
         {
-            Debug.LogWarning("[PlayerStatsHandler] Missing preset or stats table.");
-            return;
+            if (!preset || !statValues)
+            {
+                Debug.LogWarning("[PlayerStatsHandler] Missing preset or stats table.");
+                return;
+            }
+
+            runtimeStats.playerHealth = statValues.healthByLevel[(int)preset.healthLevel];
+            runtimeStats.playerSpeed  = statValues.speedByLevel[(int)preset.speedLevel];
+            runtimeStats.playerJump   = statValues.jumpByLevel[(int)preset.jumpLevel];
         }
 
-        runtimeStats.playerHealth = statValues.healthByLevel[(int)preset.healthLevel];
-        runtimeStats.playerSpeed  = statValues.speedByLevel[(int)preset.speedLevel];
-        runtimeStats.playerJump   = statValues.jumpByLevel[(int)preset.jumpLevel];
+
+        public void ResetToDefault() => ApplyPreset(defaultPreset);
     }
-
-
-    public void ResetToDefault() => ApplyPreset(defaultPreset);
 }

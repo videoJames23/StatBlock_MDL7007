@@ -1,4 +1,6 @@
 using System.Collections;
+using Player;
+using StatBlock;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -51,13 +53,10 @@ public class GameManager : MonoBehaviour
             {
                 statBlockUI.SetMenuMode(StatBlockUI.MenuMode.None);
             }
-
+            
             pauseManager.UpdatePauseState();
-
         }
     }
-    
-    
     
     private void OnCompletion()
     {
@@ -69,7 +68,4 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1.8f);
         SceneManager.LoadScene(buildIndex + 1);
     }
-
-
-
 }

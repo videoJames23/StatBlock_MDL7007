@@ -1,3 +1,4 @@
+using StatBlock;
 using UnityEngine;
 
 public class PauseManager : MonoBehaviour
@@ -11,9 +12,8 @@ public class PauseManager : MonoBehaviour
     
     public void UpdatePauseState()
     {
-        bool shouldPause =
-            statBlockUI.CurrentMode == StatBlockUI.MenuMode.PlayerMenu ||
-            statBlockUI.CurrentMode == StatBlockUI.MenuMode.EnemyMenu;
+        var shouldPause =
+            statBlockUI.CurrentMode is StatBlockUI.MenuMode.PlayerMenu or StatBlockUI.MenuMode.EnemyMenu;
 
         Time.timeScale = shouldPause ? 0 : 1;
     }

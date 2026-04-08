@@ -1,23 +1,24 @@
 using UnityEngine;
 
-public class LeverController : MonoBehaviour
+namespace Infrastructure
 {
-
-    public GameObject gate;
-   
-    void Start()
+    public class LeverController : MonoBehaviour
     {
-        gate =  GameObject.FindGameObjectWithTag("Gate");
-    }
+        public GameObject gate;
+
+        private void Start()
+        {
+            gate =  GameObject.FindGameObjectWithTag("Gate");
+        }
 
     
 
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        
-        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("EnemyVisual"))
+        public void OnTriggerEnter2D(Collider2D other)
         {
-            gate.SetActive(false);
+            if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("EnemyVisual"))
+            {
+                gate.SetActive(false);
+            }
         }
     }
 }
