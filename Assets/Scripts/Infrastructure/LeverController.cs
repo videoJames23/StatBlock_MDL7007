@@ -10,9 +10,6 @@ namespace Infrastructure
         {
             gate =  GameObject.FindGameObjectWithTag("Gate");
         }
-
-    
-
         public void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("EnemyVisual"))

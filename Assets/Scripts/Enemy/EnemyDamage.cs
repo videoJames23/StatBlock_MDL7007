@@ -6,11 +6,9 @@ namespace Enemy
 {
     public class EnemyDamage : MonoBehaviour
     {
-        private EnemyStatsHandler enemyStatsHandler;
-
-        [SerializeField] private EnemyStatValues enemyStats;
+        [SerializeField] private EnemyStatsHandler enemyStatsHandler;
+        [SerializeField] private SpriteRenderer spriteRenderer;
         
-        private SpriteRenderer spriteRenderer;
         private const float iFramesDuration = 1;
         private const int numberOfFlashes = 5;
         public bool CanTakeDamage{ get; private set; }
@@ -34,8 +32,6 @@ namespace Enemy
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
-            enemyStatsHandler = GetComponent<EnemyStatsHandler>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
             CanTakeDamage = true;
         }
 

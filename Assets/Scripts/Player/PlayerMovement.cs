@@ -7,13 +7,12 @@ namespace Player
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private PlayerStatValues playerStats;
-        public float acceleration = 12f;
-        public float airControlMultiplier = 0.5f;
-    
-        private Rigidbody2D playerRb;
-        private PlayerController playerController;
-        private PlayerStatsHandler playerStatsHandler;
+        [SerializeField] private Rigidbody2D playerRb;
+        [SerializeField] private PlayerController playerController;
+        [SerializeField] private PlayerStatsHandler playerStatsHandler;
         
+        private float acceleration = 12f;
+        private float airControlMultiplier = 0.5f;
         private bool isGrounded;
 
         public delegate void JumpEvent();
@@ -33,15 +32,6 @@ namespace Player
             PlayerCollisions.OnGround -= Ground;
             PlayerCollisions.OnUnGround -= UnGround;
             EnemyCollisions.OnPlayerSquash -= Jump;
-        }
-    
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        private void Start()
-        {
-            playerRb = GetComponent<Rigidbody2D>();
-            playerController = GetComponent<PlayerController>();
-            playerStatsHandler = GetComponent<PlayerStatsHandler>();
-       
         }
     
         public void Jump()

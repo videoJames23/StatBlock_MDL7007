@@ -6,11 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    [SerializeField] private PlayerCollisions  playerCollisions;
-    
-    [SerializeField] private StatBlockUI statBlockUI;
-    [SerializeField] private PauseManager pauseManager;
-    
     private int buildIndex;
     
     private void OnEnable()

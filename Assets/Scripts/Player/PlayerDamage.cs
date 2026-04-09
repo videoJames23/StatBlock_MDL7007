@@ -8,12 +8,12 @@ namespace Player
     public class PlayerDamage : MonoBehaviour
     {
         [SerializeField] private PlayerStatValues  playerStats;
+        [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private PlayerStatsHandler playerStatsHandler;
+        
         private bool canTakeDamage = true;
         private const float iFramesDuration = 1;
         private const int numberOfFlashes = 5;
-        private SpriteRenderer spriteRenderer;
-    
-        private PlayerStatsHandler playerStatsHandler;
     
         public delegate void Damage();
         public static event  Damage OnDamage;
@@ -32,10 +32,6 @@ namespace Player
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
-            playerStatsHandler = GetComponent<PlayerStatsHandler>();
-        
-            spriteRenderer = GetComponent<SpriteRenderer>(); 
-        
             Physics2D.IgnoreLayerCollision(10, 11, false);
         }
     

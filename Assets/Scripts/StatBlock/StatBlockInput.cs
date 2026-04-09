@@ -6,9 +6,9 @@ namespace StatBlock
 {
     public class StatBlockInput : MonoBehaviour
     {
-        private PlayerController playerController;
-    
-        private StatBlockUI statBlockUI;
+        [SerializeField] private PlayerController playerController;
+        
+        [SerializeField] private StatBlockUI statBlockUI;
 
         private const int maxIndex = 2;
         private const int minIndex = 0;
@@ -30,12 +30,7 @@ namespace StatBlock
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         { 
-            statBlockUI = GetComponent<StatBlockUI>();
             SelectedIndex = 0;
-        
-            var player = GameObject.FindGameObjectWithTag("Player");
-            playerController = player.GetComponent<PlayerController>();
-        
         }
 
         // Update is called once per frame

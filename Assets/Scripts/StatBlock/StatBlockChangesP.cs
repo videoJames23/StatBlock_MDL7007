@@ -9,23 +9,22 @@ namespace StatBlock
 {
     public class StatBlockChangesP : MonoBehaviour
     {
+        [Header("Stats")]
+        [SerializeField] private LevelConfigSO levelConfig;
         [SerializeField] private PlayerStatValues  playerStats;
     
-        [SerializeField] private LevelConfigSO levelConfig;
-        [SerializeField] private LevelBootstrap levelBootstrap;
-
+        [Header("UI")]
+        [SerializeField] private StatBlockUI statBlockUI;
+    
+        [Header("Player")]
+        [SerializeField] private PlayerController playerController;
+        [SerializeField] private PlayerStatsHandler playerStatsHandler;
     
         public int[] statsP = {1, 1, 1};
-    
-    
-        private StatBlockUI statBlockUI;
-    
-        private PlayerController playerController;
-        private PlayerStatsHandler playerStatsHandler;
-    
-        private EnemyController enemyController;
-        private Transform enemyTransform;
-    
+        
+        private int PointsTotalP { get; set; }
+        public int PointsLeftP { get; private set; }
+        
         public delegate void Up();
         public static event Up OnUp;
     
@@ -37,10 +36,7 @@ namespace StatBlock
 
         public delegate void DamageRefresh();
         public static event DamageRefresh OnDamageRefresh;
-
-        private int PointsTotalP { get; set; }
-        public int PointsLeftP { get; private set; }
-
+        
         private void OnEnable()
         {
             StatBlockInput.OnStatIncreaseP += StatIncrease;
@@ -58,15 +54,6 @@ namespace StatBlock
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
-            levelBootstrap = FindFirstObjectByType<LevelBootstrap>();
-            levelConfig = levelBootstrap.levelConfig;
-        
-            var player = GameObject.FindGameObjectWithTag("Player");
-            playerController = player.GetComponent<PlayerController>();
-            playerStatsHandler = player.GetComponent<PlayerStatsHandler>();
-        
-            statBlockUI = GetComponent<StatBlockUI>();
-            
             InitializeStatsFromLevelConfig();
         
             RecomputePoints();
@@ -74,7 +61,6 @@ namespace StatBlock
             StatChangePHealth();
             StatChangePSpeed();
             StatChangePJump();
-        
         }
         
         private void InitializeStatsFromLevelConfig()

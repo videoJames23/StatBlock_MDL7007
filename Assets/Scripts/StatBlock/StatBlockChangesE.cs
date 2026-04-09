@@ -3,22 +3,23 @@ using Enemy;
 using Scriptable_Objects.LevelConfigs;
 using Scriptable_Objects.StatInfo;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace StatBlock
 {
     public class StatBlockChangesE : MonoBehaviour
     {
+        [Header("Stats")]
         [SerializeField] private LevelConfigSO levelConfig;
-        [SerializeField] private LevelBootstrap levelBootstrap;
         [SerializeField] private EnemyStatValues  enemyStats;
     
+        [Header("UI")]
         [SerializeField] private StatBlockUI statBlockUI;
-    
+        
+        [Header("Enemy")]
         [SerializeField] private Rigidbody2D enemyRb;       
         [SerializeField] private Transform enemyVisualTransform; 
         [SerializeField] private SpriteRenderer enemyRenderer; 
-        private EnemyStatsHandler enemyStatsHandler;
+        [SerializeField] private EnemyStatsHandler enemyStatsHandler;
     
         public int[] statsE = {1, 1, 1};
 
@@ -52,24 +53,6 @@ namespace StatBlock
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
-            statBlockUI = GetComponent<StatBlockUI>();
-        
-            levelBootstrap = FindFirstObjectByType<LevelBootstrap>();
-            levelConfig = levelBootstrap.levelConfig;
-        
-            var enemyVisual = GameObject.FindGameObjectWithTag("EnemyVisual");
-            if (enemyVisual)
-            {
-                enemyVisualTransform = enemyVisual.transform;
-                enemyStatsHandler = enemyVisual.GetComponent<EnemyStatsHandler>();
-            }
-
-            var enemyRoot = GameObject.FindGameObjectWithTag("EnemyRoot");
-            if (enemyRoot)
-            {
-                enemyRb = enemyRoot.GetComponent<Rigidbody2D>();
-            }
-        
             InitializeStatsFromLevelConfig();
         
             RecomputePoints();
@@ -212,10 +195,10 @@ namespace StatBlock
         private void StatChangeESize()
         {
             if (!enemyRb || !enemyVisualTransform) return;
-
-            var newScale = enemyStats.sizeByLevel[statsE[2]];
-
-            enemyStatsHandler.runtimeStats.enemySize = newScale;
+            
+            enemyStatsHandler.runtimeStats.enemySize = enemyStats.sizeByLevel[statsE[2]];
+            var newScale = enemyStatsHandler.runtimeStats.enemySize;
+            
             ApplyEnemyScaleBottomAnchored(newScale);
             RecomputePoints();
             statBlockUI.UpdateUI();
@@ -225,16 +208,16 @@ namespace StatBlock
     
         private void ApplyEnemyScaleBottomAnchored(float scale)
         {
-            var rootPosition = enemyRb.position;
-        
-            var localScale = enemyVisualTransform.localScale;
-            enemyVisualTransform.localScale = new Vector3(scale, scale, localScale.z);
-        
             var spriteHeight = GetSpriteHeightUnits(enemyRenderer);
             var childLocalY = (spriteHeight * scale) * 0.5f;
+            
+            var localScale = enemyVisualTransform.localScale;
             var localPosition = enemyVisualTransform.localPosition;
+            
+            var rootPosition = enemyRb.position;
+            
+            enemyVisualTransform.localScale = new Vector3(scale, scale, localScale.z);
             enemyVisualTransform.localPosition = new Vector3(localPosition.x, childLocalY, localPosition.z);
-        
             enemyRb.position = rootPosition;
         
         }

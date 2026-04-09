@@ -8,9 +8,9 @@ public class LevelBootstrap : MonoBehaviour
 {
     public LevelConfigSO levelConfig;
     
-    public PlayerStatsHandler player;
+    [SerializeField] private PlayerStatsHandler player;
 
-    public EnemyStatsHandler enemy;
+    [SerializeField] private EnemyStatsHandler enemy;
 
     private void Awake()
     {

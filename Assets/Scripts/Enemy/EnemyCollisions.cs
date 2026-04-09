@@ -5,15 +5,15 @@ namespace Enemy
 {
     public class EnemyCollisions : MonoBehaviour
     {
+        
+        [Header("Enemy")]
         [SerializeField] private EnemyStatValues enemyStats;
-        [SerializeField] private PlayerStatValues playerStats;
-    
-        [SerializeField]private Rigidbody2D enemyRb;
+        [SerializeField] private Rigidbody2D enemyRb;
         [SerializeField] private Transform enemyTransform;
-        private EnemyDamage enemyDamage;
-    
-    
-        private Rigidbody2D playerRb;
+        [SerializeField] private EnemyDamage enemyDamage;
+        
+        [Header("Player")]
+        [SerializeField] private Rigidbody2D playerRb;
 
         public delegate void PlayerSquash();
         public static event PlayerSquash OnPlayerSquash;
@@ -26,24 +26,12 @@ namespace Enemy
         public static event EnemySpike OnEnemySpike;
 
         public delegate void EnemyWall();
-
         public static event EnemyWall OnEnemyWall;
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        private void Start()
-        {
-            enemyDamage = GetComponent<EnemyDamage>();
-            var enemyVisual = GameObject.FindGameObjectWithTag("EnemyVisual");
-            enemyTransform = enemyVisual.GetComponent<Transform>();
         
-            var player = GameObject.FindGameObjectWithTag("Player");
-            playerRb = player.GetComponent<Rigidbody2D>();
-        }
-    
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (other.gameObject.CompareTag("Wall"))
             {
-            
                 if (Mathf.Abs(enemyRb.linearVelocity.x) < 0.1f)
                 {
                     OnEnemyWall?.Invoke();
@@ -52,7 +40,6 @@ namespace Enemy
 
             if (other.gameObject.CompareTag("Player"))
             {  
-            
                 // MATHS CONTENT HERE
                 // ((px x ex) + (py + ey))/|p||e| = cos angle
                 var toPlayer = playerRb.position - (Vector2)enemyTransform.position;
@@ -81,7 +68,6 @@ namespace Enemy
             if (other.gameObject.CompareTag("Spike"))
             {
                 OnEnemySpike?.Invoke();
-            
             }
         }
 

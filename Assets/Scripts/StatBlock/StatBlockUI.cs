@@ -7,12 +7,14 @@ namespace StatBlock
 {
     public class StatBlockUI : MonoBehaviour
     {
+        [Header ("LevelConfig")]
         [SerializeField] private LevelConfigSO levelConfig;
-        private LevelBootstrap levelBootstrap;
+        [SerializeField] private LevelBootstrap levelBootstrap;
     
-        private StatBlockInput statBlockInput;
-        private StatBlockChangesP statBlockChangesP;
-        private StatBlockChangesE  statBlockChangesE;
+        [Header ("StatBlock")]
+        [SerializeField] private StatBlockInput statBlockInput;
+        [SerializeField] private StatBlockChangesP statBlockChangesP;
+        [SerializeField] private StatBlockChangesE  statBlockChangesE;
     
         [SerializeField] private PlayerController playerController;
     
@@ -99,15 +101,6 @@ namespace StatBlock
     
         private void Start()
         {
-            statBlockInput = GetComponent<StatBlockInput>();
-            statBlockChangesP = GetComponent<StatBlockChangesP>();
-            statBlockChangesE = GetComponent<StatBlockChangesE>();
-        
-            holderRT = holder.GetComponent<RectTransform>();
-
-            levelBootstrap =  FindFirstObjectByType<LevelBootstrap>();
-            levelConfig = levelBootstrap.levelConfig;
-            if (levelConfig != null)
                 ApplyLevelUILayout(levelConfig);
         }
     

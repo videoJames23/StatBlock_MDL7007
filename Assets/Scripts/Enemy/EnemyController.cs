@@ -5,12 +5,10 @@ namespace Enemy
 {
     public class EnemyController : MonoBehaviour
     {
-    
         [SerializeField] private Rigidbody2D enemyRb;
         [SerializeField] private EnemyStatValues enemyStats;
         [SerializeField] private EnemyStatsHandler enemyStatsHandler;
-    
-
+        
         private void OnEnable()
         {
             EnemyCollisions.OnEnemySpike += FlipDirection;

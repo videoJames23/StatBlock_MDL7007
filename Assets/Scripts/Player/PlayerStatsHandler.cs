@@ -6,14 +6,11 @@ namespace Player
 {
     public class PlayerStatsHandler : MonoBehaviour
     {
-    
         [SerializeField] private PlayerStatValues statValues;
         [SerializeField] private PlayerStatsPresetSO defaultPreset;
 
         public PlayerRuntimeStats runtimeStats;
-
-    
-    
+        
         public void ApplyPreset(PlayerStatsPresetSO preset)
         {
             if (!preset || !statValues)
@@ -26,8 +23,7 @@ namespace Player
             runtimeStats.playerSpeed  = statValues.speedByLevel[(int)preset.speedLevel];
             runtimeStats.playerJump   = statValues.jumpByLevel[(int)preset.jumpLevel];
         }
-
-
+        
         public void ResetToDefault() => ApplyPreset(defaultPreset);
     }
 }

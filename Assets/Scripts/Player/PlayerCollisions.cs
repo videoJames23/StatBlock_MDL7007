@@ -4,9 +4,8 @@ namespace Player
 {
     public class PlayerCollisions : MonoBehaviour
     {
-        private PlayerDamage playerDamage;
-    
-    
+        [SerializeField] private PlayerDamage playerDamage;
+        
         public bool IsTouchingStatBlockP{ get; private set; }
         public bool IsTouchingStatBlockE{ get; private set; }
 
@@ -18,11 +17,6 @@ namespace Player
         public delegate void UnGround();
         public static event UnGround OnUnGround;
 
-        private void Start()
-        {
-            playerDamage = GetComponent<PlayerDamage>();
-        }
-
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (other.gameObject.CompareTag("Spike"))
@@ -30,9 +24,9 @@ namespace Player
                 playerDamage.TakeDamage();
             }
         }
+        
         private void OnTriggerEnter2D(Collider2D other)
         {
-
             switch (other.gameObject.tag)
             {  
                 case "Finish":

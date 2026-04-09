@@ -4,17 +4,11 @@ namespace Infrastructure
 {
     public class SpikesController : MonoBehaviour
     {
-        public Rigidbody2D spikeRb;
+        [SerializeField] private Rigidbody2D spikeRb;
         [SerializeField] private float spikeSpeed;
         [SerializeField] private float spikeDir;
         private bool entityDetected;
-    
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        private void Start()
-        {
-            spikeRb =  GetComponent<Rigidbody2D>();
-        }
-
+        
         // Update is called once per frame
         private void Update()
         {

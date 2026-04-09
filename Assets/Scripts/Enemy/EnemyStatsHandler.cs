@@ -10,9 +10,7 @@ namespace Enemy
         [SerializeField] private EnemyStatsPresetSO defaultPreset;
 
         public EnemyRuntimeStats runtimeStats;
-
-    
-    
+        
         public void ApplyPreset(EnemyStatsPresetSO preset)
         {
             if (!preset || !statValues)
