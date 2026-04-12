@@ -4,6 +4,11 @@ namespace Infrastructure
 {
     public class LeverController : MonoBehaviour
     {
+        // Responsible for:
+        // detecting player/enemy collision
+        // &
+        // disabling gate
+        
         public GameObject gate;
 
         private void Start()

@@ -6,6 +6,11 @@ namespace StatBlock
 {
     public class StatBlockInput : MonoBehaviour
     {
+        // Responsible for:
+        // gathering input
+        // &
+        // informing statBlockChanges of changes
+        
         [SerializeField] private PlayerController playerController;
         
         [SerializeField] private StatBlockUI statBlockUI;

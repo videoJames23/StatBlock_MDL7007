@@ -5,6 +5,13 @@ namespace Scriptable_Objects.StatInfo
     [CreateAssetMenu(fileName = "EnemyStatValues", menuName = "Stat Values/Enemy Stat Values")]
     public class EnemyStatValues : ScriptableObject
     {
+        // Responsible for:
+        // holding the actual values that correspond to each stat level
+        // &
+        // holding max/min values for each stat
+        // &
+        // holding angle of player/enemy intersection to evaluate collisions
+        
         // Actual values for stats by level
         public int[] healthByLevel  = { 0, 1, 2, 3 };
         public float[] speedByLevel = { 0f, 3f, 7f, 10f };

@@ -5,6 +5,12 @@ namespace Enemy
 {
     public class EnemyCollisions : MonoBehaviour
     {
+        // Responsible for:
+        // detecting enemy collisions
+        // &
+        // informing listeners of collisions
+        // &
+        // determining if player or enemy should take damage on collision
         
         [Header("Enemy")]
         [SerializeField] private EnemyStatValues enemyStats;
@@ -15,6 +21,8 @@ namespace Enemy
         [Header("Player")]
         [SerializeField] private Rigidbody2D playerRb;
 
+        
+        // Events
         public delegate void PlayerSquash();
         public static event PlayerSquash OnPlayerSquash;
 
@@ -28,6 +36,8 @@ namespace Enemy
         public delegate void EnemyWall();
         public static event EnemyWall OnEnemyWall;
         
+        
+        // Collisions
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (other.gameObject.CompareTag("Wall"))
@@ -35,6 +45,7 @@ namespace Enemy
                 if (Mathf.Abs(enemyRb.linearVelocity.x) < 0.1f)
                 {
                     OnEnemyWall?.Invoke();
+                    // Enemy flips direction
                 }
             }
 
@@ -56,18 +67,21 @@ namespace Enemy
                 {
                     Debug.Log("Squash!");
                     OnPlayerSquash?.Invoke();
+                    // Player lands on enemy, does damage, and jumps off
                 }
             
                 else if (playerCosAngle < enemyStats.cosAngle || !bPlayerIsFalling)
                 {
                     Debug.Log("Ow!");
                     OnEnemyAttack?.Invoke();
+                    // Enemy collides with player and takes damage
                 }
             }
 
             if (other.gameObject.CompareTag("Spike"))
             {
                 OnEnemySpike?.Invoke();
+                // Enemy takes damage and flips direction
             }
         }
 
@@ -76,6 +90,7 @@ namespace Enemy
             if (other.gameObject.CompareTag("Spike") && enemyDamage.CanTakeDamage)
             {
                 OnEnemySpike?.Invoke();
+                // Enemy takes damage and flips direction
             }
         
         }

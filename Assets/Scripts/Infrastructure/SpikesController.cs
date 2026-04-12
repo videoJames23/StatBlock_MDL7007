@@ -4,6 +4,11 @@ namespace Infrastructure
 {
     public class SpikesController : MonoBehaviour
     {
+        // Responsible for:
+        // detecting player/enemy presence
+        // &
+        // moving in a straight line along x
+        
         [SerializeField] private Rigidbody2D spikeRb;
         [SerializeField] private float spikeSpeed;
         [SerializeField] private float spikeDir;

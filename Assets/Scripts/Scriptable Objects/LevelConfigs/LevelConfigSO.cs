@@ -5,6 +5,11 @@ namespace Scriptable_Objects.LevelConfigs
     [CreateAssetMenu(menuName = "Levels/Level Config", fileName = "NewLevelConfig")]
     public class LevelConfigSO : ScriptableObject
     {
+        // Responsible for:
+        // compiling starting stats and UI position
+        // &
+        // making them available for LevelBootstrap
+        
         // Starting stats for player
         [Header("Player")]
         public PlayerStatsPresetSO playerStartingPreset;

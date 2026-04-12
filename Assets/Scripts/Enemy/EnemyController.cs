@@ -5,6 +5,11 @@ namespace Enemy
 {
     public class EnemyController : MonoBehaviour
     {
+        // Responsible for:
+        // moving enemy left to right
+        // &
+        // flipping direction when instructed
+        
         [SerializeField] private Rigidbody2D enemyRb;
         [SerializeField] private EnemyStatValues enemyStats;
         [SerializeField] private EnemyStatsHandler enemyStatsHandler;
@@ -26,14 +31,14 @@ namespace Enemy
         private void FixedUpdate()
         {
             if (!enemyRb || !enemyStats) return;
-            enemyRb.linearVelocity = new Vector2(enemyStatsHandler.runtimeStats.enemySpeed * enemyStatsHandler.runtimeStats.enemyDir, enemyRb.linearVelocity.y);
+            var stats = enemyStatsHandler.runtimeStats;
+            enemyRb.linearVelocity = new Vector2(stats.enemySpeed * stats.enemyDir, enemyRb.linearVelocity.y);
         }
 
         private void FlipDirection()
         {
             enemyStatsHandler.runtimeStats.enemyDir *= -1;
         }
-    
     }
 }
 

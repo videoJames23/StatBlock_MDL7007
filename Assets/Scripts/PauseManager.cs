@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PauseManager : MonoBehaviour
 {
+    // Responsible for:
+    // informing statBlockUI of menu opening
+    // &
+    // pausing based on menu mode
+    
     [SerializeField] private StatBlockUI statBlockUI;
     [SerializeField] private PlayerCollisions playerCollisions;
 

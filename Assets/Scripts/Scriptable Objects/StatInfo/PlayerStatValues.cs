@@ -5,6 +5,11 @@ namespace Scriptable_Objects.StatInfo
    [CreateAssetMenu(fileName = "PlayerStatValues", menuName = "Stat Values/Player Stat Values")]
    public class PlayerStatValues : ScriptableObject
    {
+      // Responsible for:
+      // holding the actual values that correspond to each stat level
+      // &
+      // holding max/min values for each stat
+      
       // Actual values for stats by level
       public int[] healthByLevel  = { 0, 1, 2, 3 };
       public float[] speedByLevel = { 0f, 3f, 7f, 10f };

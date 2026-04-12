@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class LevelBootstrap : MonoBehaviour
 {
+    // Responsible for:
+    // informing stats handlers of starting stats
+    // &
+    // informing statBlockUI of UI position
+    
     public LevelConfigSO levelConfig;
     
     [SerializeField] private PlayerStatsHandler player;

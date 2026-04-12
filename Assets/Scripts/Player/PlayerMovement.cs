@@ -6,6 +6,11 @@ namespace Player
 {
     public class PlayerMovement : MonoBehaviour
     {
+        // Responsible for:
+        // moving player based on playerController input
+        // &
+        // listening for when to ground, unground, or jump
+        
         [SerializeField] private PlayerStatValues playerStats;
         [SerializeField] private Rigidbody2D playerRb;
         [SerializeField] private PlayerController playerController;

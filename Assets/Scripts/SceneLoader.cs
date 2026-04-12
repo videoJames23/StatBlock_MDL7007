@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    // Responsible for:
+    // resetting level on input
+    // &
+    // loading next level on completion
+    
     private int buildIndex;
     
     private void OnEnable()

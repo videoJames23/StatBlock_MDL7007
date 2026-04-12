@@ -9,6 +9,11 @@ namespace StatBlock
 {
     public class StatBlockChangesP : MonoBehaviour
     {
+        // Responsible for:
+        // initialising and changing player stats
+        // &
+        // tracking available points
+        
         [Header("Stats")]
         [SerializeField] private LevelConfigSO levelConfig;
         [SerializeField] private PlayerStatValues  playerStats;

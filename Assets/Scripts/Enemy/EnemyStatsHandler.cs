@@ -6,6 +6,11 @@ namespace Enemy
 {
     public class EnemyStatsHandler : MonoBehaviour
     {
+        // Responsible for:
+        // setting starting stats at runtime
+        // &
+        // exposing runtime stats for other scripts to access
+        
         [SerializeField] private EnemyStatValues statValues;
         [SerializeField] private EnemyStatsPresetSO defaultPreset;
 
@@ -18,7 +23,7 @@ namespace Enemy
                 Debug.LogWarning("[EnemyStatsHandler] Missing preset or stats table.");
                 return;
             }
-
+            
             runtimeStats.enemyHealth = statValues.healthByLevel[(int)preset.healthLevel];
             runtimeStats.enemySpeed  = statValues.speedByLevel[(int)preset.speedLevel];
             runtimeStats.enemySize = statValues.sizeByLevel[(int)preset.sizeLevel];

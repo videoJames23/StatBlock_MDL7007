@@ -4,6 +4,13 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
+        // Responsible for:
+        // gathering player input
+        // &
+        // exposing input for playerMovement
+        // &
+        // instructing playerMovement to jump
+        
         [SerializeField] private PlayerMovement playerMovement;
         public float Input{ get; private set; }
 

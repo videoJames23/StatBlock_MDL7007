@@ -8,6 +8,13 @@ namespace StatBlock
 {
     public class StatBlockChangesE : MonoBehaviour
     {
+        // Responsible for:
+        // initialising and changing enemy stats
+        // &
+        // tracking available points
+        // &
+        // resizing enemy sprite
+        
         [Header("Stats")]
         [SerializeField] private LevelConfigSO levelConfig;
         [SerializeField] private EnemyStatValues  enemyStats;

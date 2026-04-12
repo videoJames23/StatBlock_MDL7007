@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class AudioController : MonoBehaviour
 {
+    // Responsible for:
+    // Playing audio files on subscribed events
+    
     [SerializeField] private AudioSource completionSource;
     [SerializeField] private AudioSource jumpSource;
     [SerializeField] private AudioSource openSource;
@@ -15,7 +18,7 @@ public class AudioController : MonoBehaviour
     [SerializeField] private AudioSource downSource;
     [SerializeField] private AudioSource indexSource;
     [SerializeField] private AudioSource errorSource;
-
+    
     private void OnEnable()
     {
         // Start screen
@@ -85,10 +88,7 @@ public class AudioController : MonoBehaviour
     
     private static void Play(AudioSource source)
     {
-        if (!source)
-            return;
-
-        if (!source.isActiveAndEnabled)
+        if (!source || !source.isActiveAndEnabled)
             return;
 
         source.Play();

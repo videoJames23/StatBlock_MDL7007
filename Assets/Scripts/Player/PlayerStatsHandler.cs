@@ -6,6 +6,11 @@ namespace Player
 {
     public class PlayerStatsHandler : MonoBehaviour
     {
+        // Responsible for:
+        // setting starting stats at runtime
+        // &
+        // exposing runtime stats for other scripts to access
+        
         [SerializeField] private PlayerStatValues statValues;
         [SerializeField] private PlayerStatsPresetSO defaultPreset;
 

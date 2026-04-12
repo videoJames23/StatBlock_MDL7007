@@ -4,6 +4,13 @@ namespace Player
 {
     public class PlayerCollisions : MonoBehaviour
     {
+        // Responsible for:
+        // detecting player collisions
+        // &
+        // informing other scripts about collisions
+        // &
+        // knowing if the player is touching a StatBlock
+        
         [SerializeField] private PlayerDamage playerDamage;
         
         public bool IsTouchingStatBlockP{ get; private set; }

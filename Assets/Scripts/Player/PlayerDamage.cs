@@ -7,13 +7,22 @@ namespace Player
 {
     public class PlayerDamage : MonoBehaviour
     {
+        // Responsible for:
+        // determining whether player should take damage
+        // &
+        // informing StatBlockChangesP of damage taken
+        // &
+        // setting and disabling player invulnerability
+        // &
+        // flashing player sprite during invulnerability
+        
         [SerializeField] private PlayerStatValues  playerStats;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private PlayerStatsHandler playerStatsHandler;
         
-        private bool canTakeDamage = true;
-        private const float iFramesDuration = 1;
-        private const int numberOfFlashes = 5;
+        private bool canTakeDamage;
+        private const float iFramesDuration = 1; // invulnerability duration in seconds
+        private const int numberOfFlashes = 5; // number of sprite flashes to indicate invulnerability
     
         public delegate void Damage();
         public static event  Damage OnDamage;
@@ -32,7 +41,9 @@ namespace Player
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
+            canTakeDamage = true;
             Physics2D.IgnoreLayerCollision(10, 11, false);
+            // ensure player can collide with enemy and spikes
         }
     
         public void TakeDamage()
@@ -61,6 +72,7 @@ namespace Player
             
             for (int i = 0; i < numberOfFlashes; i++)
             {
+                // Enemy sprite flashes in colour to indicate invulnerability
                 spriteRenderer.color = new Color(0, 0.25f, 1, 0.5f);
                 yield return new WaitForSeconds(iFramesDuration/numberOfFlashes);
                 spriteRenderer.color = Color.blue;

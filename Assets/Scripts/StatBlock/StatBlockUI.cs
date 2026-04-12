@@ -7,6 +7,11 @@ namespace StatBlock
 {
     public class StatBlockUI : MonoBehaviour
     {
+        // Responsible for:
+        // tracking and exposing UI menu mode
+        // &
+        // updating UI to reflect stat changes
+        
         [Header ("LevelConfig")]
         [SerializeField] private LevelConfigSO levelConfig;
         [SerializeField] private LevelBootstrap levelBootstrap;
@@ -101,7 +106,7 @@ namespace StatBlock
     
         private void Start()
         {
-                ApplyLevelUILayout(levelConfig);
+            ApplyLevelUILayout(levelConfig);
         }
     
     
