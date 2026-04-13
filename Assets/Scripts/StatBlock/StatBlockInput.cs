@@ -1,6 +1,5 @@
 using Player;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace StatBlock
 {
@@ -14,7 +13,8 @@ namespace StatBlock
         [SerializeField] private PlayerController playerController;
         
         [SerializeField] private StatBlockUI statBlockUI;
-
+        
+        public int SelectedIndex{ get; private set; }
         private const int maxIndex = 2;
         private const int minIndex = 0;
 
@@ -31,13 +31,13 @@ namespace StatBlock
         public delegate void StatDecreaseE(int selectedIndex);
         public static event StatDecreaseE OnStatDecreaseE;
 
-        public int SelectedIndex{ get; private set; }
+        
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         { 
             SelectedIndex = 0;
         }
-
+        
         // Update is called once per frame
         private void Update()
         {

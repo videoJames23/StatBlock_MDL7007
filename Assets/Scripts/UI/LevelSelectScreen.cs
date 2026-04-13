@@ -7,9 +7,7 @@ public class LevelSelectScreen : MonoBehaviour
 
     public GameObject mainMenuUI;
     public delegate void Back();
-
     public static event Back OnBack;
-    
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void OnEnable()
@@ -24,7 +22,6 @@ public class LevelSelectScreen : MonoBehaviour
         Button buttonLevel3 = root.Q<Button>("level__3__button");
         Button buttonLevel4 = root.Q<Button>("level__4__button");
         
-
         buttonBack.clicked += () => Destroy(gameObject);
         buttonBack.clicked += () => Instantiate(mainMenuUI);
         buttonBack.clicked += () => OnBack?.Invoke();
@@ -40,7 +37,6 @@ public class LevelSelectScreen : MonoBehaviour
         buttonLevel3.clicked += () => SceneManager.LoadScene(5);
         
         buttonLevel4.clicked += () => SceneManager.LoadScene(6);
-        
         
     }
     

@@ -19,8 +19,6 @@ namespace UI
             Button buttonLevelSelect = root.Q<Button>("level__select__button");
             Button buttonCredits = root.Q<Button>("credits__button");
             
-           
-            
             buttonStart.clicked += () => SceneManager.LoadScene(1);
             
             buttonLevelSelect.clicked += () => Destroy(gameObject);

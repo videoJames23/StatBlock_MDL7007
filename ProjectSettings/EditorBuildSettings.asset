@@ -27,7 +27,7 @@ EditorBuildSettings:
     path: Assets/Scenes/6 - Controller.unity
     guid: 6ac73623e9c66264894570c037a766ab
   - enabled: 1
-    path: Assets/Scenes/7 - Daredevil.unity
+    path: Assets/Scenes/7 - Needle.unity
     guid: 02d62fc9884bdaf4c901697a37cc6959
   - enabled: 1
     path: Assets/Scenes/MenuCredits/Credits.unity

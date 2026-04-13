@@ -22,7 +22,6 @@ namespace StatBlock
         [SerializeField] private StatBlockUI statBlockUI;
     
         [Header("Player")]
-        [SerializeField] private PlayerController playerController;
         [SerializeField] private PlayerStatsHandler playerStatsHandler;
     
         public int[] statsP = {1, 1, 1};
@@ -68,6 +67,7 @@ namespace StatBlock
             StatChangePJump();
         }
         
+        // Sets starting stats on player
         private void InitializeStatsFromLevelConfig()
         {
             if (levelConfig == null)
@@ -98,6 +98,7 @@ namespace StatBlock
             
         }
 
+        // Increases selected stat
         private void StatIncrease(int selectedIndex)
         {
             if (PointsLeftP > 0)
@@ -129,6 +130,7 @@ namespace StatBlock
             }
         }
 
+        // Decreases selected stat
         private void StatDecrease(int selectedIndex)
         {
             OnDown?.Invoke();
@@ -155,39 +157,44 @@ namespace StatBlock
         }
     
 
+        // Recomputes how many points the player has left
         private void RecomputePoints()
         {
             PointsLeftP = PointsTotalP - statsP.Sum();
         }
 
+        // Changes player health through StatBlock input
         private void StatChangePHealth()
         {
-            if (!playerController) return;
+            if (!playerStatsHandler) return;
             playerStatsHandler.runtimeStats.playerHealth = playerStats.healthByLevel[statsP[0]];
             RecomputePoints();
             statBlockUI.UpdateUI();
         }
 
+        // Decreases player health on damage
         private void HealthDecrease()
         {
-            if (!playerController) return;
+            if (!playerStatsHandler) return;
             statsP[0]--;
             PointsTotalP--;
             StatChangePHealth();
             OnDamageRefresh?.Invoke();
         }
 
+        // Changes player speed through StatBlock input
         private void StatChangePSpeed()
         {
-            if (!playerController) return;
+            if (!playerStatsHandler) return;
             playerStatsHandler.runtimeStats.playerSpeed = playerStats.speedByLevel[statsP[1]];
             RecomputePoints();
             statBlockUI.UpdateUI();
         }
-
+        
+        // Changes player jump height through StatBlock input
         private void StatChangePJump()
         {
-            if (!playerController) return;
+            if (!playerStatsHandler) return;
             playerStatsHandler.runtimeStats.playerJump  = playerStats.jumpByLevel[statsP[2]];
             RecomputePoints();
             statBlockUI.UpdateUI();

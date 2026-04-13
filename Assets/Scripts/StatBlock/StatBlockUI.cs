@@ -79,7 +79,7 @@ namespace StatBlock
             get => currentMode;
             private set => currentMode = value;
         }
-
+        
         public void SetMenuMode(MenuMode mode)
         {
             if (CurrentMode == mode)
@@ -109,7 +109,7 @@ namespace StatBlock
             ApplyLevelUILayout(levelConfig);
         }
     
-    
+        // Applies UI position based on levelConfig
         public void ApplyLevelUILayout(LevelConfigSO config)
         {
 
@@ -142,8 +142,7 @@ namespace StatBlock
 
         }
     
-
-    
+        // Determines if player menu is open and toggles on/off
         public void TogglePlayerMenu()
         {
             if (currentMode == MenuMode.PlayerMenu)
@@ -157,7 +156,7 @@ namespace StatBlock
             }
         }
 
-    
+        // Determines if enemy menu is open and toggles on/off
         public void ToggleEnemyMenu()
         {
             if (currentMode == MenuMode.EnemyMenu)
@@ -172,17 +171,18 @@ namespace StatBlock
         }
 
     
-        // Damage updates preview to show current stats
+        // Player taking damage updates preview to show current stats
         private void DamageMenuRefreshP()
         {
             SetMenuMode(MenuMode.PlayerPreview);
         }
-
+        // Enemy taking damage updates preview to show current stats
         private void DamageMenuRefreshE()
         { 
             SetMenuMode(MenuMode.EnemyPreview);
         }
 
+        // Updates UI to reflect current stats
         public void UpdateUI()
         {
             if (!holder || !holderRT || !background)
@@ -190,7 +190,7 @@ namespace StatBlock
                 return;
             }
         
-            switch (CurrentMode)
+            switch (CurrentMode) // Sets UI position based on menu mode
             {
                 case MenuMode.PlayerMenu:
                 case MenuMode.EnemyMenu:
@@ -211,7 +211,7 @@ namespace StatBlock
                     break;
             }
 
-            for (int i = 0; i < statCount; i++)
+            for (int i = 0; i < statCount; i++) // Updates stat values
             {
                 if (!playerController) continue;
                 if (CurrentMode is MenuMode.PlayerMenu or MenuMode.PlayerPreview)
@@ -234,7 +234,7 @@ namespace StatBlock
                 }
                 
                 var isSelectionMode = CurrentMode is MenuMode.PlayerMenu or MenuMode.EnemyMenu;
-                {
+                {   // Updates text colour to highlight selected stat
                     valueTexts[i].color =
                         isSelectionMode && i == statBlockInput.SelectedIndex
                             ? Color.green
