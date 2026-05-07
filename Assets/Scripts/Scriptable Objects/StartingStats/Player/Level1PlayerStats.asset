@@ -15,4 +15,4 @@ MonoBehaviour:
   healthLevel: 1
   speedLevel: 1
   jumpLevel: 1
-  pointsTotal: 5
+  pointsTotal: 4

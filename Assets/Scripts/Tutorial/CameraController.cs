@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
     // following player during tutorial level
     
     public GameObject player;
+    [SerializeField] private int offsetVertical;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,7 +19,7 @@ public class CameraController : MonoBehaviour
     {
         if (player != null)
         {
-            gameObject.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 2, -10);
+            gameObject.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + offsetVertical, -10);
         }
         
     }
